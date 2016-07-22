@@ -1,0 +1,192 @@
+---
+title: "`r id`"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This document shows the quality control of the data set `r id`, using the
+package
+[scater](https://www.bioconductor.org/packages/release/bioc/html/scater.html).
+
+## Load the necessary packages
+
+```{r}
+suppressPackageStartupMessages(library(MultiAssayExperiment))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(tidyr))
+suppressPackageStartupMessages(library(scater))
+```
+
+## Dataset summary
+
+```{r, echo = FALSE}
+knitr::kable(data.frame(n_samples = nrow(pData(maex)), 
+                        n_genes = nrow(experiments(maex)[["gene"]]),
+                        n_transcripts = nrow(experiments(maex)[["tx"]]),
+                        organism = metadata(maex)$organism,
+                        genome = metadata(maex)$genome,
+                        index = metadata(maex)$index),
+             align = "c",
+             caption = "Data set summary")
+```
+
+
+The data is stored as a
+[MultiAssayExperiment](https://bioconductor.org/packages/devel/bioc/html/MultiAssayExperiment.html)
+object. This object contains both gene-level and transcript-level data. For the
+transcript-level data, it contains both counts and TPMs. There are two different
+gene-level summaries. The one named `gene` is obtained by summing the TPMs and
+counts, respectively, across all transcripts for a given gene. The one named
+`genelstpm` contains the same TPMs as `gene`, but the counts slot is obtained by
+taking the summed TPMs and scaling them to the count scale. The latter procedure
+avoids problems related to differential isoform usage and the fact that regular
+counts depend on the length of the feature as well as on its abundance.
+
+```{r}
+print(maex)
+```
+
+In this report, we use the gene-level TPMs and the counts obtained by scaling 
+the TPMs. The data object also contains a slot with phenotypical data for the
+cells.
+
+```{r}
+cts <- assays(experiments(maex)[["genelstpm"]])[["count"]]
+tpms <- assays(experiments(maex)[["gene"]])[["TPM"]]
+phn <- pData(maex)
+```
+
+Although no statistical testing will be performed in this report, we use the
+sample annotation denoted ``r phenoid`` to stratify and color the samples for some
+of the plots.
+
+```{r}
+table(phn[, phenoid])
+```
+
+
+### Create an SCESet object
+
+The functions in the
+[scater](https://www.bioconductor.org/packages/release/bioc/html/scater.html)
+package operate on objects of the class `SCESet`. Here, we generate such an
+object, containing the counts, TPMs and phenotypic data.
+
+```{r}
+sceset <- newSCESet(countData = cts, 
+                    tpmData = tpms,
+                    phenoData = new("AnnotatedDataFrame", data = as.data.frame(phn)))
+```
+
+## Plot overview for each cell
+
+First we plot the relative proportion of each library that is accounted for by
+the most highly expressed genes. The cells are stratified by the ``r phenoid``
+annotation.
+
+```{r}
+plot(sceset, block1 = phenoid)
+```
+
+## Calculate quality metrics and filter
+
+Next we calculate various quality control metrics for the data set. If there are
+at least two ERCC spike-in transcripts that are expressed (TPM > 0) anywhere in
+the data set, we will consider these as the control features. Otherwise, no
+control features are used.
+
+```{r}
+if (sum(rowSums(counts(sceset)[grep("^ERCC-", rownames(sceset)), ] > 0) > 
+        min(table(pData(sceset)[, phenoid]))) > 1) {
+  withcontrols <- TRUE
+  sceset <- calculateQCMetrics(sceset, feature_controls = grep("^ERCC-", rownames(sceset)))
+} else {
+  sceset <- calculateQCMetrics(sceset)
+  withcontrols <- FALSE
+}
+```
+
+We filter the data set to keep only those features that are observed in at least 1 cell. 
+
+```{r}
+keep_features <- rowSums(counts(sceset) > 0) >= 1
+sceset <- sceset[keep_features, ]
+```
+
+## Plot QC metrics
+
+Next, we plot some of the QC metrics calculated above. First, we show the 50
+features with the highest expression in the data set.
+
+```{r}
+plotQC(sceset, type = "highest-expression")
+```
+
+Next, we find the principal components that are most highly correlated with the 
+number of observed features. These are plotted both to show the association to
+the number of observed features, and the correlation between each other.
+
+```{r}
+plotQC(sceset, type = "find-pcs", variable = "total_features")
+plotQC(sceset, type = "find-pcs", variable = "total_features", plot_type = "pairs-pcs")
+```
+
+Next, we visualize a subset of the sample annotations in terms of the amount of
+marginal variance that they explain. These are also visualized in a pairs plot
+to show the associations among them.
+
+```{r}
+expl_vars <- c(phenoid, "log10_total_counts", "log10_total_features", "pct_dropout",
+               "pct_exprs_top_200_features", ifelse(withcontrols, "log10_counts_feature_controls", NA),
+               ifelse(withcontrols, "pct_counts_feature_controls", NA))
+plotQC(sceset, type = "explanatory-variables", variables = expl_vars[!is.na(expl_vars)])
+plotQC(sceset, type = "explanatory-variables", variables = expl_vars[!is.na(expl_vars)], method = "pairs")
+```
+
+We also construct a couple of plots comparing various features of the cells. The
+cells are colored by the ``r phenoid`` annotation.
+
+```{r}
+plotPhenoData(sceset, aes_string(x = "log10_total_counts", y = "total_features", colour = phenoid))
+plotPhenoData(sceset, aes_string(x = "pct_exprs_top_200_features", y = "total_features", colour = phenoid))
+if (withcontrols) {
+  plotPhenoData(sceset, aes_string(x = "total_features", y = "pct_exprs_feature_controls", color = phenoid))
+}
+```
+
+Finally, we show the frequency of expression (the number of cells in which a
+gene is observed) against the average expression of the gene.
+
+```{r}
+plotQC(sceset, type = "exprs-freq-vs-mean")
+```
+
+Next, we represent the features by their relative contribution to the total
+observed expression, plotted against the number of cells they are observed in.
+
+```{r}
+plotFeatureData(sceset, aes(x = n_cells_exprs, y = pct_total_exprs))
+```
+
+
+## Plot low-dimensional representations
+
+Finally, we use principal component analysis (PCA) as well as t-SNE to generate
+two-dimensional representations of the cells in the data set. The cells are
+colored by the ``r phenoid`` annotation.
+
+```{r}
+scater::plotPCA(sceset, colour_by = phenoid)
+scater::plotTSNE(sceset, colour_by = phenoid)
+```
+
+## Session info
+
+```{r}
+sessionInfo()
+```
+
