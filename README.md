@@ -1,2 +1,7 @@
 # conquer
+
 consistent quantification of external RNA-seq data sets
+
+## Link to shiny app for downloading data
+
+[http://imlspenticton.uzh.ch:3838/conquer/](http://imlspenticton.uzh.ch:3838/conquer/)
