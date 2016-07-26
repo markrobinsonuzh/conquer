@@ -72,7 +72,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                          txgenemap = NULL, geodata = TRUE,
                          phenofile = NULL, gene_granges = NULL, 
                          tx_granges = NULL, groupid = NULL,
-                         organism, genome) {
+                         organism, genome, dotrim, adapterseq = NULL) {
 
   ## Read run info downloaded from SRA
   x <- read.delim(paste0("data-raw/", id, "/", id, "_SraRunInfo.csv"), 
@@ -87,13 +87,18 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
       ## Find all the SRA runs corresponding to this sample. They will be merged
       ## together when running FastQC
       runs <- x$Run[x[, sncol] == smp]
-      files <- paste(paste0("<(./stream_ena ", runs, ".fastq)"), collapse = " ")
       
+      ## -------------------------------------------------------------------- ##
+      ##                          Untrimmed                                   ##
+      ## -------------------------------------------------------------------- ##
+      files <- paste(paste0("<(./stream_ena ", runs, ".fastq)"), collapse = " ")
       if (!file.exists(paste0("data-processed/", id, "/fastqc/", smp))) {
-        mkd <- sprintf("mkdir %s",
+        mkd <- sprintf("mkdir -p %s",
                        paste0("data-processed/", id, "/fastqc/", smp))
         system(mkd)
-        
+      }
+      
+      if (!file.exists(paste0("data-processed/", id, "/fastqc/", smp, "/", smp, "_fastqc.html"))) {
         fastqc <- sprintf("bash -c 'cat %s | %s --noextract -o %s -f fastq stdin:%s'",
                           files,
                           fastqcbin, 
@@ -102,6 +107,38 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
         system(fastqc)
       } else {
         message("FastQC has already been run for ", smp)
+      }
+      
+      ## -------------------------------------------------------------------- ##
+      ##                            Trimmed                                   ##
+      ## -------------------------------------------------------------------- ##
+      if (dotrim) {
+        files <- paste(paste0("<(./stream_ena ", runs, ".fastq)"), collapse = " ")
+        if (!file.exists(paste0("data-processed/", id, "/fastqc_trimmed/", smp))) {
+          mkd <- sprintf("mkdir -p %s",
+                         paste0("data-processed/", id, "/fastqc_trimmed/", smp))
+          system(mkd)
+          mkd <- sprintf("mkdir -p %s",
+                         paste0("data-processed/", id, "/cutadapt/", smp))
+          system(mkd)
+        }
+        
+        if (!file.exists(paste0("data-processed/", id, "/fastqc_trimmed/", smp, "/", smp, "_fastqc.html"))) {
+          ## Run trimming and save temporarily the fastq files
+          cutadapt <- sprintf("bash -c 'cutadapt -f fastq -m 15 -O 3 -a %s <(cat %s) -o %s > %s'",
+                              adapterseq,
+                              files,
+                              paste0("tmp/", smp, ".fastq"),
+                              paste0("data-processed/", id, "/cutadapt/", smp, "/", smp, "_cutadapt.txt"))
+          system(cutadapt)
+          fastqc <- sprintf("bash -c '%s --noextract -o %s -f fastq %s'",
+                            fastqcbin, 
+                            paste0("data-processed/", id, "/fastqc_trimmed/", smp),
+                            paste0("tmp/", smp, ".fastq"))
+          system(fastqc)
+        } else {
+          message("FastQC has already been run for ", smp)
+        }
       }
     }
   } else if (rtype == "paired") {
@@ -116,7 +153,9 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
         mkd <- sprintf("mkdir -p %s",
                        paste0("data-processed/", id, "/fastqc/", smp))
         system(mkd)
-        
+      }
+      
+      if (!file.exists(paste0("data-processed/", id, "/fastqc/", smp, "/", smp, "_1_fastqc.html"))) {
         ## Read 1
         fastqc <- sprintf("bash -c 'cat %s | %s --noextract -o %s -f fastq stdin:%s'",
                           files1,
@@ -124,7 +163,11 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                           paste0("data-processed/", id, "/fastqc/", smp),
                           paste0(smp, "_1"))
         system(fastqc)
-
+      } else {
+        message("FastQC has already been run for ", smp, "_1")
+      }
+      
+      if (!file.exists(paste0("data-processed/", id, "/fastqc/", smp, "/", smp, "_2_fastqc.html"))) {
         ## Read 2
         fastqc <- sprintf("bash -c 'cat %s | %s --noextract -o %s -f fastq stdin:%s'",
                           files2,
@@ -133,7 +176,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                           paste0(smp, "_2"))
         system(fastqc)
       } else {
-        message("FastQC has already been run for ", smp)
+        message("FastQC has already been run for ", smp, "_2")
       }
     }
   }
@@ -148,7 +191,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
       runs <- x$Run[x[, sncol] == smp]
       files <- paste(paste0("<(./stream_ena ", runs, ".fastq)"), collapse = " ")
       
-      if (!file.exists(paste0("data-processed/", id, "/salmon/", smp))) {
+      if (!file.exists(paste0("data-processed/", id, "/salmon/", smp, "/quant.sf"))) {
         salmon <- sprintf("bash -c '%s quant -l %s -i %s -r <(cat %s) -o %s'",
                           salmonbin, 
                           libtype,
@@ -168,7 +211,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
       files1 <- paste(paste0("<(./stream_ena ", runs, "_1.fastq)"), collapse = " ")
       files2 <- paste(paste0("<(./stream_ena ", runs, "_2.fastq)"), collapse = " ")
       
-      if (!file.exists(paste0("data-processed/", id, "/salmon/", smp))) {
+      if (!file.exists(paste0("data-processed/", id, "/salmon/", smp, "/quant.sf"))) {
         salmon <- sprintf("bash -c '%s quant -l %s -i %s -1 <(cat %s) -2 <(cat %s) -o %s'",
                           salmonbin, 
                           libtype,
@@ -254,7 +297,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                        genome = genome,
                        ntranscripts = nrow(txi_tx$counts),
                        ngenes = nrow(txi_gene$counts))
-  write.table(t(infodf), file = paste0("data-processed/", id, "dataset_info.txt"),
+  write.table(t(infodf), file = paste0("data-processed/", id, "/dataset_info.txt"),
               row.names = TRUE, col.names = FALSE, sep = "\t", quote = FALSE)
   
   ## ------------------------------------------------------------------------ ##

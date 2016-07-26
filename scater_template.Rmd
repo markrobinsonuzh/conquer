@@ -55,7 +55,7 @@ the TPMs. The data object also contains a slot with phenotypical data for the
 cells.
 
 ```{r}
-cts <- assays(experiments(maex)[["genelstpm"]])[["count"]]
+cts <- assays(experiments(maex)[["gene"]])[["count_lstpm"]]
 tpms <- assays(experiments(maex)[["gene"]])[["TPM"]]
 phn <- pData(maex)
 ```
