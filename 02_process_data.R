@@ -155,9 +155,9 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
       salmon_paired(salmon_dir = paste0("data-processed/", id, "/salmon"), 
                     smp = smp, files1 = files1, files2 = files2, 
                     salmonbin = salmonbin, libtype = libtype, index = index)
+      if (file.exists(files1)) unlink(files1)
+      if (file.exists(files2)) unlink(files2)
     }
-    if (file.exists(files1)) unlink(files1)
-    if (file.exists(files2)) unlink(files2)
   }
   
   ## Compress all Salmon output in a tar archive
