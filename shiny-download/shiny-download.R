@@ -5,8 +5,6 @@ library(tidyr)
 library(ggplot2)
 library(DT)
 
-## TODO: Add link to GEO/ArrayExpress data set
-
 scrna_download_shiny <- function(data_directory, top_url) {
   ## ----------------------------------------------------------------------- ##
   ##                           Define UI                                     ##
@@ -101,9 +99,10 @@ scrna_download_shiny <- function(data_directory, top_url) {
         fn <- paste0(ds, "/dataset_info.txt")
         if (file.exists(fn)) {
           fn <- read.delim(fn, header = FALSE, row.names = 1, as.is = TRUE)
-          c(organism = fn["organism", 1], nsamples = fn["nsamples", 1])
+          c(organism = fn["organism", 1], nsamples = fn["nsamples", 1],
+            pmid = fn["PMID", 1], datalink = fn["datalink", 1])
         } else {
-          c(organism = NA, nsamples = NA)
+          c(organism = NA, nsamples = NA, pmid = NA, datalink = NA)
         }
       })), stringsAsFactors = FALSE)
 
@@ -118,8 +117,24 @@ scrna_download_shiny <- function(data_directory, top_url) {
       s
     }
     
+    create_link_2 <- function(val, title, val2) {
+      s1 <- sapply(seq_along(val), function(i) {
+        if (!is.na(val[i])) sprintf('<a href="%s" target="_blank"> %s</a>',
+                                    val[i], title[i])
+        else title[i]
+      })
+      s2 <- sapply(seq_along(val), function(i) {
+        if (!is.na(val2[i])) sprintf('<a href="%s" target="_blank"> %s</a>',
+                                     paste0("http://www.ncbi.nlm.nih.gov/pubmed/", val2[i]),
+                                     paste0(" (PMID ", val2[i], ")"))
+        else ""
+      })
+      paste0(s1, s2)
+    }
+    
     output$dt_datasets <- DT::renderDataTable({
-      dtbl$data_set <- dtbl$Row.names
+      dtbl$data_set <- create_link_2(dtbl$datalink, dtbl$Row.names, dtbl$pmid)
+##      dtbl$data_set <- dtbl$Row.names
       dtbl$MultiAssayExperiment <- create_link(dtbl$mae_link, ".rds", as.Date(dtbl$mae_mtime))
       dtbl$MultiQC_html <- create_link(dtbl$multiqc_link, ".html", as.Date(dtbl$multiqc_mtime))
       dtbl$scater_html <- create_link(dtbl$scater_link, ".html", as.Date(dtbl$scater_mtime))

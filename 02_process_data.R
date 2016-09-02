@@ -12,7 +12,7 @@ library(Rtsne)
 source("00_help_functions.R")
 
 generate_report <- function(id, maex, phenoid, output_format = NULL,
-                            output_file = NULL, output_dir = "./", ...){
+                            output_file = NULL, output_dir = "./", nrw, lps, ...){
   ## This function was written by Nicholas Hamilton and obtained from 
   ## http://stackoverflow.com/questions/37097535/generate-report-in-r
   
@@ -79,7 +79,8 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                          phenofile = NULL, gene_granges = NULL, 
                          tx_granges = NULL, groupid = NULL,
                          organism, genome, dotrim = FALSE, adapterseq = NULL,
-                         cutadaptbin = "cutadapt", tmp_dir = "tmp") {
+                         cutadaptbin = "cutadapt", tmp_dir = "tmp", nrw = NULL,
+                         lps = "right", pmid = NA, datalink = NA) {
 
   ## Read run info downloaded from SRA
   x <- read.delim(paste0("data-raw/", id, "/", id, "_SraRunInfo.csv"), 
@@ -100,67 +101,77 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
     } 
     
     if (rtype == "single") {
-      ## Download fastq file and save temporarily
-      dwl <- sprintf("bash -c 'cat %s > %s'",
-                     files,
-                     paste0(tmp_dir, "/", smp, ".fastq"))
-      system(dwl)
-      ## Trim 
-      if (dotrim) {
-        if (!all(file.exists(paste0("data-processed/", id, "/fastqc/", smp, "/", smp, "_fastqc.html"),
-                             paste0("data-processed/", id, "/salmon/", smp, "/quant.sf")))) {
+      if (!all(file.exists(paste0("data-processed/", id, "/fastqc/", smp, "/", smp, "_fastqc.html"),
+                           paste0("data-processed/", id, "/salmon/", smp, "/quant.sf")))) {
+        
+        ## Download fastq file and save temporarily
+        message("Downloading fastq file for ", smp)
+        dwl <- sprintf("bash -c 'cat %s > %s'",
+                       files,
+                       paste0(tmp_dir, "/", smp, ".fastq"))
+        system(dwl)
+        ## Trim 
+        if (dotrim) {
+          message("Trimming fastq file for ", smp)
           trim_single(cutadapt_dir = paste0("data-processed/", id, "/cutadapt"), 
                       smp = smp, adapterseq = adapterseq, 
                       cutadaptbin = cutadaptbin, tmp_dir = tmp_dir)
+          files <- paste0(tmp_dir, "/", smp, ".trim.fastq")
+        } else {
+          files <- paste0(tmp_dir, "/", smp, ".fastq")
         }
-        files <- paste0(tmp_dir, "/", smp, ".trim.fastq")
+        fastqc_single(fastqc_dir = paste0("data-processed/", id, "/fastqc"), 
+                      smp = smp, files = files, fastqcbin = fastqcbin, appd = "") 
+        salmon_single(salmon_dir = paste0("data-processed/", id, "/salmon"), 
+                      smp = smp, files = files, salmonbin = salmonbin, 
+                      libtype = libtype, index = index)
       } else {
-        files <- paste0(tmp_dir, "/", smp, ".fastq")
+        message("Output files for ", smp, " already exist.")
       }
-      fastqc_single(fastqc_dir = paste0("data-processed/", id, "/fastqc"), 
-                    smp = smp, files = files, fastqcbin = fastqcbin, appd = "") 
-      salmon_single(salmon_dir = paste0("data-processed/", id, "/salmon"), 
-                    smp = smp, files = files, salmonbin = salmonbin, 
-                    libtype = libtype, index = index)
       if (file.exists(files)) unlink(files)
     } else if (rtype == "paired") {
-      ## Download fastq files and save temporarily
-      dwl1 <- sprintf("bash -c 'cat %s > %s'",
-                      files1,
-                      paste0(tmp_dir, "/", smp, "_1.fastq"))
-      system(dwl1)
-      dwl2 <- sprintf("bash -c 'cat %s > %s'",
-                      files2,
-                      paste0(tmp_dir, "/", smp, "_2.fastq"))
-      system(dwl2)
-      ## Trim
-      if (dotrim) {
-        if (!all(file.exists(paste0("data-processed/", id, "/fastqc/",
-                                    smp, "/", smp, c("_1", "_2"), "_fastqc.html"),
-                             paste0("data-processed/", id, "/salmon/", 
-                                    smp, "/quant.sf")))) {
+      if (!all(file.exists(paste0("data-processed/", id, "/fastqc/",
+                                  smp, "/", smp, c("_1", "_2"), "_fastqc.html"),
+                           paste0("data-processed/", id, "/salmon/", 
+                                  smp, "/quant.sf")))) {
+        ## Download fastq files and save temporarily
+        message("Downloading fastq files for ", smp)
+        dwl1 <- sprintf("bash -c 'cat %s > %s'",
+                        files1,
+                        paste0(tmp_dir, "/", smp, "_1.fastq"))
+        system(dwl1)
+        dwl2 <- sprintf("bash -c 'cat %s > %s'",
+                        files2,
+                        paste0(tmp_dir, "/", smp, "_2.fastq"))
+        system(dwl2)
+        ## Trim
+        if (dotrim) {
+          message("Trimming fastq files for ", smp)
           trim_paired(cutadapt_dir = paste0("data-processed/", id, "/cutadapt"), 
                       smp = smp, adapterseq = adapterseq, cutadaptbin = cutadaptbin,
                       tmp_dir = tmp_dir)
+          files1 <- paste0(tmp_dir, "/", smp, "_1.trim.fastq")
+          files2 <- paste0(tmp_dir, "/", smp, "_2.trim.fastq")
+        } else {
+          files1 <- paste0(tmp_dir, "/", smp, "_1.fastq")
+          files2 <- paste0(tmp_dir, "/", smp, "_2.fastq")
         }
-        files1 <- paste0(tmp_dir, "/", smp, "_1.trim.fastq")
-        files2 <- paste0(tmp_dir, "/", smp, "_2.trim.fastq")
+        fastqc_paired(fastqc_dir = paste0("data-processed/", id, "/fastqc"), 
+                      smp = smp, files1 = files1, files2 = files2, 
+                      fastqcbin = fastqcbin)
+        salmon_paired(salmon_dir = paste0("data-processed/", id, "/salmon"), 
+                      smp = smp, files1 = files1, files2 = files2, 
+                      salmonbin = salmonbin, libtype = libtype, index = index)
       } else {
-        files1 <- paste0(tmp_dir, "/", smp, "_1.fastq")
-        files2 <- paste0(tmp_dir, "/", smp, "_2.fastq")
+        message("Output files for ", smp, " already exist.")
       }
-      fastqc_paired(fastqc_dir = paste0("data-processed/", id, "/fastqc"), 
-                    smp = smp, files1 = files1, files2 = files2, 
-                    fastqcbin = fastqcbin)
-      salmon_paired(salmon_dir = paste0("data-processed/", id, "/salmon"), 
-                    smp = smp, files1 = files1, files2 = files2, 
-                    salmonbin = salmonbin, libtype = libtype, index = index)
       if (file.exists(files1)) unlink(files1)
       if (file.exists(files2)) unlink(files2)
     }
   }
   
   ## Compress all Salmon output in a tar archive
+  message("Compressing Salmon output for ", id)
   targz <- sprintf("bash -c 'tar -C data-processed/ -czf %s %s'",
                    paste0("data-processed/", id, "/", id, "_salmon.tar.gz"),
                    paste0(id, "/salmon"))
@@ -169,6 +180,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
   ## ------------------------------------------------------------------------ ##
   ##                             MultiQC                                      ##
   ## ------------------------------------------------------------------------ ##
+  message("Running MultiQC for ", id)
   mqc <- sprintf("bash -c 'multiqc -o %s -n %s -f %s'",
                  paste0("report-multiqc"),
                  paste0(id, "_multiqc_report.html"),
@@ -178,6 +190,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
   ## ------------------------------------------------------------------------ ##
   ##                             tximport                                     ##
   ## ------------------------------------------------------------------------ ##
+  message("Reading expression levels for ", id)
   files <- paste0(list.files(paste0("data-processed/", id, "/salmon"), 
                              full.names = TRUE), "/quant.sf")
   names(files) <- basename(gsub("/quant.sf", "", files))
@@ -231,16 +244,20 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                        organism = organism,
                        genome = genome,
                        ntranscripts = nrow(txi_tx$counts),
-                       ngenes = nrow(txi_gene$counts))
+                       ngenes = nrow(txi_gene$counts),
+                       PMID = pmid,
+                       datalink = datalink)
   write.table(t(infodf), file = paste0("data-processed/", id, "/dataset_info.txt"),
               row.names = TRUE, col.names = FALSE, sep = "\t", quote = FALSE)
   
   ## ------------------------------------------------------------------------ ##
   ##                    Generate scater QC report                             ##
   ## ------------------------------------------------------------------------ ##
+  message("Generating scater report for ", id)
   generate_report(id = id, maex = mae, phenoid = groupid, 
                   output_format = "html_document",
                   output_file = paste0(id, "_scater.html"),
-                  output_dir = paste0("report-scater"))
+                  output_dir = paste0("report-scater"),
+                  nrw = nrw, lps = lps)
 }
 

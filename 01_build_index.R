@@ -31,12 +31,29 @@ cmd <- sprintf("bash -c '%s index -t %s -i %s --type quasi'",
                                            ".cdna.ncrna.ercc92.sidx"), human_cdna_fa))
 system(cmd)
 
+## Index for shorter reads
+cmd <- sprintf("bash -c '%s index -t %s -i %s --type quasi -k 15'",
+               salmonbin,
+               paste0("<(cat ", human_cdna_fa, " ", human_ncrna_fa, " ", ercc_fa, ")"),
+               gsub("cdna.all.fa$", paste0(human_ensembl_version, 
+                                           ".cdna.ncrna.ercc92.k15.sidx"), human_cdna_fa))
+system(cmd)
+
+
 ## Mouse cDNA & ncRNA + ERCC
 cmd <- sprintf("bash -c '%s index -t %s -i %s --type quasi'",
                salmonbin,
                paste0("<(cat ", mouse_cdna_fa, " ", mouse_ncrna_fa, " ", ercc_fa, ")"),
                gsub("cdna.all.fa$", paste0(mouse_ensembl_version, 
                                            ".cdna.ncrna.ercc92.sidx"), mouse_cdna_fa))
+system(cmd)
+
+## Index for shorter reads
+cmd <- sprintf("bash -c '%s index -t %s -i %s --type quasi -k 15'",
+               salmonbin,
+               paste0("<(cat ", mouse_cdna_fa, " ", mouse_ncrna_fa, " ", ercc_fa, ")"),
+               gsub("cdna.all.fa$", paste0(mouse_ensembl_version, 
+                                           ".cdna.ncrna.ercc92.k15.sidx"), mouse_cdna_fa))
 system(cmd)
 
 ## -------------------------------------------------------------------------- ##

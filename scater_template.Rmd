@@ -59,7 +59,7 @@ cts <- assays(experiments(maex)[["gene"]])[["count_lstpm"]]
 tpms <- assays(experiments(maex)[["gene"]])[["TPM"]]
 phn <- pData(maex)
 
-phn[, paste(phenoid, collapse = ".")] <- interaction(phn[, phenoid])
+phn[, paste(phenoid, collapse = ".")] <- as.character(interaction(as.data.frame(phn[, phenoid])))
 ```
 
 Although no statistical testing will be performed in this report, we use the 
@@ -154,12 +154,15 @@ cells are colored by the ``r paste(phenoid, collapse = ".")`` annotation.
 
 ```{r}
 plotPhenoData(sceset, aes_string(x = "log10_total_counts", y = "total_features",
-                                 colour = paste(phenoid, collapse = ".")))
+                                 colour = paste(phenoid, collapse = "."))) + 
+  guides(colour = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps)
 plotPhenoData(sceset, aes_string(x = "pct_exprs_top_200_features", y = "total_features", 
-                                 colour = paste(phenoid, collapse = ".")))
+                                 colour = paste(phenoid, collapse = "."))) + 
+  guides(colour = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps)
 if (withcontrols) {
   plotPhenoData(sceset, aes_string(x = "total_features", y = "pct_exprs_feature_controls", 
-                                   color = paste(phenoid, collapse = ".")))
+                                   color = paste(phenoid, collapse = "."))) + 
+  guides(colour = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps)
 }
 ```
 
@@ -167,7 +170,9 @@ Finally, we show the frequency of expression (the number of cells in which a
 gene is observed) against the average expression of the gene.
 
 ```{r}
-plotQC(sceset, type = "exprs-freq-vs-mean")
+tryCatch({
+  plotQC(sceset, type = "exprs-freq-vs-mean")
+}, error = function(e) NULL)
 ```
 
 Next, we represent the features by their relative contribution to the total
@@ -184,17 +189,22 @@ Finally, we use principal component analysis (PCA) as well as t-SNE to generate
 two-dimensional representations of the cells in the data set. The cells are
 colored by the ``r phenoid`` annotation.
 
-```{r}
-scater::plotPCA(sceset, colour_by = paste(phenoid, collapse = "."))
+```{r, fig.width = 8}
+print(scater::plotPCA(sceset, colour_by = paste(phenoid, collapse = ".")) + 
+        guides(fill = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps))
 if (length(phenoid) > 1) {
   for (pid in phenoid) {
-    scater::plotPCA(sceset, colour_by = pid)
+    print(scater::plotPCA(sceset, colour_by = pid) + 
+            guides(fill = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps))
   }
 }
-scater::plotTSNE(sceset, colour_by = paste(phenoid, collapse = "."))
+tsne <- scater::plotTSNE(sceset, return_SCESet = TRUE)
+print(scater::plotReducedDim(tsne, colour_by = paste(phenoid, collapse = ".")) + 
+        guides(fill = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps))
 if (length(phenoid) > 1) {
   for (pid in phenoid) {
-    scater::plotTSNE(sceset, colour_by = pid)
+    print(scater::plotReducedDim(tsne, colour_by = pid) + 
+            guides(fill = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps))
   }
 }
 ```

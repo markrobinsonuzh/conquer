@@ -18,7 +18,7 @@ fastqc_single <- function(fastqc_dir, smp, files, fastqcbin, appd = "") {
 
 salmon_single <- function(salmon_dir, smp, files, salmonbin, libtype, index) {
   if (!file.exists(paste0(salmon_dir, "/", smp, "/quant.sf"))) {
-    salmon <- sprintf("bash -c '%s quant -l %s -i %s -r <(cat %s) -o %s'",
+    salmon <- sprintf("bash -c '%s quant -p 10 -l %s -i %s -r <(cat %s) -o %s'",
                       salmonbin, 
                       libtype,
                       index,
@@ -32,7 +32,7 @@ salmon_single <- function(salmon_dir, smp, files, salmonbin, libtype, index) {
 
 salmon_paired <- function(salmon_dir, smp, files1, files2, salmonbin, libtype, index) {
   if (!file.exists(paste0(salmon_dir, "/", smp, "/quant.sf"))) {
-    salmon <- sprintf("bash -c '%s quant -l %s -i %s -1 <(cat %s) -2 <(cat %s) -o %s'",
+    salmon <- sprintf("bash -c '%s quant -p 10 -l %s -i %s -1 <(cat %s) -2 <(cat %s) -o %s'",
                       salmonbin, 
                       libtype,
                       index,
