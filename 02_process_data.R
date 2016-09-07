@@ -33,10 +33,10 @@ generate_report <- function(id, maex, phenoid, output_format = NULL,
 
 #' Function to process fastq files
 #' 
-#' fastq files will be streamed into FastQC
-#' (http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and Salmon
-#' (https://combine-lab.github.io/salmon/) for analysis. Results will be
-#' summarized using MultiQC (http://multiqc.info/) and scater
+#' fastq files will be streamed into FastQC 
+#' (http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and Salmon 
+#' (https://combine-lab.github.io/salmon/) for analysis. Results will be 
+#' summarized using MultiQC (http://multiqc.info/) and scater 
 #' (https://www.bioconductor.org/packages/release/bioc/html/scater.html).
 #' 
 #' @param id A data set ID (typically a GSE ID). It is assumed that there is a 
@@ -49,30 +49,36 @@ generate_report <- function(id, maex, phenoid, output_format = NULL,
 #' @param fastqcbin The path to the FastQC binary
 #' @param sncol The column in the SraRunInfo file corresponding to sample names
 #' @param txgenemap A data.frame mapping between transcripts and genes
-#' @param geodata TRUE or FALSE, whether the data set is from GEO or not. If
-#'   TRUE, the function assumes that there is a file
-#'   \code{./data-raw/{ID}_series_matrix.txt.gz}. If FALSE, you have to provide
+#' @param geodata TRUE or FALSE, whether the data set is from GEO or not. If 
+#'   TRUE, the function assumes that there is a file 
+#'   \code{./data-raw/{ID}_series_matrix.txt.gz}. If FALSE, you have to provide 
 #'   a \code{phenofile}.
-#' @param If the data set is not a GEO data set, a text file with phenotype
-#'   information
+#' @param phenofile If the data set is not a GEO data set, a text file with
+#'   phenotype information
 #' @param gene_granges A GRanges object with gene information
 #' @param tx_granges A GRanges object with transcript information
-#' @param groupid The name of the annotation column (from the phenotype data
-#'   file) that will be used to color and stratify samples in the scater
+#' @param groupid The name of the annotation column (from the phenotype data 
+#'   file) that will be used to color and stratify samples in the scater 
 #'   analysis
 #' @param organism The organism
 #' @param genome The genome build
-#' @param dotrim Whether or not to also run analysis on trimmed data (using
+#' @param dotrim Whether or not to also run analysis on trimmed data (using 
 #'   cutadapt)
-#' @param adapterseq The sequence that will be provided to cutadapt (via the
+#' @param adapterseq The sequence that will be provided to cutadapt (via the 
 #'   \code{-a} argument)
 #' @param cutadaptbin The path to the cutadapt binary
-#' 
-#' @return Does not return anything, but saves processed files and reports in
+#' @param tmp_dir The temporary folder where fastq files will be stored during
+#'   processing
+#' @param nrw The number of rows to split the figure legends over
+#' @param lps The position of the legend
+#' @param pmid A PubMed ID that can be linked to the dataset
+#' @param datalink A URL where the dataset can be found
+#'   
+#' @return Does not return anything, but saves processed files and reports in 
 #'   the ./data-processed and ./qc-scater subfolders
 #'   
 #' @author Charlotte Soneson
-#' 
+#'   
 process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                          fastqcbin = "fastqc", sncol = "SampleName", 
                          txgenemap = NULL, geodata = TRUE,

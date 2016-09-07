@@ -34,6 +34,10 @@ scrna_download_shiny <- function(data_directory, top_url) {
                             "))
             ),
           
+          tabPanel("About",
+                   includeMarkdown("/home/Shared_taupo/data/seq/conquer/database/shiny-download/about_conquer.md"),
+                   value = "about"),
+          
           tabPanel("scRNA-seq data sets",
                    DT::dataTableOutput("dt_datasets"),
                    value = "select_dataset"),
@@ -99,10 +103,10 @@ scrna_download_shiny <- function(data_directory, top_url) {
         fn <- paste0(ds, "/dataset_info.txt")
         if (file.exists(fn)) {
           fn <- read.delim(fn, header = FALSE, row.names = 1, as.is = TRUE)
-          c(organism = fn["organism", 1], nsamples = fn["nsamples", 1],
+          c(organism = fn["organism", 1], ncells = fn["nsamples", 1],
             pmid = fn["PMID", 1], datalink = fn["datalink", 1])
         } else {
-          c(organism = NA, nsamples = NA, pmid = NA, datalink = NA)
+          c(organism = NA, ncells = NA, pmid = NA, datalink = NA)
         }
       })), stringsAsFactors = FALSE)
 
@@ -139,7 +143,7 @@ scrna_download_shiny <- function(data_directory, top_url) {
       dtbl$MultiQC_html <- create_link(dtbl$multiqc_link, ".html", as.Date(dtbl$multiqc_mtime))
       dtbl$scater_html <- create_link(dtbl$scater_link, ".html", as.Date(dtbl$scater_mtime))
       dtbl$salmon_tar <- create_link(dtbl$salmon_link, ".tar.gz", as.Date(dtbl$salmon_mtime))
-      return(dtbl[, c("data_set", "organism", "nsamples", "MultiAssayExperiment", 
+      return(dtbl[, c("data_set", "organism", "ncells", "MultiAssayExperiment", 
                       "MultiQC_html", "scater_html", "salmon_tar")])
     }, escape = FALSE)   
 
