@@ -1,5 +1,7 @@
 #/bin/bash
 
+## Slightly modified from code written by Valentine Svensson, http://www.nxn.se/valent/streaming-rna-seq-data-from-ena
+
 fastq="$1"
 
 prefix=ftp://ftp.sra.ebi.ac.uk/vol1/fastq

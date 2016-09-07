@@ -28,18 +28,6 @@ process_data(id = "EMTAB2805", rtype = "paired",
              dotrim = FALSE, adapterseq = NULL, cutadaptbin = cutadaptbin, tmp_dir = "tmp",
              pmid = 25599176, datalink = "https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-2805/")
 
-# # GSE29087 (protocol designed to capture 5' ends of transcripts)
-# process_data(id = "GSE29087", rtype = "single",
-#              index = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.sidx",
-#              libtype = "U", salmonbin = salmonbin,
-#              fastqcbin = fastqcbin, sncol = "SampleName",
-#              txgenemap = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.txgenemap,
-#              geodata = TRUE, phenofile = NULL,
-#              gene_granges = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.granges$gene_granges,
-#              tx_granges = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.granges$tx_granges,
-#              groupid = "source_name_ch1", organism = "Homo sapiens", genome = "GRCh38.84",
-#              dotrim = FALSE, adapterseq = NULL, cutadaptbin = cutadaptbin, tmp_dir = "tmp")
-
 ## GSE77847
 process_data(id = "GSE77847", rtype = "paired",
              index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx",
@@ -52,18 +40,6 @@ process_data(id = "GSE77847", rtype = "paired",
              groupid = "characteristics_ch1", organism = "Mus musculus", genome = "GRCm38.84",
              dotrim = FALSE, adapterseq = NULL, cutadaptbin = cutadaptbin, tmp_dir = "tmp",
              pmid = 27016502, datalink = "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE77847")
-
-## GSE41265 (no comparison to be made, only one group)
-# process_data(id = "GSE41265", rtype = "paired",
-#              index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx",
-#              libtype = "IU", salmonbin = salmonbin,
-#              fastqcbin = fastqcbin, sncol = "SampleName",
-#              txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
-#              geodata = TRUE, phenofile = NULL,
-#              gene_granges = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges$gene_granges,
-#              tx_granges = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges$tx_granges,
-#              groupid = "characteristics_ch1.1", organism = "Mus musculus", genome = "GRCm38.84",
-#              dotrim = FALSE, adapterseq = NULL, cutadaptbin = cutadaptbin, tmp_dir = "tmp")
 
 ## GSE44183human
 process_data(id = "GSE44183-GPL11154", rtype = "paired",

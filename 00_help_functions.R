@@ -58,12 +58,6 @@ trim_single <- function(cutadapt_dir, smp, adapterseq, cutadaptbin, tmp_dir) {
     system(mkd)
   }
   if (!file.exists(paste0(tmp_dir, "/", smp, ".trim.fastq"))) {
-    # ## Download fastq file and save temporarily
-    # dwl <- sprintf("bash -c 'cat %s > %s'",
-    #                files,
-    #                paste0(tmp_dir, "/", smp, ".fastq"))
-    # system(dwl)
-    
     ## Run trimming and save temporarily the resulting fastq file
     cutadapt <- sprintf("bash -c '%s -f fastq -m 15 -O 3 -a %s -o %s %s > %s'",
                         cutadaptbin, 
@@ -75,12 +69,6 @@ trim_single <- function(cutadapt_dir, smp, adapterseq, cutadaptbin, tmp_dir) {
     
     ## Remove the original fastq file
     unlink(paste0(tmp_dir, "/", smp, ".fastq"))
-    
-    # ## Modify the filename in the cutadapt output file
-    # chf <- sprintf("bash -c 'sed -i \'s:/dev/fd/63:%s:\' %s'",
-    #                paste0(smp, ".fastq"),
-    #                paste0(cutadapt_dir, "/", smp, "/", smp, "_cutadapt.txt"))
-    # system(chf)
   }
 }
 
@@ -91,16 +79,6 @@ trim_paired <- function(cutadapt_dir, smp, adapterseq, cutadaptbin, tmp_dir) {
   }
   
   if (!all(file.exists(paste0(tmp_dir, "/", smp, c("_1", "_2"), ".fastq")))) {
-    # ## Download fastq files and save temporarily
-    # dwl1 <- sprintf("bash -c 'cat %s > %s'",
-    #                 files1,
-    #                 paste0(tmp_dir, "/", smp, "_1.fastq"))
-    # system(dwl1)
-    # dwl2 <- sprintf("bash -c 'cat %s > %s'",
-    #                 files2,
-    #                 paste0(tmp_dir, "/", smp, "_2.fastq"))
-    # system(dwl2)
-    
     ## Run trimming adn same temporarily the resulting fastq files
     cutadapt <- sprintf("bash -c '%s -f fastq -m 15 -O 3 -a %s -A %s -o %s -p %s %s %s > %s'",
                         cutadaptbin, 
@@ -116,17 +94,6 @@ trim_paired <- function(cutadapt_dir, smp, adapterseq, cutadaptbin, tmp_dir) {
     ## Remove the original fastq files
     unlink(paste0(tmp_dir, "/", smp, "_1.fastq"))
     unlink(paste0(tmp_dir, "/", smp, "_2.fastq"))
-    
-    # ## Modify the filename in the cutadapt output file
-    # chf <- sprintf("bash -c 'sed -i \'s:/dev/fd/63:%s:\' %s'",
-    #                paste0(smp, "_1.fastq"),
-    #                paste0(cutadapt_dir, "/", smp, "/", smp, "_cutadapt.txt"))
-    # system(chf)
-    # ## Modify the filename in the cutadapt output file
-    # chf <- sprintf("bash -c 'sed -i \'s:/dev/fd/62:%s:\' %s'",
-    #                paste0(smp, "_2.fastq"),
-    #                paste0(cutadapt_dir, "/", smp, "/", smp, "_cutadapt.txt"))
-    # system(chf)
   }
 }
 
