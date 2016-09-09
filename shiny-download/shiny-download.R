@@ -104,9 +104,9 @@ scrna_download_shiny <- function(data_directory, top_url) {
         if (file.exists(fn)) {
           fn <- read.delim(fn, header = FALSE, row.names = 1, as.is = TRUE)
           c(organism = fn["organism", 1], ncells = fn["nsamples", 1],
-            pmid = fn["PMID", 1], datalink = fn["datalink", 1])
+            pmid = fn["PMID", 1], datalink = fn["datalink", 1], ID = fn["shortname", 1])
         } else {
-          c(organism = NA, ncells = NA, pmid = NA, datalink = NA)
+          c(organism = NA, ncells = NA, pmid = NA, datalink = NA, ID = NA)
         }
       })), stringsAsFactors = FALSE)
 
@@ -143,7 +143,8 @@ scrna_download_shiny <- function(data_directory, top_url) {
       dtbl$MultiQC_html <- create_link(dtbl$multiqc_link, ".html", as.Date(dtbl$multiqc_mtime))
       dtbl$scater_html <- create_link(dtbl$scater_link, ".html", as.Date(dtbl$scater_mtime))
       dtbl$salmon_tar <- create_link(dtbl$salmon_link, ".tar.gz", as.Date(dtbl$salmon_mtime))
-      return(dtbl[, c("data_set", "organism", "ncells", "MultiAssayExperiment", 
+      dtbl$ncells <- as.numeric(as.character(dtbl$ncells))
+      return(dtbl[, c("data_set", "ID", "organism", "ncells", "MultiAssayExperiment", 
                       "MultiQC_html", "scater_html", "salmon_tar")])
     }, escape = FALSE)   
 

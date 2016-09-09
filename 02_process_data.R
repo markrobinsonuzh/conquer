@@ -73,9 +73,11 @@ generate_report <- function(id, maex, phenoid, output_format = NULL,
 #' @param lps The position of the legend
 #' @param pmid A PubMed ID that can be linked to the dataset
 #' @param datalink A URL where the dataset can be found
+#' @param shortname An informative identifier for the dataset
 #'   
 #' @return Does not return anything, but saves processed files and reports in 
-#'   the ./data-processed and ./qc-scater subfolders
+#'   the ./data-processed, ./data-mae, ./report-multiqc and ./report-scater
+#'   subfolders
 #'   
 #' @author Charlotte Soneson
 #'   
@@ -86,7 +88,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                          tx_granges = NULL, groupid = NULL,
                          organism, genome, dotrim = FALSE, adapterseq = NULL,
                          cutadaptbin = "cutadapt", tmp_dir = "tmp", nrw = NULL,
-                         lps = "right", pmid = NA, datalink = NA) {
+                         lps = "right", pmid = NA, datalink = NA, shortname = NA) {
 
   ## Read run info downloaded from SRA
   x <- read.delim(paste0("data-raw/", id, "/", id, "_SraRunInfo.csv"), 
@@ -252,7 +254,8 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                        ntranscripts = nrow(txi_tx$counts),
                        ngenes = nrow(txi_gene$counts),
                        PMID = pmid,
-                       datalink = datalink)
+                       datalink = datalink,
+                       shortname = shortname)
   write.table(t(infodf), file = paste0("data-processed/", id, "/dataset_info.txt"),
               row.names = TRUE, col.names = FALSE, sep = "\t", quote = FALSE)
   
