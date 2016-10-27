@@ -42,6 +42,10 @@ scrna_download_shiny <- function(data_directory, top_url) {
                    DT::dataTableOutput("dt_datasets"),
                    value = "select_dataset"),
           
+          tabPanel("Changelog",
+                   includeMarkdown("/home/Shared_taupo/data/seq/conquer/database/shiny-download/changelog_conquer.md"),
+                   value = "changelog"),
+          
           selected = "select_dataset"
             )
             ))
