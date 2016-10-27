@@ -74,6 +74,8 @@ generate_report <- function(id, maex, phenoid, output_format = NULL,
 #' @param pmid A PubMed ID that can be linked to the dataset
 #' @param datalink A URL where the dataset can be found
 #' @param shortname An informative identifier for the dataset
+#' @param multiqcbin The path to the multiqc binary
+#' @param aspects Which parts of the data processing that will be run
 #'   
 #' @return Does not return anything, but saves processed files and reports in 
 #'   the ./data-processed, ./data-mae, ./report-multiqc and ./report-scater
@@ -88,185 +90,203 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                          tx_granges = NULL, groupid = NULL,
                          organism, genome, dotrim = FALSE, adapterseq = NULL,
                          cutadaptbin = "cutadapt", tmp_dir = "tmp", nrw = NULL,
-                         lps = "right", pmid = NA, datalink = NA, shortname = NA) {
+                         lps = "right", pmid = NA, datalink = NA, shortname = NA, 
+                         multiqcbin = multiqcbin, 
+                         aspects = c("fastqc", "salmon", "multiqc", "mae", "scater")) {
 
   ## Read run info downloaded from SRA
   x <- read.delim(paste0("data-raw/", id, "/", id, "_SraRunInfo.csv"), 
                   header = TRUE, as.is = TRUE, sep = ",")
   samples <- unique(x[, sncol])
 
-  for (smp in samples) {
-    ## Find all the SRA runs corresponding to this sample. They will be merged
-    ## together in the analysis
-    runs <- x$Run[x[, sncol] == smp]
-    
-    ## Put together a file list
-    if (rtype == "single") {
-      files <- paste(paste0("<(./stream_ena ", runs, ".fastq)"), collapse = " ")
-    } else if (rtype == "paired") {
-      files1 <- paste(paste0("<(./stream_ena ", runs, "_1.fastq)"), collapse = " ")
-      files2 <- paste(paste0("<(./stream_ena ", runs, "_2.fastq)"), collapse = " ")
-    } 
-    
-    if (rtype == "single") {
-      if (!all(file.exists(paste0("data-processed/", id, "/fastqc/", smp, "/", smp, "_fastqc.html"),
-                           paste0("data-processed/", id, "/salmon/", smp, "/quant.sf")))) {
-        
-        ## Download fastq file and save temporarily
-        message("Downloading fastq file for ", smp)
-        dwl <- sprintf("bash -c 'cat %s > %s'",
-                       files,
-                       paste0(tmp_dir, "/", smp, ".fastq"))
-        system(dwl)
-        ## Trim 
-        if (dotrim) {
-          message("Trimming fastq file for ", smp)
-          trim_single(cutadapt_dir = paste0("data-processed/", id, "/cutadapt"), 
-                      smp = smp, adapterseq = adapterseq, 
-                      cutadaptbin = cutadaptbin, tmp_dir = tmp_dir)
-          files <- paste0(tmp_dir, "/", smp, ".trim.fastq")
+  if (any(c("fastqc", "salmon") %in% aspects)) {
+    for (smp in samples) {
+      ## Find all the SRA runs corresponding to this sample. They will be merged
+      ## together in the analysis
+      runs <- x$Run[x[, sncol] == smp]
+      
+      ## Put together a file list
+      if (rtype == "single") {
+        files <- paste(paste0("<(./stream_ena ", runs, ".fastq)"), collapse = " ")
+      } else if (rtype == "paired") {
+        files1 <- paste(paste0("<(./stream_ena ", runs, "_1.fastq)"), collapse = " ")
+        files2 <- paste(paste0("<(./stream_ena ", runs, "_2.fastq)"), collapse = " ")
+      } 
+      
+      if (rtype == "single") {
+        if (!all(file.exists(paste0("data-processed/", id, "/fastqc/", smp, "/", smp, "_fastqc.html"),
+                             paste0("data-processed/", id, "/salmon/", smp, "/quant.sf")))) {
+          
+          ## Download fastq file and save temporarily
+          message("Downloading fastq file for ", smp)
+          dwl <- sprintf("bash -c 'cat %s > %s'",
+                         files,
+                         paste0(tmp_dir, "/", smp, ".fastq"))
+          system(dwl)
+          ## Trim 
+          if (dotrim) {
+            message("Trimming fastq file for ", smp)
+            trim_single(cutadapt_dir = paste0("data-processed/", id, "/cutadapt"), 
+                        smp = smp, adapterseq = adapterseq, 
+                        cutadaptbin = cutadaptbin, tmp_dir = tmp_dir)
+            files <- paste0(tmp_dir, "/", smp, ".trim.fastq")
+          } else {
+            files <- paste0(tmp_dir, "/", smp, ".fastq")
+          }
+          if ("fastqc" %in% aspects)
+            fastqc_single(fastqc_dir = paste0("data-processed/", id, "/fastqc"), 
+                          smp = smp, files = files, fastqcbin = fastqcbin, appd = "") 
+          if ("salmon" %in% aspects)
+            salmon_single(salmon_dir = paste0("data-processed/", id, "/salmon"), 
+                          smp = smp, files = files, salmonbin = salmonbin, 
+                          libtype = libtype, index = index)
         } else {
-          files <- paste0(tmp_dir, "/", smp, ".fastq")
+          message("Output files for ", smp, " already exist.")
         }
-        fastqc_single(fastqc_dir = paste0("data-processed/", id, "/fastqc"), 
-                      smp = smp, files = files, fastqcbin = fastqcbin, appd = "") 
-        salmon_single(salmon_dir = paste0("data-processed/", id, "/salmon"), 
-                      smp = smp, files = files, salmonbin = salmonbin, 
-                      libtype = libtype, index = index)
-      } else {
-        message("Output files for ", smp, " already exist.")
-      }
-      if (file.exists(files)) unlink(files)
-    } else if (rtype == "paired") {
-      if (!all(file.exists(paste0("data-processed/", id, "/fastqc/",
-                                  smp, "/", smp, c("_1", "_2"), "_fastqc.html"),
-                           paste0("data-processed/", id, "/salmon/", 
-                                  smp, "/quant.sf")))) {
-        ## Download fastq files and save temporarily
-        message("Downloading fastq files for ", smp)
-        dwl1 <- sprintf("bash -c 'cat %s > %s'",
-                        files1,
-                        paste0(tmp_dir, "/", smp, "_1.fastq"))
-        system(dwl1)
-        dwl2 <- sprintf("bash -c 'cat %s > %s'",
-                        files2,
-                        paste0(tmp_dir, "/", smp, "_2.fastq"))
-        system(dwl2)
-        ## Trim
-        if (dotrim) {
-          message("Trimming fastq files for ", smp)
-          trim_paired(cutadapt_dir = paste0("data-processed/", id, "/cutadapt"), 
-                      smp = smp, adapterseq = adapterseq, cutadaptbin = cutadaptbin,
-                      tmp_dir = tmp_dir)
-          files1 <- paste0(tmp_dir, "/", smp, "_1.trim.fastq")
-          files2 <- paste0(tmp_dir, "/", smp, "_2.trim.fastq")
+        if (file.exists(files)) unlink(files)
+      } else if (rtype == "paired") {
+        if (!all(file.exists(paste0("data-processed/", id, "/fastqc/",
+                                    smp, "/", smp, c("_1", "_2"), "_fastqc.html"),
+                             paste0("data-processed/", id, "/salmon/", 
+                                    smp, "/quant.sf")))) {
+          ## Download fastq files and save temporarily
+          message("Downloading fastq files for ", smp)
+          dwl1 <- sprintf("bash -c 'cat %s > %s'",
+                          files1,
+                          paste0(tmp_dir, "/", smp, "_1.fastq"))
+          system(dwl1)
+          dwl2 <- sprintf("bash -c 'cat %s > %s'",
+                          files2,
+                          paste0(tmp_dir, "/", smp, "_2.fastq"))
+          system(dwl2)
+          ## Trim
+          if (dotrim) {
+            message("Trimming fastq files for ", smp)
+            trim_paired(cutadapt_dir = paste0("data-processed/", id, "/cutadapt"), 
+                        smp = smp, adapterseq = adapterseq, cutadaptbin = cutadaptbin,
+                        tmp_dir = tmp_dir)
+            files1 <- paste0(tmp_dir, "/", smp, "_1.trim.fastq")
+            files2 <- paste0(tmp_dir, "/", smp, "_2.trim.fastq")
+          } else {
+            files1 <- paste0(tmp_dir, "/", smp, "_1.fastq")
+            files2 <- paste0(tmp_dir, "/", smp, "_2.fastq")
+          }
+          if ("fastqc" %in% aspects)
+            fastqc_paired(fastqc_dir = paste0("data-processed/", id, "/fastqc"), 
+                          smp = smp, files1 = files1, files2 = files2, 
+                          fastqcbin = fastqcbin)
+          if ("salmon" %in% aspects)
+            salmon_paired(salmon_dir = paste0("data-processed/", id, "/salmon"), 
+                          smp = smp, files1 = files1, files2 = files2, 
+                          salmonbin = salmonbin, libtype = libtype, index = index)
         } else {
-          files1 <- paste0(tmp_dir, "/", smp, "_1.fastq")
-          files2 <- paste0(tmp_dir, "/", smp, "_2.fastq")
+          message("Output files for ", smp, " already exist.")
         }
-        fastqc_paired(fastqc_dir = paste0("data-processed/", id, "/fastqc"), 
-                      smp = smp, files1 = files1, files2 = files2, 
-                      fastqcbin = fastqcbin)
-        salmon_paired(salmon_dir = paste0("data-processed/", id, "/salmon"), 
-                      smp = smp, files1 = files1, files2 = files2, 
-                      salmonbin = salmonbin, libtype = libtype, index = index)
-      } else {
-        message("Output files for ", smp, " already exist.")
+        if (file.exists(files1)) unlink(files1)
+        if (file.exists(files2)) unlink(files2)
       }
-      if (file.exists(files1)) unlink(files1)
-      if (file.exists(files2)) unlink(files2)
     }
   }
   
-  ## Compress all Salmon output in a tar archive
-  message("Compressing Salmon output for ", id)
-  targz <- sprintf("bash -c 'tar -C data-processed/ -czf %s %s'",
-                   paste0("data-processed/", id, "/", id, "_salmon.tar.gz"),
-                   paste0(id, "/salmon"))
-  system(targz)
+  if ("salmon" %in% aspects) {
+    ## Compress all Salmon output in a tar archive
+    message("Compressing Salmon output for ", id)
+    targz <- sprintf("bash -c 'tar -C data-processed/ -czf %s %s'",
+                     paste0("data-processed/", id, "/", id, "_salmon.tar.gz"),
+                     paste0(id, "/salmon"))
+    system(targz)
+  }
 
   ## ------------------------------------------------------------------------ ##
   ##                             MultiQC                                      ##
   ## ------------------------------------------------------------------------ ##
-  message("Running MultiQC for ", id)
-  mqc <- sprintf("bash -c 'multiqc -o %s -n %s -f %s'",
-                 paste0("report-multiqc"),
-                 paste0(id, "_multiqc_report.html"),
-                 paste0("data-processed/", id))
-  system(mqc)
-
-  ## ------------------------------------------------------------------------ ##
-  ##                             tximport                                     ##
-  ## ------------------------------------------------------------------------ ##
-  message("Reading expression levels for ", id)
-  files <- paste0(list.files(paste0("data-processed/", id, "/salmon"), 
-                             full.names = TRUE), "/quant.sf")
-  names(files) <- basename(gsub("/quant.sf", "", files))
-  txi_tx <- tximport(files = files, type = "salmon", txIn = TRUE, txOut = TRUE)
-  txi_gene <- summarizeToGene(txi = txi_tx, tx2gene = txgenemap,
-                              countsFromAbundance = "no")
-  txi_gene_lstpm <- summarizeToGene(txi = txi_tx, tx2gene = txgenemap, 
-                                    countsFromAbundance = "lengthScaledTPM")
-
-  if (geodata == TRUE) {
-    geo <- getGEO(filename = paste0("data-raw/", id, "/", id, "_series_matrix.txt.gz"),
-                  getGPL = FALSE)
-    meta <- pData(geo)
-  } else {
-    meta <- read.delim(phenofile, header = TRUE, row.names = 1, as.is = TRUE)
+  if ("multiqc" %in% aspects) {
+    message("Running MultiQC for ", id)
+    mqc <- sprintf("bash -c '%s -o %s -n %s -f %s'",
+                   multiqcbin, 
+                   paste0("report-multiqc"),
+                   paste0(id, "_multiqc_report.html"),
+                   paste0("data-processed/", id))
+    system(mqc)
   }
-  stopifnot(all(colnames(txi_tx$counts) %in% rownames(meta)))
-  meta <- meta[match(colnames(txi_tx$counts), rownames(meta)), ]
   
-  ## ------------------------------------------------------------------------ ##
-  ##                  Generate MultiAssayExperiment                           ##
-  ## ------------------------------------------------------------------------ ##
-  stopifnot(all(rownames(txi_gene_lstpm$counts) == rownames(txi_gene$counts)))
-  stopifnot(all(colnames(txi_gene_lstpm$counts) == colnames(txi_gene$counts)))
-  
-  generse <- SummarizedExperiment(assays = list(TPM = txi_gene$abundance,
-                                                count = txi_gene$counts,
-                                                count_lstpm = txi_gene_lstpm$counts,
-                                                avetxlength = txi_gene$length),
-                                  rowRanges = gene_granges[rownames(txi_gene$abundance)])
-  
-  txrse <- SummarizedExperiment(assays = list(TPM = txi_tx$abundance,
-                                              count = txi_tx$counts,
-                                              efflength = txi_tx$length),
-                                rowRanges = tx_granges[rownames(txi_tx$abundance)])
-  
-  ## Generate MultiAssayExperiment
-  mae <- MultiAssayExperiment(ExperimentList = list(gene = generse,
-                                                    tx = txrse),
-                              pData = droplevels(meta))
-  mae@metadata <- list(genome = genome, 
-                       organism = organism,
-                       index = basename(index))
-  
-  saveRDS(mae, file = paste0("data-mae/", id, ".rds"))
-  
-  ## ------------------------------------------------------------------------ ##
-  ##                  Write basic information to file                         ##
-  ## ------------------------------------------------------------------------ ##
-  infodf <- data.frame(nsamples = nrow(pData(mae)),
-                       organism = organism,
-                       genome = genome,
-                       ntranscripts = nrow(txi_tx$counts),
-                       ngenes = nrow(txi_gene$counts),
-                       PMID = pmid,
-                       datalink = datalink,
-                       shortname = shortname)
-  write.table(t(infodf), file = paste0("data-processed/", id, "/dataset_info.txt"),
-              row.names = TRUE, col.names = FALSE, sep = "\t", quote = FALSE)
+  if ("mae" %in% aspects) {
+    ## ------------------------------------------------------------------------ ##
+    ##                             tximport                                     ##
+    ## ------------------------------------------------------------------------ ##
+    message("Reading expression levels for ", id)
+    files <- paste0(list.files(paste0("data-processed/", id, "/salmon"), 
+                               full.names = TRUE), "/quant.sf")
+    names(files) <- basename(gsub("/quant.sf", "", files))
+    txi_tx <- tximport(files = files, type = "salmon", txIn = TRUE, txOut = TRUE)
+    txi_gene <- summarizeToGene(txi = txi_tx, tx2gene = txgenemap,
+                                countsFromAbundance = "no")
+    txi_gene_lstpm <- summarizeToGene(txi = txi_tx, tx2gene = txgenemap, 
+                                      countsFromAbundance = "lengthScaledTPM")
+    
+    if (geodata == TRUE) {
+      geo <- getGEO(filename = paste0("data-raw/", id, "/", id, "_series_matrix.txt.gz"),
+                    getGPL = FALSE)
+      meta <- pData(geo)
+    } else {
+      meta <- read.delim(phenofile, header = TRUE, row.names = 1, as.is = TRUE)
+    }
+    stopifnot(all(colnames(txi_tx$counts) %in% rownames(meta)))
+    meta <- meta[match(colnames(txi_tx$counts), rownames(meta)), ]
+    
+    ## ------------------------------------------------------------------------ ##
+    ##                  Generate MultiAssayExperiment                           ##
+    ## ------------------------------------------------------------------------ ##
+    stopifnot(all(rownames(txi_gene_lstpm$counts) == rownames(txi_gene$counts)))
+    stopifnot(all(colnames(txi_gene_lstpm$counts) == colnames(txi_gene$counts)))
+    
+    generse <- SummarizedExperiment(assays = list(TPM = txi_gene$abundance,
+                                                  count = txi_gene$counts,
+                                                  count_lstpm = txi_gene_lstpm$counts,
+                                                  avetxlength = txi_gene$length),
+                                    rowRanges = gene_granges[rownames(txi_gene$abundance)])
+    
+    txrse <- SummarizedExperiment(assays = list(TPM = txi_tx$abundance,
+                                                count = txi_tx$counts,
+                                                efflength = txi_tx$length),
+                                  rowRanges = tx_granges[rownames(txi_tx$abundance)])
+    
+    ## Generate MultiAssayExperiment
+    mae <- MultiAssayExperiment(experiments = list(gene = generse,
+                                                   tx = txrse),
+                                pData = droplevels(meta))
+    mae@metadata <- list(genome = genome, 
+                         organism = organism,
+                         index = basename(index))
+    
+    saveRDS(mae, file = paste0("data-mae/", id, ".rds"))
+    
+    ## ------------------------------------------------------------------------ ##
+    ##                  Write basic information to file                         ##
+    ## ------------------------------------------------------------------------ ##
+    infodf <- data.frame(nsamples = nrow(pData(mae)),
+                         organism = organism,
+                         genome = genome,
+                         ntranscripts = nrow(txi_tx$counts),
+                         ngenes = nrow(txi_gene$counts),
+                         PMID = pmid,
+                         datalink = datalink,
+                         shortname = shortname)
+    write.table(t(infodf), file = paste0("data-processed/", id, "/dataset_info.txt"),
+                row.names = TRUE, col.names = FALSE, sep = "\t", quote = FALSE)
+  }
   
   ## ------------------------------------------------------------------------ ##
   ##                    Generate scater QC report                             ##
   ## ------------------------------------------------------------------------ ##
-  message("Generating scater report for ", id)
-  generate_report(id = id, maex = mae, phenoid = groupid, 
-                  output_format = "html_document",
-                  output_file = paste0(id, "_scater.html"),
-                  output_dir = paste0("report-scater"),
-                  nrw = nrw, lps = lps)
+  if ("scater" %in% aspects) {
+    mae <- readRDS(paste0("data-mae/", id, ".rds"))
+    message("Generating scater report for ", id)
+    generate_report(id = id, maex = mae, phenoid = groupid, 
+                    output_format = "html_document",
+                    output_file = paste0(id, "_scater.html"),
+                    output_dir = paste0("report-scater"),
+                    nrw = nrw, lps = lps)
+  }
 }
 
