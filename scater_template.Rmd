@@ -198,7 +198,7 @@ if (length(phenoid) > 1) {
             guides(fill = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps))
   }
 }
-tsne <- scater::plotTSNE(sceset, return_SCESet = TRUE)
+tsne <- scater::plotTSNE(sceset[!duplicated(tpm(sceset)), ], exprs_values = "tpm", return_SCESet = TRUE)
 print(scater::plotReducedDim(tsne, colour_by = paste(phenoid, collapse = ".")) + 
         guides(fill = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps))
 if (length(phenoid) > 1) {

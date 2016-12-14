@@ -46,6 +46,10 @@ scrna_download_shiny <- function(data_directory, top_url) {
                    includeMarkdown("/home/Shared_taupo/data/seq/conquer/database/shiny-download/changelog_conquer.md"),
                    value = "changelog"),
           
+          tabPanel("Excluded samples",
+                   includeMarkdown("/home/Shared_taupo/data/seq/conquer/database/shiny-download/excluded_samples.md"),
+                   value = "excludedsamples"),
+          
           selected = "select_dataset"
             )
             ))

@@ -1,20 +1,42 @@
 source("02_process_data.R")
 
-salmonbin <- "/usr/local/software/SalmonBeta-0.6.1_DebianSqueeze/bin/salmon"
+#salmonbin <- "/usr/local/software/SalmonBeta-0.6.1_DebianSqueeze/bin/salmon"
+salmonbin <- "software/Salmon-0.7.2_linux_x86_64/bin/salmon"
 fastqcbin <- "FastQC_v0.11.6.devel/fastqc"
 cutadaptbin <- "cutadapt"
 multiqcbin <- "/home/charlotte/miniconda2/bin/multiqc"
+
 Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.txgenemap <- 
   readRDS("reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.txgenemap.rds")
 Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap <- 
   readRDS("reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap.rds")
+Danio_rerio.GRCz10.87.cdna.ncrna.ercc92.txgenemap <- 
+  readRDS("reference-files/danio-rerio/Danio_rerio.GRCz10.87.cdna.ncrna.ercc92.txgenemap.rds")
+
 Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.granges <- 
   readRDS("reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.granges.rds")
 Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges <- 
   readRDS("reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges.rds")
+Danio_rerio.GRCz10.87.cdna.ncrna.ercc92.granges <- 
+  readRDS("reference-files/danio-rerio/Danio_rerio.GRCz10.87.cdna.ncrna.ercc92.granges.rds")
 
 adapterseq <- "AGATCGGAAGAGC"
 #adapterseq <- "file:adapters.fa"
+
+## GSE66688
+process_data(id = "GSE66688", rtype = "paired", 
+             index = "reference-files/danio-rerio/Danio_rerio.GRCz10.87.cdna.ncrna.ercc92.sidx", 
+             libtype = "A", salmonbin = "software/Salmon-0.7.2_linux_x86_64/bin/salmon",
+             fastqcbin = fastqcbin, sncol = "SampleName", 
+             txgenemap = Danio_rerio.GRCz10.87.cdna.ncrna.ercc92.txgenemap,
+             geodata = TRUE, phenofile = NULL,
+             gene_granges = Danio_rerio.GRCz10.87.cdna.ncrna.ercc92.granges$gene_granges,
+             tx_granges = Danio_rerio.GRCz10.87.cdna.ncrna.ercc92.granges$tx_granges,
+             groupid = "characteristics_ch1", organism = "Danio rerio", genome = "GRCz10.87",
+             dotrim = FALSE, adapterseq = NULL, cutadaptbin = cutadaptbin, tmp_dir = "tmp",
+             pmid = 25867923, datalink = "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE66688",
+             shortname = "Satija2015", multiqcbin = multiqcbin, 
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
 
 ## E-MTAB-2805
 process_data(id = "EMTAB2805", rtype = "paired",
@@ -256,9 +278,27 @@ process_data(id = "GSE48968-GPL13112", rtype = "paired",
              shortname = "Shalek2014", multiqcbin = multiqcbin, 
              aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
 
-## GSE48968-GPL17021
-process_data(id = "GSE48968-GPL17021", rtype = "paired",
+## GSE48968-GPL17021-125bp
+process_data(id = "GSE48968-GPL17021-125bp", rtype = "paired",
              index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx",
+             libtype = "IU", salmonbin = salmonbin,
+             fastqcbin = fastqcbin, sncol = "SampleName",
+             txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
+             geodata = TRUE, phenofile = NULL,
+             gene_granges = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges$gene_granges,
+             tx_granges = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges$tx_granges,
+             groupid = "source_name_ch1", 
+             organism = "Mus musculus", genome = "GRCm38.84",
+             dotrim = FALSE, adapterseq = NULL, cutadaptbin = cutadaptbin, tmp_dir = "tmp",
+             nrw = 3, lps = "bottom",
+             pmid = 24919153, datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE48968",
+             shortname = "Shalek2014", multiqcbin = multiqcbin, 
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+
+## Running
+## GSE48968-GPL17021-25bp
+process_data(id = "GSE48968-GPL17021-25bp", rtype = "paired",
+             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.k15.sidx",
              libtype = "IU", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "SampleName",
              txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,

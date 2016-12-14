@@ -9,6 +9,7 @@ library(tximport)
 library(GEOquery)
 library(rmarkdown)
 library(Rtsne)
+library(rjson)
 source("00_help_functions.R")
 
 generate_report <- function(id, maex, phenoid, output_format = NULL,
@@ -195,6 +196,29 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                      paste0("data-processed/", id, "/", id, "_salmon.tar.gz"),
                      paste0(id, "/salmon"))
     system(targz)
+    
+    ## Create summary table from Salmon parameters and results
+    message("Creating Salmon summary table for ", id)
+    smps <- list.files(paste0("data-processed/", id, "/salmon"), full.names = TRUE)
+    names(smps) <- basename(smps)
+    summary_table_salmon <- as.data.frame(t(sapply(smps, function(s) {
+      cmdinfo <- fromJSON(file = paste0(s, "/cmd_info.json"))
+      cmdinfo <- c(salmon_version = cmdinfo[["salmon_version"]],
+                   libtype = cmdinfo[["libType"]],
+                   index = basename(cmdinfo[["index"]]))
+      if (file.exists(paste0(s, "/aux_info"))) {
+        metainfo <- fromJSON(file = paste0(s, "/aux_info/meta_info.json"))
+      } else {
+        metainfo <- fromJSON(file = paste0(s, "/aux/meta_info.json"))
+      }
+      metainfo <- c(num_processed = metainfo[["num_processed"]],
+                    num_mapped = metainfo[["num_mapped"]],
+                    percent_mapped = round(metainfo[["percent_mapped"]], 3))
+      c(cmdinfo, metainfo)
+    })))
+    write.table(cbind(sample = rownames(summary_table_salmon), summary_table_salmon), 
+                file = paste0("data-processed/", id, "/summary_table_salmon.txt"),
+                row.names = FALSE, col.names = TRUE, sep = "\t", quote = FALSE)
   }
 
   ## ------------------------------------------------------------------------ ##
