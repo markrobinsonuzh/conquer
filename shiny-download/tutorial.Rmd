@@ -1,0 +1,97 @@
+---
+title: "Using the conquer database"
+author: ""
+date: ""
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+To use a data set provided in the *conquer* database, download the corresponding
+**R** object from the **MultiAssayExperiment** column. As an illustration, we 
+will assume that the file for the *GSE41265* data set has been downloaded and is 
+available in the current working directory. First, load the 
+[SummarizedExperiment](http://bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html)
+and
+[MultiAssayExperiment](http://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html)
+packages and read the file into R:
+
+```{r}
+suppressPackageStartupMessages(library(SummarizedExperiment))
+suppressPackageStartupMessages(library(MultiAssayExperiment))
+(gse41265 <- readRDS("GSE41265.rds"))
+```
+
+The resulting object contains both gene and transcript abundances. 
+
+```{r}
+experiments(gse41265)
+```
+
+## Gene-level data
+
+To access the gene abundances, get the **gene** experiment:
+
+```{r}
+(gse41265_gene <- experiments(gse41265)[["gene"]])
+```
+
+This object contains four slots, which can be accessed via the **assays** function:
+
+- **TPM**: transcripts per million abundance estimates for each gene, obtained
+by summing the transcript TPMs for the gene's isoforms.
+- **count**: gene read counts, obtained by summing the estimated read counts for
+the gene's isoforms.
+- **count_lstpm**: length-scaled TPMs, which provide and alternative abundance
+measure on the "count scale", which is not correlated with the average
+transcript length in a given sample. See the
+[tximport](http://bioconductor.org/packages/release/bioc/html/tximport.html)
+Bioconductor package for more information.
+- **avetxlength**: the average length of the transcripts expressed in each
+sample for each gene. See the
+[tximport](http://bioconductor.org/packages/release/bioc/html/tximport.html)
+Bioconductor package for more information.
+
+Each of these slots is a matrix with the respective values for each gene and
+each sample.
+
+```{r}
+head(assays(gse41265_gene)[["TPM"]])
+head(assays(gse41265_gene)[["count"]])
+head(assays(gse41265_gene)[["count_lstpm"]])
+head(assays(gse41265_gene)[["avetxlength"]])
+```
+
+## Transcript-level data
+
+To access the transcript abundances, get instead the **transcript** experiment:
+
+```{r}
+(gse41265_tx <- experiments(gse41265)[["tx"]])
+```
+
+This object contains three slots, which can be accessed via the **assays**
+function:
+
+- **TPM**: transcripts per million abundance estimates for each transcript.
+- **count**: transcript read counts.
+- **efflength**: effective transcript lengths.
+
+Each of these slots is a matrix with the respective values for each transcript
+and each sample.
+
+```{r}
+head(assays(gse41265_tx)[["TPM"]])
+head(assays(gse41265_tx)[["count"]])
+head(assays(gse41265_tx)[["efflength"]])
+```
+
+## Sample annotations
+
+The sample annotations, downloaded from GEO, are also available in the object:
+
+```{r}
+pdata <- Biobase::pData(gse41265)
+head(pdata, 2)
+```
+

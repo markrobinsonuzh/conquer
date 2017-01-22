@@ -50,6 +50,10 @@ scrna_download_shiny <- function(data_directory, top_url) {
                    includeMarkdown("/home/Shared_taupo/data/seq/conquer/database/shiny-download/excluded_samples.md"),
                    value = "excludedsamples"),
           
+          tabPanel("Tutorial",
+                   includeMarkdown("/home/Shared_taupo/data/seq/conquer/database/shiny-download/tutorial.md"),
+                   value = "tutorial"),
+          
           selected = "select_dataset"
             )
             ))
