@@ -91,7 +91,9 @@ the most highly expressed genes. The cells are stratified by the ``r phenoid``
 annotation.
 
 ```{r}
-plot(sceset, block1 = paste(phenoid, collapse = "."))
+tryCatch({
+  plot(sceset, block1 = paste(phenoid, collapse = "."))
+}, error = function(e) print(e))
 ```
 
 ## Calculate quality metrics and filter

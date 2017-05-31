@@ -77,6 +77,9 @@ generate_report <- function(id, maex, phenoid, output_format = NULL,
 #' @param shortname An informative identifier for the dataset
 #' @param multiqcbin The path to the multiqc binary
 #' @param aspects Which parts of the data processing that will be run
+#' @param topdir The top directory for reading and writing data. It is assumed
+#'   that this directory has subdirectories data-mae, data-processed, data-raw,
+#'   report-multiqc and report-scater
 #'   
 #' @return Does not return anything, but saves processed files and reports in 
 #'   the ./data-processed, ./data-mae, ./report-multiqc and ./report-scater
@@ -93,10 +96,11 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                          cutadaptbin = "cutadapt", tmp_dir = "tmp", nrw = NULL,
                          lps = "right", pmid = NA, datalink = NA, shortname = NA, 
                          multiqcbin = multiqcbin, 
-                         aspects = c("fastqc", "salmon", "multiqc", "mae", "scater")) {
+                         aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"),
+                         topdir = ".") {
 
   ## Read run info downloaded from SRA
-  x <- read.delim(paste0("data-raw/", id, "/", id, "_SraRunInfo.csv"), 
+  x <- read.delim(paste0(topdir, "/data-raw/", id, "/", id, "_SraRunInfo.csv"), 
                   header = TRUE, as.is = TRUE, sep = ",")
   samples <- unique(x[, sncol])
 
@@ -115,8 +119,8 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
       } 
       
       if (rtype == "single") {
-        if (!all(file.exists(paste0("data-processed/", id, "/fastqc/", smp, "/", smp, "_fastqc.html"),
-                             paste0("data-processed/", id, "/salmon/", smp, "/quant.sf")))) {
+        if (!all(file.exists(paste0(topdir, "/data-processed/", id, "/fastqc/", smp, "/", smp, "_fastqc.html"),
+                             paste0(topdir, "/data-processed/", id, "/salmon/", smp, "/quant.sf")))) {
           
           ## Download fastq file and save temporarily
           message("Downloading fastq file for ", smp)
@@ -127,7 +131,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
           ## Trim 
           if (dotrim) {
             message("Trimming fastq file for ", smp)
-            trim_single(cutadapt_dir = paste0("data-processed/", id, "/cutadapt"), 
+            trim_single(cutadapt_dir = paste0(topdir, "/data-processed/", id, "/cutadapt"), 
                         smp = smp, adapterseq = adapterseq, 
                         cutadaptbin = cutadaptbin, tmp_dir = tmp_dir)
             files <- paste0(tmp_dir, "/", smp, ".trim.fastq")
@@ -135,10 +139,10 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
             files <- paste0(tmp_dir, "/", smp, ".fastq")
           }
           if ("fastqc" %in% aspects)
-            fastqc_single(fastqc_dir = paste0("data-processed/", id, "/fastqc"), 
+            fastqc_single(fastqc_dir = paste0(topdir, "/data-processed/", id, "/fastqc"), 
                           smp = smp, files = files, fastqcbin = fastqcbin, appd = "") 
           if ("salmon" %in% aspects)
-            salmon_single(salmon_dir = paste0("data-processed/", id, "/salmon"), 
+            salmon_single(salmon_dir = paste0(topdir, "/data-processed/", id, "/salmon"), 
                           smp = smp, files = files, salmonbin = salmonbin, 
                           libtype = libtype, index = index)
         } else {
@@ -146,9 +150,9 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
         }
         if (file.exists(files)) unlink(files)
       } else if (rtype == "paired") {
-        if (!all(file.exists(paste0("data-processed/", id, "/fastqc/",
+        if (!all(file.exists(paste0(topdir, "/data-processed/", id, "/fastqc/",
                                     smp, "/", smp, c("_1", "_2"), "_fastqc.html"),
-                             paste0("data-processed/", id, "/salmon/", 
+                             paste0(topdir, "/data-processed/", id, "/salmon/", 
                                     smp, "/quant.sf")))) {
           ## Download fastq files and save temporarily
           message("Downloading fastq files for ", smp)
@@ -163,7 +167,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
           ## Trim
           if (dotrim) {
             message("Trimming fastq files for ", smp)
-            trim_paired(cutadapt_dir = paste0("data-processed/", id, "/cutadapt"), 
+            trim_paired(cutadapt_dir = paste0(topdir, "/data-processed/", id, "/cutadapt"), 
                         smp = smp, adapterseq = adapterseq, cutadaptbin = cutadaptbin,
                         tmp_dir = tmp_dir)
             files1 <- paste0(tmp_dir, "/", smp, "_1.trim.fastq")
@@ -173,11 +177,11 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
             files2 <- paste0(tmp_dir, "/", smp, "_2.fastq")
           }
           if ("fastqc" %in% aspects)
-            fastqc_paired(fastqc_dir = paste0("data-processed/", id, "/fastqc"), 
+            fastqc_paired(fastqc_dir = paste0(topdir, "/data-processed/", id, "/fastqc"), 
                           smp = smp, files1 = files1, files2 = files2, 
                           fastqcbin = fastqcbin)
           if ("salmon" %in% aspects)
-            salmon_paired(salmon_dir = paste0("data-processed/", id, "/salmon"), 
+            salmon_paired(salmon_dir = paste0(topdir, "/data-processed/", id, "/salmon"), 
                           smp = smp, files1 = files1, files2 = files2, 
                           salmonbin = salmonbin, libtype = libtype, index = index)
         } else {
@@ -192,14 +196,15 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
   if ("salmon" %in% aspects) {
     ## Compress all Salmon output in a tar archive
     message("Compressing Salmon output for ", id)
-    targz <- sprintf("bash -c 'tar -C data-processed/ -czf %s %s'",
-                     paste0("data-processed/", id, "/", id, "_salmon.tar.gz"),
+    targz <- sprintf("bash -c 'tar -C %s/data-processed/ -czf %s %s'",
+                     topdir, 
+                     paste0(topdir, "/data-processed/", id, "/", id, "_salmon.tar.gz"),
                      paste0(id, "/salmon"))
     system(targz)
     
     ## Create summary table from Salmon parameters and results
     message("Creating Salmon summary table for ", id)
-    smps <- list.files(paste0("data-processed/", id, "/salmon"), full.names = TRUE)
+    smps <- list.files(paste0(topdir, "/data-processed/", id, "/salmon"), full.names = TRUE)
     names(smps) <- basename(smps)
     summary_table_salmon <- as.data.frame(t(sapply(smps, function(s) {
       cmdinfo <- fromJSON(file = paste0(s, "/cmd_info.json"))
@@ -217,7 +222,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
       c(cmdinfo, metainfo)
     })))
     write.table(cbind(sample = rownames(summary_table_salmon), summary_table_salmon), 
-                file = paste0("data-processed/", id, "/summary_table_salmon.txt"),
+                file = paste0(topdir, "/data-processed/", id, "/summary_table_salmon.txt"),
                 row.names = FALSE, col.names = TRUE, sep = "\t", quote = FALSE)
   }
 
@@ -228,9 +233,9 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
     message("Running MultiQC for ", id)
     mqc <- sprintf("bash -c '%s -o %s -n %s -f %s'",
                    multiqcbin, 
-                   paste0("report-multiqc"),
+                   paste0(topdir, "/report-multiqc"),
                    paste0(id, "_multiqc_report.html"),
-                   paste0("data-processed/", id))
+                   paste0(topdir, "/data-processed/", id))
     system(mqc)
   }
   
@@ -239,7 +244,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
     ##                             tximport                                     ##
     ## ------------------------------------------------------------------------ ##
     message("Reading expression levels for ", id)
-    files <- paste0(list.files(paste0("data-processed/", id, "/salmon"), 
+    files <- paste0(list.files(paste0(topdir, "/data-processed/", id, "/salmon"), 
                                full.names = TRUE), "/quant.sf")
     names(files) <- basename(gsub("/quant.sf", "", files))
     txi_tx <- tximport(files = files, type = "salmon", txIn = TRUE, txOut = TRUE)
@@ -249,7 +254,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                                       countsFromAbundance = "lengthScaledTPM")
     
     if (geodata == TRUE) {
-      geo <- getGEO(filename = paste0("data-raw/", id, "/", id, "_series_matrix.txt.gz"),
+      geo <- getGEO(filename = paste0(topdir, "/data-raw/", id, "/", id, "_series_matrix.txt.gz"),
                     getGPL = FALSE)
       meta <- pData(geo)
     } else {
@@ -283,7 +288,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                          organism = organism,
                          index = basename(index))
     
-    saveRDS(mae, file = paste0("data-mae/", id, ".rds"))
+    saveRDS(mae, file = paste0(topdir, "/data-mae/", id, ".rds"))
     
     ## ------------------------------------------------------------------------ ##
     ##                  Write basic information to file                         ##
@@ -296,7 +301,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                          PMID = pmid,
                          datalink = datalink,
                          shortname = shortname)
-    write.table(t(infodf), file = paste0("data-processed/", id, "/dataset_info.txt"),
+    write.table(t(infodf), file = paste0(topdir, "/data-processed/", id, "/dataset_info.txt"),
                 row.names = TRUE, col.names = FALSE, sep = "\t", quote = FALSE)
   }
   
@@ -304,12 +309,12 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
   ##                    Generate scater QC report                             ##
   ## ------------------------------------------------------------------------ ##
   if ("scater" %in% aspects) {
-    mae <- readRDS(paste0("data-mae/", id, ".rds"))
+    mae <- readRDS(paste0(topdir, "/data-mae/", id, ".rds"))
     message("Generating scater report for ", id)
     generate_report(id = id, maex = mae, phenoid = groupid, 
                     output_format = "html_document",
                     output_file = paste0(id, "_scater.html"),
-                    output_dir = paste0("report-scater"),
+                    output_dir = paste0(topdir, "/report-scater"),
                     nrw = nrw, lps = lps)
   }
 }

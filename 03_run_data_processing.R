@@ -25,7 +25,7 @@ adapterseq <- "AGATCGGAAGAGC"
 
 ## GSE66688
 process_data(id = "GSE66688", rtype = "paired", 
-             index = "reference-files/danio-rerio/Danio_rerio.GRCz10.87.cdna.ncrna.ercc92.sidx", 
+             index = "reference-files/danio-rerio/Danio_rerio.GRCz10.87.cdna.ncrna.ercc92.0.7.2.sidx", 
              libtype = "A", salmonbin = "software/Salmon-0.7.2_linux_x86_64/bin/salmon",
              fastqcbin = fastqcbin, sncol = "SampleName", 
              txgenemap = Danio_rerio.GRCz10.87.cdna.ncrna.ercc92.txgenemap,
@@ -36,11 +36,11 @@ process_data(id = "GSE66688", rtype = "paired",
              dotrim = FALSE, adapterseq = NULL, cutadaptbin = cutadaptbin, tmp_dir = "tmp",
              pmid = 25867923, datalink = "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE66688",
              shortname = "Satija2015", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
 ## E-MTAB-2805
 process_data(id = "EMTAB2805", rtype = "paired",
-             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx",
+             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.0.6.1.sidx",
              libtype = "IU", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "LibraryName",
              txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
@@ -51,11 +51,11 @@ process_data(id = "EMTAB2805", rtype = "paired",
              dotrim = FALSE, adapterseq = NULL, cutadaptbin = cutadaptbin, tmp_dir = "tmp",
              pmid = 25599176, datalink = "https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-2805/",
              shortname = "Buettner2015", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
 ## GSE77847
 process_data(id = "GSE77847", rtype = "paired",
-             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx",
+             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.0.6.1.sidx",
              libtype = "IU", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "SampleName",
              txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
@@ -66,11 +66,11 @@ process_data(id = "GSE77847", rtype = "paired",
              dotrim = FALSE, adapterseq = NULL, cutadaptbin = cutadaptbin, tmp_dir = "tmp",
              pmid = 27016502, datalink = "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE77847",
              shortname = "Meyer2016", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
 ## GSE44183human
 process_data(id = "GSE44183-GPL11154", rtype = "paired",
-             index = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.sidx",
+             index = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.0.6.1.sidx",
              libtype = "IU", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "Sample_Name_s",
              txgenemap = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.txgenemap,
@@ -81,11 +81,11 @@ process_data(id = "GSE44183-GPL11154", rtype = "paired",
              dotrim = FALSE, adapterseq = NULL, cutadaptbin = cutadaptbin, tmp_dir = "tmp",
              pmid = 23892778, datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE44183",
              shortname = "Xue2013", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
 ## GSE44183mouse
 process_data(id = "GSE44183-GPL13112", rtype = "paired",
-             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx",
+             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.0.6.1.sidx",
              libtype = "IU", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "Sample_Name_s",
              txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
@@ -96,11 +96,11 @@ process_data(id = "GSE44183-GPL13112", rtype = "paired",
              dotrim = FALSE, adapterseq = NULL, cutadaptbin = cutadaptbin, tmp_dir = "tmp",
              pmid = 23892778, datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE44183",
              shortname = "Xue2013", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
 ## GSE44183mouse, trimmed
 process_data(id = "GSE44183-GPL13112-trimmed", rtype = "paired",
-             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx",
+             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.0.6.1.sidx",
              libtype = "IU", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "Sample_Name_s",
              txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
@@ -111,11 +111,11 @@ process_data(id = "GSE44183-GPL13112-trimmed", rtype = "paired",
              dotrim = TRUE, adapterseq = "AGATCGGAAGAGC", cutadaptbin = cutadaptbin, tmp_dir = "tmp",
              pmid = 23892778, datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE44183",
              shortname = "Xue2013", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
 ## GSE45719
 process_data(id = "GSE45719", rtype = "single",
-             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx",
+             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.0.6.1.sidx",
              libtype = "U", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "SampleName",
              txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
@@ -126,11 +126,11 @@ process_data(id = "GSE45719", rtype = "single",
              dotrim = FALSE, adapterseq = NULL, cutadaptbin = cutadaptbin, tmp_dir = "tmp",
              pmid = 24408435, datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE45719",
              shortname = "Deng2014", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
 ## GSE74596
 process_data(id = "GSE74596", rtype = "single",
-             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx",
+             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.0.6.1.sidx",
              libtype = "U", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "SampleName",
              txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
@@ -141,11 +141,11 @@ process_data(id = "GSE74596", rtype = "single",
              dotrim = FALSE, adapterseq = NULL, cutadaptbin = cutadaptbin, tmp_dir = "tmp",
              pmid = 27089380, datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE74596",
              shortname = "Engel2016", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
 ## GSE63818, HiSeq2500
 process_data(id = "GSE63818-GPL16791", rtype = "paired",
-             index = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.sidx",
+             index = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.0.6.1.sidx",
              libtype = "IU", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "SampleName",
              txgenemap = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.txgenemap,
@@ -157,11 +157,11 @@ process_data(id = "GSE63818-GPL16791", rtype = "paired",
              dotrim = FALSE, adapterseq = NULL, cutadaptbin = cutadaptbin, tmp_dir = "tmp",
              pmid = 26046443, datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63818",
              shortname = "Guo2015", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
 ## GSE60749, HiSeq2000 (25bp reads)
 process_data(id = "GSE60749-GPL13112", rtype = "paired",
-             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.k15.sidx",
+             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.k15.0.6.1.sidx",
              libtype = "IU", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "SampleName",
              txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
@@ -174,11 +174,11 @@ process_data(id = "GSE60749-GPL13112", rtype = "paired",
              nrw = 3, lps = "bottom",
              pmid = 25471879, datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60749",
              shortname = "Kumar2014", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
 ## GSE60749, HiSeq2500 (25bp reads)
 process_data(id = "GSE60749-GPL17021", rtype = "paired",
-             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.k15.sidx",
+             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.k15.0.6.1.sidx",
              libtype = "IU", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "SampleName",
              txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
@@ -191,11 +191,11 @@ process_data(id = "GSE60749-GPL17021", rtype = "paired",
              nrw = 3, lps = "bottom",
              pmid = 25471879, datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60749",
              shortname = "Kumar2014", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
 ## GSE57872 (25bp reads)
 process_data(id = "GSE57872", rtype = "paired",
-             index = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.k15.sidx",
+             index = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.k15.0.6.1.sidx",
              libtype = "IU", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "SampleName",
              txgenemap = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.txgenemap,
@@ -208,11 +208,11 @@ process_data(id = "GSE57872", rtype = "paired",
              nrw = 3, lps = "bottom",
              pmid = 24925914, datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE57872",
              shortname = "Patel2014", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
 ## GSE41265
 process_data(id = "GSE41265", rtype = "paired",
-             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx",
+             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.0.6.1.sidx",
              libtype = "IU", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "SampleName",
              txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
@@ -225,11 +225,11 @@ process_data(id = "GSE41265", rtype = "paired",
              nrw = 1, lps = "bottom",
              pmid = 23685454, datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE41265",
              shortname = "Shalek2013", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
 ## GSE52529-GPL11154
 process_data(id = "GSE52529-GPL11154", rtype = "paired",
-             index = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.sidx",
+             index = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.0.6.1.sidx",
              libtype = "IU", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "SampleName",
              txgenemap = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.txgenemap,
@@ -242,11 +242,11 @@ process_data(id = "GSE52529-GPL11154", rtype = "paired",
              nrw = 3, lps = "bottom",
              pmid = 24658644, datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE52529",
              shortname = "Trapnell2014", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
 ## GSE52529-GPL16791
 process_data(id = "GSE52529-GPL16791", rtype = "paired",
-             index = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.sidx",
+             index = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.0.6.1.sidx",
              libtype = "IU", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "SampleName",
              txgenemap = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.txgenemap,
@@ -259,11 +259,11 @@ process_data(id = "GSE52529-GPL16791", rtype = "paired",
              nrw = 3, lps = "bottom",
              pmid = 24658644, datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE52529",
              shortname = "Trapnell2014", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
 ## GSE48968-GPL13112
 process_data(id = "GSE48968-GPL13112", rtype = "paired",
-             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx",
+             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.0.6.1.sidx",
              libtype = "IU", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "SampleName",
              txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
@@ -276,11 +276,11 @@ process_data(id = "GSE48968-GPL13112", rtype = "paired",
              nrw = 3, lps = "bottom",
              pmid = 24919153, datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE48968",
              shortname = "Shalek2014", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
 ## GSE48968-GPL17021-125bp
 process_data(id = "GSE48968-GPL17021-125bp", rtype = "paired",
-             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx",
+             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.0.6.1.sidx",
              libtype = "IU", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "SampleName",
              txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
@@ -293,12 +293,11 @@ process_data(id = "GSE48968-GPL17021-125bp", rtype = "paired",
              nrw = 3, lps = "bottom",
              pmid = 24919153, datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE48968",
              shortname = "Shalek2014", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
 
-## Running
 ## GSE48968-GPL17021-25bp
 process_data(id = "GSE48968-GPL17021-25bp", rtype = "paired",
-             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.k15.sidx",
+             index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.k15.0.6.1.sidx",
              libtype = "IU", salmonbin = salmonbin,
              fastqcbin = fastqcbin, sncol = "SampleName",
              txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
@@ -311,4 +310,4 @@ process_data(id = "GSE48968-GPL17021-25bp", rtype = "paired",
              nrw = 3, lps = "bottom",
              pmid = 24919153, datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE48968",
              shortname = "Shalek2014", multiqcbin = multiqcbin, 
-             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"))
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")

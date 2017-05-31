@@ -26,13 +26,15 @@ library(rtracklayer)
 ## Give the path to the Salmon binary
 #salmonbin <- "/usr/local/software/SalmonBeta-0.6.1_DebianSqueeze/bin/salmon"
 salmonbin <- "software/Salmon-0.7.2_linux_x86_64/bin/salmon"
+salmonversion <- "0.7.2"
 
 ## Human cDNA & ncRNA + ERCC
 cmd <- sprintf("bash -c '%s index -t %s -i %s --type quasi'",
                salmonbin,
                paste0("<(cat ", human_cdna_fa, " ", human_ncrna_fa, " ", ercc_fa, ")"),
                gsub("cdna.all.fa$", paste0(human_ensembl_version, 
-                                           ".cdna.ncrna.ercc92.sidx"), human_cdna_fa))
+                                           ".cdna.ncrna.ercc92.", salmonversion, 
+                                           ".sidx"), human_cdna_fa))
 system(cmd)
 
 ## Index for shorter reads
@@ -40,7 +42,8 @@ cmd <- sprintf("bash -c '%s index -t %s -i %s --type quasi -k 15'",
                salmonbin,
                paste0("<(cat ", human_cdna_fa, " ", human_ncrna_fa, " ", ercc_fa, ")"),
                gsub("cdna.all.fa$", paste0(human_ensembl_version, 
-                                           ".cdna.ncrna.ercc92.k15.sidx"), human_cdna_fa))
+                                           ".cdna.ncrna.ercc92.k15.", salmonversion, 
+                                           ".sidx"), human_cdna_fa))
 system(cmd)
 
 
@@ -49,7 +52,8 @@ cmd <- sprintf("bash -c '%s index -t %s -i %s --type quasi'",
                salmonbin,
                paste0("<(cat ", mouse_cdna_fa, " ", mouse_ncrna_fa, " ", ercc_fa, ")"),
                gsub("cdna.all.fa$", paste0(mouse_ensembl_version, 
-                                           ".cdna.ncrna.ercc92.sidx"), mouse_cdna_fa))
+                                           ".cdna.ncrna.ercc92.", salmonversion,
+                                           ".sidx"), mouse_cdna_fa))
 system(cmd)
 
 ## Index for shorter reads
@@ -57,7 +61,8 @@ cmd <- sprintf("bash -c '%s index -t %s -i %s --type quasi -k 15'",
                salmonbin,
                paste0("<(cat ", mouse_cdna_fa, " ", mouse_ncrna_fa, " ", ercc_fa, ")"),
                gsub("cdna.all.fa$", paste0(mouse_ensembl_version, 
-                                           ".cdna.ncrna.ercc92.k15.sidx"), mouse_cdna_fa))
+                                           ".cdna.ncrna.ercc92.k15.", salmonversion, 
+                                           ".sidx"), mouse_cdna_fa))
 system(cmd)
 
 ## Zebrafish cDNA & ncRNA + ERCC
@@ -65,7 +70,8 @@ cmd <- sprintf("bash -c '%s index -t %s -i %s --type quasi'",
                salmonbin,
                paste0("<(cat ", zebrafish_cdna_fa, " ", zebrafish_ncrna_fa, " ", ercc_fa, ")"),
                gsub("cdna.all.fa$", paste0(zebrafish_ensembl_version, 
-                                           ".cdna.ncrna.ercc92.sidx"), zebrafish_cdna_fa))
+                                           ".cdna.ncrna.ercc92.", salmonversion, 
+                                           ".sidx"), zebrafish_cdna_fa))
 system(cmd)
 
 ## Index for shorter reads
@@ -73,7 +79,8 @@ cmd <- sprintf("bash -c '%s index -t %s -i %s --type quasi -k 15'",
                salmonbin,
                paste0("<(cat ", zebrafish_cdna_fa, " ", zebrafish_ncrna_fa, " ", ercc_fa, ")"),
                gsub("cdna.all.fa$", paste0(zebrafish_ensembl_version, 
-                                           ".cdna.ncrna.ercc92.k15.sidx"), zebrafish_cdna_fa))
+                                           ".cdna.ncrna.ercc92.k15.", salmonversion,
+                                           ".sidx"), zebrafish_cdna_fa))
 system(cmd)
 
 ## -------------------------------------------------------------------------- ##
