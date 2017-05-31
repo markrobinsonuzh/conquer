@@ -7,6 +7,12 @@ output:
     keep_md: yes
 ---
 
+**Note!** Starting from version 1.1.49, the `pData` slot in a
+*MultiAssayExperiment* is deprecated in favor of `colData`. Thus, until the
+objects included in *conquer* are updated to the new version, you may need to
+run `updateObject()` on the downloaded *MultiAssayExperiment* objects to take
+advantage of the new features. .
+
 To use a data set provided in the *conquer* database, download the corresponding
 **R** object from the **MultiAssayExperiment** column. As an illustration, we 
 will assume that the file for the *GSE41265* data set has been downloaded and is 
