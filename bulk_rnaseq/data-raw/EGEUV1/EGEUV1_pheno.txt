@@ -1,0 +1,668 @@
+Experiment	center	population
+ERX162712	ERX162712	Max Planck Institute for Molecular Genetics	TSI
+ERX162762	ERX162762	Max Planck Institute for Molecular Genetics	TSI
+ERX162790	ERX162790	Institute of Clinical Molecular Biology, University of Kiel, Germany	TSI
+ERX162711	ERX162711	Max Planck Institute for Molecular Genetics	GBR
+ERX163097	ERX163097	University of Geneva	CEU
+ERX179630	ERX179630	University of Geneva	FIN
+ERX163028	ERX163028	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX179610	ERX179610	University of Geneva	YRI
+ERX162755	ERX162755	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	TSI
+ERX163154	ERX163154	University of Geneva	FIN
+ERX163088	ERX163088	Max Planck Institute for Molecular Genetics	GBR
+ERX162869	ERX162869	Institute of Clinical Molecular Biology, University of Kiel, Germany	CEU
+ERX163008	ERX163008	University of Geneva	TSI
+ERX162855	ERX162855	Centre for Genomic Regulation, Barcelona	YRI
+ERX162796	ERX162796	Centre for Genomic Regulation, Barcelona	GBR
+ERX162976	ERX162976	University of Geneva	CEU
+ERX162935	ERX162935	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	GBR
+ERX163100	ERX163100	Institute of Clinical Molecular Biology, University of Kiel, Germany	YRI
+ERX179544	ERX179544	Institute of Clinical Molecular Biology, University of Kiel, Germany	YRI
+ERX179672	ERX179672	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	YRI
+ERX179601	ERX179601	University of Geneva	YRI
+ERX179525	ERX179525	Max Planck Institute for Molecular Genetics	YRI
+ERX179535	ERX179535	University of Geneva	YRI
+ERX179567	ERX179567	Leiden University Medical Center	YRI
+ERX162751	ERX162751	Centre for Genomic Regulation, Barcelona	GBR
+ERX162782	ERX162782	Centre for Genomic Regulation, Barcelona	CEU
+ERX162784	ERX162784	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	FIN
+ERX163089	ERX163089	Max Planck Institute for Molecular Genetics	YRI
+ERX163000	ERX163000	Max Planck Institute for Molecular Genetics	CEU
+ERX163050	ERX163050	University of Geneva	YRI
+ERX163058	ERX163058	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	CEU
+ERX162847	ERX162847	Leiden University Medical Center	GBR
+ERX163056	ERX163056	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	FIN
+ERX162835	ERX162835	Leiden University Medical Center	YRI
+ERX162750	ERX162750	University of Geneva	CEU
+ERX163082	ERX163082	Max Planck Institute for Molecular Genetics	TSI
+ERX162761	ERX162761	Centre for Genomic Regulation, Barcelona	TSI
+ERX162756	ERX162756	Centre for Genomic Regulation, Barcelona	FIN
+ERX162943	ERX162943	University of Geneva	CEU
+ERX163085	ERX163085	Centre for Genomic Regulation, Barcelona	CEU
+ERX162723	ERX162723	Centre for Genomic Regulation, Barcelona	CEU
+ERX162995	ERX162995	Centre for Genomic Regulation, Barcelona	CEU
+ERX162797	ERX162797	Uppsala University	YRI
+ERX162910	ERX162910	University of Geneva	FIN
+ERX162736	ERX162736	Centre for Genomic Regulation, Barcelona	CEU
+ERX162715	ERX162715	University of Geneva	GBR
+ERX162770	ERX162770	Institute of Clinical Molecular Biology, University of Kiel, Germany	GBR
+ERX163009	ERX163009	University of Geneva	TSI
+ERX162953	ERX162953	Max Planck Institute for Molecular Genetics	TSI
+ERX179644	ERX179644	University of Geneva	YRI
+ERX179616	ERX179616	University of Geneva	CEU
+ERX179576	ERX179576	University of Geneva	CEU
+ERX179521	ERX179521	Uppsala University	YRI
+ERX179643	ERX179643	University of Geneva	YRI
+ERX179691	ERX179691	University of Geneva	YRI
+ERX179640	ERX179640	University of Geneva	FIN
+ERX163010	ERX163010	Uppsala University	TSI
+ERX162915	ERX162915	Institute of Clinical Molecular Biology, University of Kiel, Germany	YRI
+ERX163048	ERX163048	Max Planck Institute for Molecular Genetics	TSI
+ERX163036	ERX163036	Leiden University Medical Center	YRI
+ERX163002	ERX163002	Max Planck Institute for Molecular Genetics	GBR
+ERX162868	ERX162868	Centre for Genomic Regulation, Barcelona	YRI
+ERX162961	ERX162961	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	CEU
+ERX163001	ERX163001	Uppsala University	YRI
+ERX163012	ERX163012	Max Planck Institute for Molecular Genetics	CEU
+ERX162975	ERX162975	University of Geneva	FIN
+ERX162820	ERX162820	Uppsala University	CEU
+ERX162821	ERX162821	Max Planck Institute for Molecular Genetics	CEU
+ERX163160	ERX163160	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX163027	ERX163027	Centre for Genomic Regulation, Barcelona	FIN
+ERX162813	ERX162813	Institute of Clinical Molecular Biology, University of Kiel, Germany	YRI
+ERX162902	ERX162902	Centre for Genomic Regulation, Barcelona	YRI
+ERX162839	ERX162839	Centre for Genomic Regulation, Barcelona	YRI
+ERX163114	ERX163114	Max Planck Institute for Molecular Genetics	FIN
+ERX162832	ERX162832	Institute of Clinical Molecular Biology, University of Kiel, Germany	GBR
+ERX163064	ERX163064	Centre for Genomic Regulation, Barcelona	GBR
+ERX162833	ERX162833	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	TSI
+ERX163115	ERX163115	Centre for Genomic Regulation, Barcelona	GBR
+ERX162896	ERX162896	Max Planck Institute for Molecular Genetics	TSI
+ERX162942	ERX162942	Leiden University Medical Center	FIN
+ERX163059	ERX163059	Max Planck Institute for Molecular Genetics	TSI
+ERX163146	ERX163146	Max Planck Institute for Molecular Genetics	YRI
+ERX162850	ERX162850	Centre for Genomic Regulation, Barcelona	FIN
+ERX162871	ERX162871	Institute of Clinical Molecular Biology, University of Kiel, Germany	CEU
+ERX163163	ERX163163	University of Geneva	CEU
+ERX162981	ERX162981	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	YRI
+ERX163017	ERX163017	Uppsala University	CEU
+ERX163157	ERX163157	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX162929	ERX162929	University of Geneva	FIN
+ERX163051	ERX163051	Institute of Clinical Molecular Biology, University of Kiel, Germany	TSI
+ERX163070	ERX163070	Centre for Genomic Regulation, Barcelona	YRI
+ERX163084	ERX163084	Uppsala University	TSI
+ERX162959	ERX162959	Institute of Clinical Molecular Biology, University of Kiel, Germany	YRI
+ERX162912	ERX162912	University of Geneva	CEU
+ERX162997	ERX162997	Max Planck Institute for Molecular Genetics	YRI
+ERX163033	ERX163033	Centre for Genomic Regulation, Barcelona	TSI
+ERX163124	ERX163124	University of Geneva	GBR
+ERX163148	ERX163148	University of Geneva	FIN
+ERX162894	ERX162894	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	GBR
+ERX162818	ERX162818	University of Geneva	GBR
+ERX162793	ERX162793	University of Geneva	TSI
+ERX163165	ERX163165	Centre for Genomic Regulation, Barcelona	TSI
+ERX163127	ERX163127	Leiden University Medical Center	GBR
+ERX162807	ERX162807	Institute of Clinical Molecular Biology, University of Kiel, Germany	CEU
+ERX163068	ERX163068	University of Geneva	GBR
+ERX163162	ERX163162	Uppsala University	CEU
+ERX162892	ERX162892	Uppsala University	GBR
+ERX162952	ERX162952	University of Geneva	FIN
+ERX162936	ERX162936	Centre for Genomic Regulation, Barcelona	GBR
+ERX162899	ERX162899	Max Planck Institute for Molecular Genetics	CEU
+ERX179560	ERX179560	University of Geneva	CEU
+ERX179512	ERX179512	Institute of Clinical Molecular Biology, University of Kiel, Germany	TSI
+ERX179537	ERX179537	University of Geneva	GBR
+ERX179533	ERX179533	University of Geneva	TSI
+ERX179510	ERX179510	University of Geneva	YRI
+ERX179565	ERX179565	University of Geneva	CEU
+ERX179555	ERX179555	University of Geneva	TSI
+ERX179516	ERX179516	University of Geneva	CEU
+ERX179556	ERX179556	University of Geneva	TSI
+ERX179532	ERX179532	University of Geneva	CEU
+ERX162725	ERX162725	Leiden University Medical Center	CEU
+ERX163044	ERX163044	Institute of Clinical Molecular Biology, University of Kiel, Germany	TSI
+ERX163106	ERX163106	University of Geneva	GBR
+ERX163077	ERX163077	University of Geneva	CEU
+ERX163101	ERX163101	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	FIN
+ERX163029	ERX163029	Max Planck Institute for Molecular Genetics	CEU
+ERX162802	ERX162802	Centre for Genomic Regulation, Barcelona	YRI
+ERX163042	ERX163042	University of Geneva	TSI
+ERX162718	ERX162718	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	GBR
+ERX162921	ERX162921	Uppsala University	GBR
+ERX162859	ERX162859	University of Geneva	YRI
+ERX162883	ERX162883	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	FIN
+ERX163151	ERX163151	Uppsala University	CEU
+ERX163057	ERX163057	University of Geneva	FIN
+ERX162874	ERX162874	Max Planck Institute for Molecular Genetics	YRI
+ERX162931	ERX162931	Max Planck Institute for Molecular Genetics	TSI
+ERX162906	ERX162906	Institute of Clinical Molecular Biology, University of Kiel, Germany	TSI
+ERX163116	ERX163116	University of Geneva	FIN
+ERX162937	ERX162937	University of Geneva	TSI
+ERX162778	ERX162778	University of Geneva	TSI
+ERX162781	ERX162781	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX162993	ERX162993	Centre for Genomic Regulation, Barcelona	FIN
+ERX162962	ERX162962	Uppsala University	FIN
+ERX162911	ERX162911	University of Geneva	TSI
+ERX163096	ERX163096	Centre for Genomic Regulation, Barcelona	FIN
+ERX163007	ERX163007	Uppsala University	GBR
+ERX162878	ERX162878	Max Planck Institute for Molecular Genetics	FIN
+ERX163103	ERX163103	Centre for Genomic Regulation, Barcelona	CEU
+ERX162805	ERX162805	Centre for Genomic Regulation, Barcelona	YRI
+ERX162743	ERX162743	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	GBR
+ERX162948	ERX162948	University of Geneva	TSI
+ERX162775	ERX162775	Institute of Clinical Molecular Biology, University of Kiel, Germany	TSI
+ERX163034	ERX163034	University of Geneva	FIN
+ERX162957	ERX162957	Max Planck Institute for Molecular Genetics	YRI
+ERX163005	ERX163005	Leiden University Medical Center	CEU
+ERX162988	ERX162988	University of Geneva	CEU
+ERX162758	ERX162758	Uppsala University	GBR
+ERX162731	ERX162731	Institute of Clinical Molecular Biology, University of Kiel, Germany	GBR
+ERX162923	ERX162923	Max Planck Institute for Molecular Genetics	CEU
+ERX162996	ERX162996	Institute of Clinical Molecular Biology, University of Kiel, Germany	TSI
+ERX163140	ERX163140	Centre for Genomic Regulation, Barcelona	YRI
+ERX163003	ERX163003	Centre for Genomic Regulation, Barcelona	CEU
+ERX162950	ERX162950	Leiden University Medical Center	TSI
+ERX163118	ERX163118	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	GBR
+ERX162854	ERX162854	University of Geneva	GBR
+ERX163119	ERX163119	University of Geneva	FIN
+ERX163111	ERX163111	University of Geneva	FIN
+ERX162893	ERX162893	University of Geneva	YRI
+ERX162861	ERX162861	Leiden University Medical Center	CEU
+ERX163063	ERX163063	Centre for Genomic Regulation, Barcelona	FIN
+ERX163132	ERX163132	Institute of Clinical Molecular Biology, University of Kiel, Germany	TSI
+ERX162742	ERX162742	Uppsala University	YRI
+ERX163093	ERX163093	Max Planck Institute for Molecular Genetics	TSI
+ERX162814	ERX162814	Leiden University Medical Center	YRI
+ERX162971	ERX162971	Centre for Genomic Regulation, Barcelona	TSI
+ERX163143	ERX163143	Institute of Clinical Molecular Biology, University of Kiel, Germany	YRI
+ERX162845	ERX162845	Leiden University Medical Center	GBR
+ERX162927	ERX162927	University of Geneva	FIN
+ERX162843	ERX162843	Centre for Genomic Regulation, Barcelona	TSI
+ERX162841	ERX162841	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX162897	ERX162897	Centre for Genomic Regulation, Barcelona	CEU
+ERX162951	ERX162951	University of Geneva	FIN
+ERX163045	ERX163045	Uppsala University	FIN
+ERX163109	ERX163109	Centre for Genomic Regulation, Barcelona	TSI
+ERX162903	ERX162903	Uppsala University	FIN
+ERX162998	ERX162998	Leiden University Medical Center	GBR
+ERX162816	ERX162816	Max Planck Institute for Molecular Genetics	FIN
+ERX162930	ERX162930	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	CEU
+ERX162967	ERX162967	Uppsala University	TSI
+ERX162800	ERX162800	Uppsala University	GBR
+ERX163126	ERX163126	Centre for Genomic Regulation, Barcelona	CEU
+ERX162732	ERX162732	University of Geneva	TSI
+ERX162799	ERX162799	Leiden University Medical Center	CEU
+ERX163137	ERX163137	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX162749	ERX162749	Centre for Genomic Regulation, Barcelona	FIN
+ERX162792	ERX162792	Max Planck Institute for Molecular Genetics	YRI
+ERX163172	ERX163172	Max Planck Institute for Molecular Genetics	FIN
+ERX163066	ERX163066	University of Geneva	FIN
+ERX162872	ERX162872	Leiden University Medical Center	CEU
+ERX163013	ERX163013	University of Geneva	CEU
+ERX162831	ERX162831	University of Geneva	CEU
+ERX163170	ERX163170	Centre for Genomic Regulation, Barcelona	TSI
+ERX162908	ERX162908	Institute of Clinical Molecular Biology, University of Kiel, Germany	YRI
+ERX162983	ERX162983	Centre for Genomic Regulation, Barcelona	FIN
+ERX162754	ERX162754	Centre for Genomic Regulation, Barcelona	FIN
+ERX162803	ERX162803	University of Geneva	CEU
+ERX163043	ERX163043	University of Geneva	TSI
+ERX163015	ERX163015	University of Geneva	YRI
+ERX162920	ERX162920	Institute of Clinical Molecular Biology, University of Kiel, Germany	CEU
+ERX162759	ERX162759	University of Geneva	FIN
+ERX162713	ERX162713	Centre for Genomic Regulation, Barcelona	GBR
+ERX163022	ERX163022	University of Geneva	TSI
+ERX163144	ERX163144	Max Planck Institute for Molecular Genetics	YRI
+ERX162945	ERX162945	University of Geneva	YRI
+ERX162866	ERX162866	Institute of Clinical Molecular Biology, University of Kiel, Germany	TSI
+ERX162828	ERX162828	Uppsala University	GBR
+ERX163004	ERX163004	University of Geneva	FIN
+ERX179507	ERX179507	University of Geneva	YRI
+ERX179582	ERX179582	University of Geneva	CEU
+ERX179667	ERX179667	University of Geneva	CEU
+ERX179687	ERX179687	University of Geneva	YRI
+ERX179684	ERX179684	University of Geneva	YRI
+ERX179641	ERX179641	Uppsala University	TSI
+ERX179661	ERX179661	University of Geneva	TSI
+ERX179668	ERX179668	University of Geneva	YRI
+ERX179543	ERX179543	Institute of Clinical Molecular Biology, University of Kiel, Germany	YRI
+ERX179704	ERX179704	University of Geneva	CEU
+ERX179685	ERX179685	University of Geneva	YRI
+ERX179586	ERX179586	University of Geneva	YRI
+ERX179681	ERX179681	University of Geneva	CEU
+ERX179536	ERX179536	University of Geneva	YRI
+ERX179612	ERX179612	University of Geneva	YRI
+ERX179593	ERX179593	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	TSI
+ERX179635	ERX179635	University of Geneva	CEU
+ERX179519	ERX179519	University of Geneva	YRI
+ERX179664	ERX179664	University of Geneva	CEU
+ERX179515	ERX179515	University of Geneva	FIN
+ERX179600	ERX179600	University of Geneva	TSI
+ERX179609	ERX179609	Leiden University Medical Center	TSI
+ERX179518	ERX179518	University of Geneva	YRI
+ERX179522	ERX179522	University of Geneva	GBR
+ERX179571	ERX179571	University of Geneva	CEU
+ERX179676	ERX179676	University of Geneva	YRI
+ERX179702	ERX179702	University of Geneva	CEU
+ERX179634	ERX179634	Max Planck Institute for Molecular Genetics	TSI
+ERX179618	ERX179618	University of Geneva	TSI
+ERX179591	ERX179591	University of Geneva	YRI
+ERX179577	ERX179577	University of Geneva	YRI
+ERX162787	ERX162787	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX162852	ERX162852	Leiden University Medical Center	GBR
+ERX162834	ERX162834	University of Geneva	GBR
+ERX162972	ERX162972	University of Geneva	TSI
+ERX163067	ERX163067	Centre for Genomic Regulation, Barcelona	GBR
+ERX163046	ERX163046	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	YRI
+ERX162753	ERX162753	Max Planck Institute for Molecular Genetics	GBR
+ERX162898	ERX162898	Leiden University Medical Center	TSI
+ERX162722	ERX162722	Max Planck Institute for Molecular Genetics	GBR
+ERX162730	ERX162730	Institute of Clinical Molecular Biology, University of Kiel, Germany	CEU
+ERX162789	ERX162789	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	TSI
+ERX162853	ERX162853	University of Geneva	CEU
+ERX162776	ERX162776	Institute of Clinical Molecular Biology, University of Kiel, Germany	TSI
+ERX162888	ERX162888	Leiden University Medical Center	FIN
+ERX163133	ERX163133	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	GBR
+ERX162774	ERX162774	Max Planck Institute for Molecular Genetics	GBR
+ERX162922	ERX162922	Uppsala University	YRI
+ERX162857	ERX162857	University of Geneva	TSI
+ERX162956	ERX162956	University of Geneva	YRI
+ERX162744	ERX162744	Institute of Clinical Molecular Biology, University of Kiel, Germany	GBR
+ERX163153	ERX163153	University of Geneva	CEU
+ERX163095	ERX163095	University of Geneva	TSI
+ERX162933	ERX162933	University of Geneva	YRI
+ERX162729	ERX162729	Centre for Genomic Regulation, Barcelona	TSI
+ERX163098	ERX163098	Max Planck Institute for Molecular Genetics	CEU
+ERX162795	ERX162795	University of Geneva	YRI
+ERX162918	ERX162918	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX163061	ERX163061	Leiden University Medical Center	TSI
+ERX162999	ERX162999	Max Planck Institute for Molecular Genetics	FIN
+ERX162979	ERX162979	Centre for Genomic Regulation, Barcelona	YRI
+ERX162955	ERX162955	Centre for Genomic Regulation, Barcelona	CEU
+ERX162794	ERX162794	Centre for Genomic Regulation, Barcelona	TSI
+ERX162973	ERX162973	Leiden University Medical Center	YRI
+ERX163107	ERX163107	Institute of Clinical Molecular Biology, University of Kiel, Germany	TSI
+ERX163087	ERX163087	Leiden University Medical Center	GBR
+ERX162719	ERX162719	Centre for Genomic Regulation, Barcelona	FIN
+ERX163150	ERX163150	University of Geneva	GBR
+ERX162947	ERX162947	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	TSI
+ERX162858	ERX162858	University of Geneva	YRI
+ERX162879	ERX162879	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX163117	ERX163117	University of Geneva	FIN
+ERX163142	ERX163142	Leiden University Medical Center	CEU
+ERX162720	ERX162720	Centre for Genomic Regulation, Barcelona	YRI
+ERX163023	ERX163023	Uppsala University	YRI
+ERX163147	ERX163147	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX163086	ERX163086	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	CEU
+ERX162734	ERX162734	Centre for Genomic Regulation, Barcelona	GBR
+ERX162764	ERX162764	Uppsala University	CEU
+ERX162817	ERX162817	Max Planck Institute for Molecular Genetics	FIN
+ERX163026	ERX163026	Uppsala University	TSI
+ERX162728	ERX162728	University of Geneva	CEU
+ERX162836	ERX162836	Max Planck Institute for Molecular Genetics	TSI
+ERX162944	ERX162944	Max Planck Institute for Molecular Genetics	YRI
+ERX162827	ERX162827	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	GBR
+ERX162887	ERX162887	Centre for Genomic Regulation, Barcelona	GBR
+ERX162727	ERX162727	Centre for Genomic Regulation, Barcelona	CEU
+ERX163035	ERX163035	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	YRI
+ERX162895	ERX162895	Centre for Genomic Regulation, Barcelona	GBR
+ERX162875	ERX162875	Uppsala University	FIN
+ERX163060	ERX163060	University of Geneva	CEU
+ERX162829	ERX162829	University of Geneva	GBR
+ERX162934	ERX162934	University of Geneva	TSI
+ERX162925	ERX162925	Centre for Genomic Regulation, Barcelona	FIN
+ERX162849	ERX162849	University of Geneva	CEU
+ERX163019	ERX163019	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX162788	ERX162788	Leiden University Medical Center	TSI
+ERX163073	ERX163073	Institute of Clinical Molecular Biology, University of Kiel, Germany	GBR
+ERX163030	ERX163030	University of Geneva	TSI
+ERX162757	ERX162757	University of Geneva	YRI
+ERX163125	ERX163125	Centre for Genomic Regulation, Barcelona	FIN
+ERX162992	ERX162992	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	FIN
+ERX162745	ERX162745	Max Planck Institute for Molecular Genetics	CEU
+ERX163018	ERX163018	Max Planck Institute for Molecular Genetics	GBR
+ERX162773	ERX162773	Institute of Clinical Molecular Biology, University of Kiel, Germany	TSI
+ERX162777	ERX162777	Centre for Genomic Regulation, Barcelona	FIN
+ERX162823	ERX162823	Max Planck Institute for Molecular Genetics	TSI
+ERX163149	ERX163149	University of Geneva	GBR
+ERX163164	ERX163164	Leiden University Medical Center	CEU
+ERX163047	ERX163047	University of Geneva	FIN
+ERX163134	ERX163134	University of Geneva	GBR
+ERX162864	ERX162864	Centre for Genomic Regulation, Barcelona	YRI
+ERX163032	ERX163032	Uppsala University	GBR
+ERX163031	ERX163031	University of Geneva	CEU
+ERX163090	ERX163090	Leiden University Medical Center	CEU
+ERX162905	ERX162905	Leiden University Medical Center	FIN
+ERX163041	ERX163041	Leiden University Medical Center	CEU
+ERX162804	ERX162804	Institute of Clinical Molecular Biology, University of Kiel, Germany	YRI
+ERX162924	ERX162924	University of Geneva	YRI
+ERX162960	ERX162960	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX162733	ERX162733	Centre for Genomic Regulation, Barcelona	FIN
+ERX162939	ERX162939	Max Planck Institute for Molecular Genetics	TSI
+ERX162801	ERX162801	University of Geneva	FIN
+ERX163055	ERX163055	Centre for Genomic Regulation, Barcelona	YRI
+ERX162840	ERX162840	Uppsala University	GBR
+ERX162970	ERX162970	Max Planck Institute for Molecular Genetics	GBR
+ERX162989	ERX162989	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	TSI
+ERX163169	ERX163169	University of Geneva	YRI
+ERX163062	ERX163062	University of Geneva	TSI
+ERX179608	ERX179608	University of Geneva	CEU
+ERX179550	ERX179550	Uppsala University	YRI
+ERX179561	ERX179561	University of Geneva	TSI
+ERX179629	ERX179629	University of Geneva	CEU
+ERX179625	ERX179625	University of Geneva	FIN
+ERX179514	ERX179514	University of Geneva	GBR
+ERX179578	ERX179578	University of Geneva	TSI
+ERX179594	ERX179594	University of Geneva	FIN
+ERX179528	ERX179528	University of Geneva	CEU
+ERX179523	ERX179523	University of Geneva	YRI
+ERX179552	ERX179552	University of Geneva	CEU
+ERX179558	ERX179558	University of Geneva	CEU
+ERX179563	ERX179563	University of Geneva	YRI
+ERX179585	ERX179585	University of Geneva	YRI
+ERX179548	ERX179548	University of Geneva	CEU
+ERX179526	ERX179526	University of Geneva	CEU
+ERX179631	ERX179631	University of Geneva	GBR
+ERX179579	ERX179579	University of Geneva	CEU
+ERX179699	ERX179699	University of Geneva	YRI
+ERX179566	ERX179566	University of Geneva	FIN
+ERX179658	ERX179658	University of Geneva	TSI
+ERX179706	ERX179706	University of Geneva	YRI
+ERX179542	ERX179542	Institute of Clinical Molecular Biology, University of Kiel, Germany	GBR
+ERX179520	ERX179520	University of Geneva	YRI
+ERX179700	ERX179700	University of Geneva	CEU
+ERX179624	ERX179624	University of Geneva	GBR
+ERX179529	ERX179529	University of Geneva	FIN
+ERX179656	ERX179656	University of Geneva	YRI
+ERX179547	ERX179547	University of Geneva	CEU
+ERX179659	ERX179659	University of Geneva	YRI
+ERX179653	ERX179653	University of Geneva	YRI
+ERX179569	ERX179569	University of Geneva	TSI
+ERX179708	ERX179708	University of Geneva	CEU
+ERX179551	ERX179551	University of Geneva	CEU
+ERX179690	ERX179690	University of Geneva	YRI
+ERX179557	ERX179557	University of Geneva	FIN
+ERX179637	ERX179637	University of Geneva	CEU
+ERX179607	ERX179607	University of Geneva	FIN
+ERX179540	ERX179540	University of Geneva	TSI
+ERX179670	ERX179670	University of Geneva	CEU
+ERX179647	ERX179647	University of Geneva	GBR
+ERX179545	ERX179545	University of Geneva	CEU
+ERX179663	ERX179663	University of Geneva	GBR
+ERX179541	ERX179541	University of Geneva	YRI
+ERX179570	ERX179570	University of Geneva	YRI
+ERX179596	ERX179596	University of Geneva	CEU
+ERX179703	ERX179703	University of Geneva	CEU
+ERX179590	ERX179590	University of Geneva	CEU
+ERX179553	ERX179553	University of Geneva	YRI
+ERX179679	ERX179679	University of Geneva	CEU
+ERX179598	ERX179598	University of Geneva	YRI
+ERX179508	ERX179508	University of Geneva	CEU
+ERX162914	ERX162914	Centre for Genomic Regulation, Barcelona	GBR
+ERX163128	ERX163128	Max Planck Institute for Molecular Genetics	FIN
+ERX163120	ERX163120	University of Geneva	YRI
+ERX162890	ERX162890	Max Planck Institute for Molecular Genetics	FIN
+ERX162822	ERX162822	Max Planck Institute for Molecular Genetics	CEU
+ERX162882	ERX162882	Uppsala University	GBR
+ERX162873	ERX162873	University of Geneva	YRI
+ERX163069	ERX163069	Leiden University Medical Center	GBR
+ERX162907	ERX162907	Institute of Clinical Molecular Biology, University of Kiel, Germany	CEU
+ERX162737	ERX162737	Centre for Genomic Regulation, Barcelona	CEU
+ERX163166	ERX163166	Centre for Genomic Regulation, Barcelona	YRI
+ERX162766	ERX162766	Centre for Genomic Regulation, Barcelona	CEU
+ERX163139	ERX163139	Max Planck Institute for Molecular Genetics	TSI
+ERX162738	ERX162738	Institute of Clinical Molecular Biology, University of Kiel, Germany	CEU
+ERX163054	ERX163054	Centre for Genomic Regulation, Barcelona	CEU
+ERX163130	ERX163130	Uppsala University	YRI
+ERX162909	ERX162909	Leiden University Medical Center	GBR
+ERX162721	ERX162721	Uppsala University	YRI
+ERX162940	ERX162940	University of Geneva	TSI
+ERX162824	ERX162824	Centre for Genomic Regulation, Barcelona	YRI
+ERX162901	ERX162901	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	GBR
+ERX163011	ERX163011	Centre for Genomic Regulation, Barcelona	GBR
+ERX163152	ERX163152	Centre for Genomic Regulation, Barcelona	TSI
+ERX163065	ERX163065	Centre for Genomic Regulation, Barcelona	CEU
+ERX162785	ERX162785	Institute of Clinical Molecular Biology, University of Kiel, Germany	GBR
+ERX162724	ERX162724	Max Planck Institute for Molecular Genetics	YRI
+ERX162746	ERX162746	Centre for Genomic Regulation, Barcelona	GBR
+ERX163141	ERX163141	Centre for Genomic Regulation, Barcelona	CEU
+ERX162941	ERX162941	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	GBR
+ERX162768	ERX162768	Leiden University Medical Center	CEU
+ERX162900	ERX162900	Centre for Genomic Regulation, Barcelona	YRI
+ERX162812	ERX162812	Institute of Clinical Molecular Biology, University of Kiel, Germany	TSI
+ERX162842	ERX162842	Leiden University Medical Center	YRI
+ERX162977	ERX162977	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	TSI
+ERX162740	ERX162740	Centre for Genomic Regulation, Barcelona	FIN
+ERX162811	ERX162811	Leiden University Medical Center	TSI
+ERX162844	ERX162844	Centre for Genomic Regulation, Barcelona	YRI
+ERX162860	ERX162860	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	CEU
+ERX162726	ERX162726	Centre for Genomic Regulation, Barcelona	CEU
+ERX162810	ERX162810	University of Geneva	FIN
+ERX163079	ERX163079	Institute of Clinical Molecular Biology, University of Kiel, Germany	YRI
+ERX163052	ERX163052	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	FIN
+ERX163021	ERX163021	University of Geneva	GBR
+ERX162886	ERX162886	Leiden University Medical Center	YRI
+ERX162938	ERX162938	Centre for Genomic Regulation, Barcelona	FIN
+ERX162735	ERX162735	Centre for Genomic Regulation, Barcelona	YRI
+ERX162838	ERX162838	Max Planck Institute for Molecular Genetics	YRI
+ERX162779	ERX162779	Centre for Genomic Regulation, Barcelona	GBR
+ERX163076	ERX163076	University of Geneva	FIN
+ERX162946	ERX162946	Leiden University Medical Center	GBR
+ERX163113	ERX163113	Max Planck Institute for Molecular Genetics	TSI
+ERX162919	ERX162919	University of Geneva	FIN
+ERX162717	ERX162717	Leiden University Medical Center	GBR
+ERX162932	ERX162932	Institute of Clinical Molecular Biology, University of Kiel, Germany	TSI
+ERX162846	ERX162846	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	FIN
+ERX163024	ERX163024	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	YRI
+ERX162884	ERX162884	Max Planck Institute for Molecular Genetics	YRI
+ERX162819	ERX162819	Centre for Genomic Regulation, Barcelona	TSI
+ERX163135	ERX163135	University of Geneva	YRI
+ERX163083	ERX163083	Max Planck Institute for Molecular Genetics	FIN
+ERX162772	ERX162772	Institute of Clinical Molecular Biology, University of Kiel, Germany	GBR
+ERX162870	ERX162870	Uppsala University	CEU
+ERX163161	ERX163161	Leiden University Medical Center	GBR
+ERX163145	ERX163145	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	YRI
+ERX163171	ERX163171	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	YRI
+ERX162928	ERX162928	Institute of Clinical Molecular Biology, University of Kiel, Germany	YRI
+ERX163039	ERX163039	Max Planck Institute for Molecular Genetics	FIN
+ERX162716	ERX162716	University of Geneva	TSI
+ERX163159	ERX163159	University of Geneva	TSI
+ERX162809	ERX162809	Centre for Genomic Regulation, Barcelona	FIN
+ERX163053	ERX163053	Centre for Genomic Regulation, Barcelona	FIN
+ERX162982	ERX162982	Max Planck Institute for Molecular Genetics	GBR
+ERX163040	ERX163040	Institute of Clinical Molecular Biology, University of Kiel, Germany	CEU
+ERX162747	ERX162747	Uppsala University	TSI
+ERX163105	ERX163105	Centre for Genomic Regulation, Barcelona	CEU
+ERX162877	ERX162877	University of Geneva	CEU
+ERX162739	ERX162739	Max Planck Institute for Molecular Genetics	GBR
+ERX162791	ERX162791	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	TSI
+ERX163167	ERX163167	Uppsala University	CEU
+ERX163112	ERX163112	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	GBR
+ERX162826	ERX162826	Leiden University Medical Center	TSI
+ERX162969	ERX162969	University of Geneva	GBR
+ERX163078	ERX163078	Uppsala University	GBR
+ERX163129	ERX163129	Uppsala University	YRI
+ERX162867	ERX162867	University of Geneva	YRI
+ERX162714	ERX162714	Uppsala University	TSI
+ERX162808	ERX162808	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	TSI
+ERX162985	ERX162985	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	GBR
+ERX179513	ERX179513	University of Geneva	YRI
+ERX179695	ERX179695	University of Geneva	YRI
+ERX179539	ERX179539	University of Geneva	CEU
+ERX179574	ERX179574	University of Geneva	CEU
+ERX179673	ERX179673	University of Geneva	CEU
+ERX179632	ERX179632	University of Geneva	YRI
+ERX179627	ERX179627	University of Geneva	CEU
+ERX179688	ERX179688	University of Geneva	YRI
+ERX179546	ERX179546	University of Geneva	CEU
+ERX179660	ERX179660	Institute of Clinical Molecular Biology, University of Kiel, Germany	YRI
+ERX179623	ERX179623	University of Geneva	YRI
+ERX179504	ERX179504	University of Geneva	CEU
+ERX179682	ERX179682	University of Geneva	YRI
+ERX179689	ERX179689	University of Geneva	GBR
+ERX179693	ERX179693	Leiden University Medical Center	GBR
+ERX179583	ERX179583	University of Geneva	YRI
+ERX179581	ERX179581	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	FIN
+ERX179654	ERX179654	University of Geneva	CEU
+ERX179657	ERX179657	University of Geneva	YRI
+ERX179524	ERX179524	University of Geneva	YRI
+ERX179650	ERX179650	Max Planck Institute for Molecular Genetics	FIN
+ERX179648	ERX179648	University of Geneva	CEU
+ERX179587	ERX179587	Max Planck Institute for Molecular Genetics	GBR
+ERX179506	ERX179506	University of Geneva	CEU
+ERX179669	ERX179669	University of Geneva	YRI
+ERX179697	ERX179697	University of Geneva	YRI
+ERX179674	ERX179674	University of Geneva	YRI
+ERX179592	ERX179592	University of Geneva	YRI
+ERX179662	ERX179662	University of Geneva	GBR
+ERX179683	ERX179683	Centro Nacional de Análisis Genómico	GBR
+ERX179568	ERX179568	University of Geneva	GBR
+ERX179694	ERX179694	University of Geneva	YRI
+ERX179620	ERX179620	University of Geneva	CEU
+ERX179613	ERX179613	University of Geneva	CEU
+ERX179678	ERX179678	University of Geneva	FIN
+ERX179575	ERX179575	University of Geneva	CEU
+ERX179628	ERX179628	University of Geneva	CEU
+ERX179538	ERX179538	University of Geneva	GBR
+ERX179639	ERX179639	Leiden University Medical Center	FIN
+ERX179701	ERX179701	Uppsala University	FIN
+ERX179509	ERX179509	University of Geneva	CEU
+ERX179645	ERX179645	University of Geneva	CEU
+ERX179615	ERX179615	University of Geneva	YRI
+ERX179602	ERX179602	University of Geneva	TSI
+ERX179692	ERX179692	University of Geneva	FIN
+ERX179671	ERX179671	University of Geneva	YRI
+ERX179655	ERX179655	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX179651	ERX179651	University of Geneva	FIN
+ERX179622	ERX179622	University of Geneva	YRI
+ERX179564	ERX179564	Uppsala University	GBR
+ERX179633	ERX179633	University of Geneva	YRI
+ERX179531	ERX179531	University of Geneva	CEU
+ERX179677	ERX179677	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	GBR
+ERX179597	ERX179597	University of Geneva	FIN
+ERX179614	ERX179614	University of Geneva	CEU
+ERX179530	ERX179530	University of Geneva	YRI
+ERX179642	ERX179642	University of Geneva	YRI
+ERX179680	ERX179680	University of Geneva	CEU
+ERX179666	ERX179666	University of Geneva	YRI
+ERX179696	ERX179696	University of Geneva	CEU
+ERX179649	ERX179649	Institute of Clinical Molecular Biology, University of Kiel, Germany	GBR
+ERX162767	ERX162767	Max Planck Institute for Molecular Genetics	FIN
+ERX163156	ERX163156	Uppsala University	CEU
+ERX162752	ERX162752	Max Planck Institute for Molecular Genetics	TSI
+ERX163037	ERX163037	Institute of Clinical Molecular Biology, University of Kiel, Germany	GBR
+ERX163014	ERX163014	University of Geneva	YRI
+ERX162741	ERX162741	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	TSI
+ERX163081	ERX163081	Centre for Genomic Regulation, Barcelona	GBR
+ERX163102	ERX163102	Centre for Genomic Regulation, Barcelona	TSI
+ERX162968	ERX162968	Centre for Genomic Regulation, Barcelona	TSI
+ERX162848	ERX162848	Institute of Clinical Molecular Biology, University of Kiel, Germany	GBR
+ERX162913	ERX162913	University of Geneva	FIN
+ERX162825	ERX162825	Centre for Genomic Regulation, Barcelona	GBR
+ERX163092	ERX163092	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX162815	ERX162815	Max Planck Institute for Molecular Genetics	GBR
+ERX162917	ERX162917	Max Planck Institute for Molecular Genetics	YRI
+ERX163016	ERX163016	Centre for Genomic Regulation, Barcelona	GBR
+ERX163006	ERX163006	Institute of Clinical Molecular Biology, University of Kiel, Germany	GBR
+ERX162763	ERX162763	Centre for Genomic Regulation, Barcelona	TSI
+ERX162926	ERX162926	Max Planck Institute for Molecular Genetics	CEU
+ERX163138	ERX163138	Leiden University Medical Center	FIN
+ERX162958	ERX162958	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	FIN
+ERX162885	ERX162885	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	GBR
+ERX163080	ERX163080	Uppsala University	YRI
+ERX162978	ERX162978	University of Geneva	CEU
+ERX163131	ERX163131	Centre for Genomic Regulation, Barcelona	FIN
+ERX162865	ERX162865	University of Geneva	YRI
+ERX162837	ERX162837	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX162780	ERX162780	University of Geneva	YRI
+ERX162984	ERX162984	Centre for Genomic Regulation, Barcelona	TSI
+ERX162980	ERX162980	Institute of Clinical Molecular Biology, University of Kiel, Germany	YRI
+ERX162891	ERX162891	Max Planck Institute for Molecular Genetics	GBR
+ERX162889	ERX162889	University of Geneva	GBR
+ERX162966	ERX162966	University of Geneva	GBR
+ERX162783	ERX162783	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX162991	ERX162991	Uppsala University	GBR
+ERX163049	ERX163049	University of Geneva	TSI
+ERX162771	ERX162771	Max Planck Institute for Molecular Genetics	FIN
+ERX162963	ERX162963	Leiden University Medical Center	YRI
+ERX163108	ERX163108	Uppsala University	YRI
+ERX162862	ERX162862	Max Planck Institute for Molecular Genetics	CEU
+ERX162769	ERX162769	Centre for Genomic Regulation, Barcelona	TSI
+ERX162904	ERX162904	Centre for Genomic Regulation, Barcelona	CEU
+ERX162881	ERX162881	Max Planck Institute for Molecular Genetics	YRI
+ERX162880	ERX162880	Centre for Genomic Regulation, Barcelona	TSI
+ERX163091	ERX163091	Leiden University Medical Center	FIN
+ERX163025	ERX163025	Centre for Genomic Regulation, Barcelona	TSI
+ERX162964	ERX162964	Max Planck Institute for Molecular Genetics	CEU
+ERX163075	ERX163075	Centre for Genomic Regulation, Barcelona	YRI
+ERX163038	ERX163038	Max Planck Institute for Molecular Genetics	CEU
+ERX163072	ERX163072	Centre for Genomic Regulation, Barcelona	FIN
+ERX162830	ERX162830	University of Geneva	GBR
+ERX163155	ERX163155	University of Geneva	CEU
+ERX162786	ERX162786	University of Geneva	GBR
+ERX162986	ERX162986	Centre for Genomic Regulation, Barcelona	TSI
+ERX162806	ERX162806	Institute of Clinical Molecular Biology, University of Kiel, Germany	TSI
+ERX163123	ERX163123	University of Geneva	FIN
+ERX163099	ERX163099	Institute of Clinical Molecular Biology, University of Kiel, Germany	CEU
+ERX163168	ERX163168	Uppsala University	CEU
+ERX162990	ERX162990	Institute of Clinical Molecular Biology, University of Kiel, Germany	CEU
+ERX163074	ERX163074	Leiden University Medical Center	YRI
+ERX163158	ERX163158	University of Geneva	TSI
+ERX163094	ERX163094	University of Geneva	TSI
+ERX162851	ERX162851	University of Geneva	FIN
+ERX162974	ERX162974	Uppsala University	TSI
+ERX162748	ERX162748	Max Planck Institute for Molecular Genetics	GBR
+ERX162876	ERX162876	University of Geneva	CEU
+ERX163121	ERX163121	Centre for Genomic Regulation, Barcelona	FIN
+ERX162954	ERX162954	Max Planck Institute for Molecular Genetics	FIN
+ERX162994	ERX162994	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX163110	ERX163110	Institute of Clinical Molecular Biology, University of Kiel, Germany	FIN
+ERX163136	ERX163136	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	FIN
+ERX162765	ERX162765	Institute of Clinical Molecular Biology, University of Kiel, Germany	CEU
+ERX162798	ERX162798	University of Geneva	YRI
+ERX163020	ERX163020	University of Geneva	CEU
+ERX162856	ERX162856	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	YRI
+ERX162949	ERX162949	Leiden University Medical Center	FIN
+ERX163071	ERX163071	Leiden University Medical Center	CEU
+ERX162916	ERX162916	University of Geneva	CEU
+ERX162760	ERX162760	Centre for Genomic Regulation, Barcelona	GBR
+ERX163104	ERX163104	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	YRI
+ERX162965	ERX162965	University of Geneva	YRI
+ERX162863	ERX162863	Uppsala University	YRI
+ERX163122	ERX163122	Institute of Clinical Molecular Biology, University of Kiel, Germany	GBR
+ERX162987	ERX162987	Institute of Clinical Molecular Biology, University of Kiel, Germany	GBR
+ERX179595	ERX179595	University of Geneva	GBR
+ERX179619	ERX179619	University of Geneva	YRI
+ERX179562	ERX179562	University of Geneva	CEU
+ERX179534	ERX179534	Max Planck Institute for Molecular Genetics	CEU
+ERX179559	ERX179559	University of Geneva	TSI
+ERX179588	ERX179588	University of Geneva	GBR
+ERX179604	ERX179604	University of Geneva	CEU
+ERX179665	ERX179665	University of Geneva	YRI
+ERX179707	ERX179707	Uppsala University	CEU
+ERX179606	ERX179606	University of Geneva	CEU
+ERX179603	ERX179603	University of Geneva	CEU
+ERX179605	ERX179605	University of Geneva	YRI
+ERX179517	ERX179517	University of Geneva	CEU
+ERX179611	ERX179611	University of Geneva	CEU
+ERX179652	ERX179652	Institute of Clinical Molecular Biology, University of Kiel, Germany	CEU
+ERX179626	ERX179626	University of Geneva	CEU
+ERX179599	ERX179599	University of Geneva	YRI
+ERX179646	ERX179646	University of Geneva	YRI
+ERX179554	ERX179554	University of Geneva	YRI
+ERX179511	ERX179511	University of Geneva	YRI
+ERX179549	ERX179549	University of Geneva	YRI
+ERX179617	ERX179617	University of Geneva	TSI
+ERX179638	ERX179638	University of Geneva	CEU
+ERX179527	ERX179527	University of Geneva	GBR
+ERX179686	ERX179686	University of Geneva	FIN
+ERX179505	ERX179505	University of Geneva	YRI
+ERX179636	ERX179636	University of Geneva	YRI
+ERX179698	ERX179698	Leiden University Medical Center	CEU
+ERX179705	ERX179705	Helmholtz Zentrum München, German Research Center for Environmental Health, Germany	CEU
+ERX179621	ERX179621	University of Geneva	CEU
+ERX179589	ERX179589	University of Geneva	CEU
+ERX179675	ERX179675	University of Geneva	TSI
+ERX179580	ERX179580	Leiden University Medical Center	CEU
+ERX179573	ERX179573	University of Geneva	CEU
+ERX179584	ERX179584	University of Geneva	YRI
+ERX179572	ERX179572	University of Geneva	CEU
