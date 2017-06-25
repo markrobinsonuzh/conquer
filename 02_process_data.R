@@ -10,6 +10,7 @@ library(GEOquery)
 library(rmarkdown)
 library(Rtsne)
 library(rjson)
+#library(countsimQC)
 source("00_help_functions.R")
 
 generate_report <- function(id, maex, phenoid, output_format = NULL,
@@ -80,6 +81,8 @@ generate_report <- function(id, maex, phenoid, output_format = NULL,
 #' @param topdir The top directory for reading and writing data. It is assumed
 #'   that this directory has subdirectories data-mae, data-processed, data-raw,
 #'   report-multiqc and report-scater
+#' @param force Whether to force recalculation of FastQC/Salmon results even in
+#'   cases where the files already exist.
 #'   
 #' @return Does not return anything, but saves processed files and reports in 
 #'   the ./data-processed, ./data-mae, ./report-multiqc and ./report-scater
@@ -97,7 +100,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                          lps = "right", pmid = NA, datalink = NA, shortname = NA, 
                          multiqcbin = multiqcbin, 
                          aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"),
-                         topdir = ".") {
+                         topdir = ".", force = FALSE) {
 
   ## Read run info downloaded from SRA
   x <- read.delim(paste0(topdir, "/data-raw/", id, "/", id, "_SraRunInfo.csv"), 
@@ -119,7 +122,8 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
       } 
       
       if (rtype == "single") {
-        if (!all(file.exists(paste0(topdir, "/data-processed/", id, "/fastqc/", smp, "/", smp, "_fastqc.html"),
+        if (force || 
+            !all(file.exists(paste0(topdir, "/data-processed/", id, "/fastqc/", smp, "/", smp, "_fastqc.html"),
                              paste0(topdir, "/data-processed/", id, "/salmon/", smp, "/quant.sf")))) {
           
           ## Download fastq file and save temporarily
@@ -150,7 +154,8 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
         }
         if (file.exists(files)) unlink(files)
       } else if (rtype == "paired") {
-        if (!all(file.exists(paste0(topdir, "/data-processed/", id, "/fastqc/",
+        if (force || 
+            !all(file.exists(paste0(topdir, "/data-processed/", id, "/fastqc/",
                                     smp, "/", smp, c("_1", "_2"), "_fastqc.html"),
                              paste0(topdir, "/data-processed/", id, "/salmon/", 
                                     smp, "/quant.sf")))) {
