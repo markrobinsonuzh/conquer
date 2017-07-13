@@ -23,6 +23,21 @@ Danio_rerio.GRCz10.87.cdna.ncrna.ercc92.granges <-
 adapterseq <- "AGATCGGAAGAGC"
 #adapterseq <- "file:adapters.fa"
 
+## GSE66507
+process_data(id = "GSE66507", rtype = "paired",
+             index = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.0.7.2.sidx",
+             libtype = "A", salmonbin = salmonbin,
+             fastqcbin = fastqcbin, sncol = "SampleName",
+             txgenemap = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.txgenemap,
+             geodata = TRUE, phenofile = NULL,
+             gene_granges = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.granges$gene_granges,
+             tx_granges = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.granges$tx_granges,
+             groupid = "characteristics_ch1.1", organism = "Homo sapiens", genome = "GRCh38.84",
+             dotrim = FALSE, adapterseq = NULL, cutadaptbin = cutadaptbin, tmp_dir = "tmp",
+             pmid = 26293300, datalink = "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE66507",
+             shortname = "Blakeley2015", multiqcbin = multiqcbin, 
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), topdir = ".")
+
 ## GSE71585, HiSeq2000
 process_data(id = "GSE71585-GPL13112", rtype = "single",
              index = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.0.7.2.sidx",
