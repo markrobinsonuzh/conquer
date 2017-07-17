@@ -83,6 +83,7 @@ generate_report <- function(id, maex, phenoid, output_format = NULL,
 #'   report-multiqc and report-scater
 #' @param force Whether to force recalculation of FastQC/Salmon results even in
 #'   cases where the files already exist.
+#' @param bias Whether to run Salmon with bias correction
 #'   
 #' @return Does not return anything, but saves processed files and reports in 
 #'   the ./data-processed, ./data-mae, ./report-multiqc and ./report-scater
@@ -100,7 +101,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
                          lps = "right", pmid = NA, datalink = NA, shortname = NA, 
                          multiqcbin = multiqcbin, 
                          aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"),
-                         topdir = ".", force = FALSE) {
+                         topdir = ".", force = FALSE, bias = FALSE) {
 
   ## Read run info downloaded from SRA
   x <- read.delim(paste0(topdir, "/data-raw/", id, "/", id, "_SraRunInfo.csv"), 
@@ -148,7 +149,7 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
           if ("salmon" %in% aspects)
             salmon_single(salmon_dir = paste0(topdir, "/data-processed/", id, "/salmon"), 
                           smp = smp, files = files, salmonbin = salmonbin, 
-                          libtype = libtype, index = index)
+                          libtype = libtype, index = index, bias = bias)
         } else {
           message("Output files for ", smp, " already exist.")
         }
@@ -188,7 +189,8 @@ process_data <- function(id, rtype, index, libtype, salmonbin = "salmon",
           if ("salmon" %in% aspects)
             salmon_paired(salmon_dir = paste0(topdir, "/data-processed/", id, "/salmon"), 
                           smp = smp, files1 = files1, files2 = files2, 
-                          salmonbin = salmonbin, libtype = libtype, index = index)
+                          salmonbin = salmonbin, libtype = libtype, 
+                          index = index, bias = bias)
         } else {
           message("Output files for ", smp, " already exist.")
         }

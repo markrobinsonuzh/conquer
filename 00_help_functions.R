@@ -16,29 +16,31 @@ fastqc_single <- function(fastqc_dir, smp, files, fastqcbin, appd = "") {
   }
 }
 
-salmon_single <- function(salmon_dir, smp, files, salmonbin, libtype, index) {
+salmon_single <- function(salmon_dir, smp, files, salmonbin, libtype, index, bias = FALSE) {
   if (!file.exists(paste0(salmon_dir, "/", smp, "/quant.sf"))) {
-    salmon <- sprintf("bash -c '%s quant -p 10 -l %s -i %s -r <(cat %s) -o %s'",
+    salmon <- sprintf("bash -c '%s quant -p 10 -l %s -i %s -r <(cat %s) -o %s %s'",
                       salmonbin, 
                       libtype,
                       index,
                       files, 
-                      paste0(salmon_dir, "/", smp))
+                      paste0(salmon_dir, "/", smp),
+                      ifelse(bias, "--seqBias", ""))
     system(salmon)
   } else {
     message("Salmon has already been run for ", smp)
   }
 }
 
-salmon_paired <- function(salmon_dir, smp, files1, files2, salmonbin, libtype, index) {
+salmon_paired <- function(salmon_dir, smp, files1, files2, salmonbin, libtype, index, bias = FALSE) {
   if (!file.exists(paste0(salmon_dir, "/", smp, "/quant.sf"))) {
-    salmon <- sprintf("bash -c '%s quant -p 10 -l %s -i %s -1 <(cat %s) -2 <(cat %s) -o %s'",
+    salmon <- sprintf("bash -c '%s quant -p 10 -l %s -i %s -1 <(cat %s) -2 <(cat %s) -o %s %s'",
                       salmonbin, 
                       libtype,
                       index,
                       files1,
                       files2,
-                      paste0(salmon_dir, "/", smp))
+                      paste0(salmon_dir, "/", smp),
+                      ifelse(bias, "--seqBias", ""))
     system(salmon)
   } else {
     message("Salmon has already been run for ", smp)

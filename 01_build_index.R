@@ -25,8 +25,10 @@ library(rtracklayer)
 
 ## Give the path to the Salmon binary
 #salmonbin <- "/usr/local/software/SalmonBeta-0.6.1_DebianSqueeze/bin/salmon"
-salmonbin <- "software/Salmon-0.7.2_linux_x86_64/bin/salmon"
-salmonversion <- "0.7.2"
+#salmonbin <- "software/Salmon-0.7.2_linux_x86_64/bin/salmon"
+#salmonversion <- "0.7.2"
+salmonbin <- "/home/charlotte/software/Salmon-0.8.2_linux_x86_64/bin/salmon"
+salmonversion <- "0.8.2"
 
 ## Human cDNA & ncRNA + ERCC
 cmd <- sprintf("bash -c '%s index -t %s -i %s --type quasi'",
