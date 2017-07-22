@@ -24,12 +24,11 @@ suppressPackageStartupMessages(library(scater))
 ## Dataset summary
 
 ```{r, echo = FALSE}
-knitr::kable(data.frame(n_samples = nrow(pData(maex)), 
+knitr::kable(data.frame(n_samples = nrow(colData(maex)), 
                         n_genes = nrow(experiments(maex)[["gene"]]),
                         n_transcripts = nrow(experiments(maex)[["tx"]]),
                         organism = metadata(maex)$organism,
-                        genome = metadata(maex)$genome,
-                        index = metadata(maex)$index),
+                        genome = metadata(maex)$genome),
              align = "c",
              caption = "Data set summary")
 ```
@@ -50,14 +49,26 @@ counts depend on the length of the feature as well as on its abundance.
 print(maex)
 ```
 
+```{r}
+if ("salmon_summary" %in% names(metadata(maex)))
+  DT::datatable(metadata(maex)$salmon_summary, options = list(scrollX = TRUE))
+if ("rapmap_summary" %in% names(metadata(maex)))
+  DT::datatable(metadata(maex)$rapmap_summary, options = list(scrollX = TRUE))
+```
+
 In this report, we use the gene-level TPMs and the counts obtained by scaling 
-the TPMs. The data object also contains a slot with phenotypical data for the
-cells.
+the TPMs (if available). For UMI data sets, we use the gene-level tag counts.
+The data object also contains a slot with phenotypical data for the cells.
 
 ```{r}
-cts <- assays(experiments(maex)[["gene"]])[["count_lstpm"]]
-tpms <- assays(experiments(maex)[["gene"]])[["TPM"]]
-phn <- pData(maex)
+if (all(c("count_lstpm", "TPM") %in% names(assays(experiments(maex)[["gene"]])))) {
+  cts <- assays(experiments(maex)[["gene"]])[["count_lstpm"]]
+  tpms <- assays(experiments(maex)[["gene"]])[["TPM"]]
+} else {
+  cts <- assays(experiments(maex)[["gene"]])[["count"]]
+  tpms <- NULL
+}
+phn <- colData(maex)
 
 phn[, paste(phenoid, collapse = ".")] <- as.character(interaction(as.data.frame(phn[, phenoid])))
 ```
@@ -80,8 +91,8 @@ object, containing the counts, TPMs and phenotypic data.
 
 ```{r}
 sceset <- newSCESet(countData = cts, 
-                    tpmData = tpms,
                     phenoData = new("AnnotatedDataFrame", data = as.data.frame(phn)))
+set_exprs(sceset, "tpm") <- tpms
 ```
 
 ## Plot overview for each cell
@@ -134,7 +145,7 @@ Next, we find the principal components that are most highly correlated with the
 number of observed features. These are plotted both to show the association to
 the number of observed features, and the correlation between each other.
 
-```{r}
+```{r, warning = FALSE}
 plotQC(sceset, type = "find-pcs", variable = "total_features")
 plotQC(sceset, type = "find-pcs", variable = "total_features", plot_type = "pairs-pcs")
 ```
@@ -145,7 +156,7 @@ to show the associations among them.
 
 ```{r}
 expl_vars <- c(phenoid, "log10_total_counts", "log10_total_features", "pct_dropout",
-               "pct_exprs_top_200_features", ifelse(withcontrols, "log10_counts_feature_controls", NA),
+               "pct_counts_top_200_features", ifelse(withcontrols, "log10_counts_feature_controls", NA),
                ifelse(withcontrols, "pct_counts_feature_controls", NA))
 plotQC(sceset, type = "explanatory-variables", variables = expl_vars[!is.na(expl_vars)])
 plotQC(sceset, type = "explanatory-variables", variables = expl_vars[!is.na(expl_vars)], method = "pairs")
@@ -158,11 +169,11 @@ cells are colored by the ``r paste(phenoid, collapse = ".")`` annotation.
 plotPhenoData(sceset, aes_string(x = "log10_total_counts", y = "total_features",
                                  colour = paste(phenoid, collapse = "."))) + 
   guides(colour = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps)
-plotPhenoData(sceset, aes_string(x = "pct_exprs_top_200_features", y = "total_features", 
+plotPhenoData(sceset, aes_string(x = "pct_counts_top_200_features", y = "total_features", 
                                  colour = paste(phenoid, collapse = "."))) + 
   guides(colour = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps)
 if (withcontrols) {
-  plotPhenoData(sceset, aes_string(x = "total_features", y = "pct_exprs_feature_controls", 
+  plotPhenoData(sceset, aes_string(x = "total_features", y = "pct_counts_feature_controls", 
                                    color = paste(phenoid, collapse = "."))) + 
   guides(colour = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps)
 }
@@ -200,7 +211,11 @@ if (length(phenoid) > 1) {
             guides(fill = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps))
   }
 }
-tsne <- scater::plotTSNE(sceset[!duplicated(tpm(sceset)), ], exprs_values = "tpm", return_SCESet = TRUE)
+if (!is.null(tpms)) {
+  tsne <- scater::plotTSNE(sceset[!duplicated(tpm(sceset)), ], exprs_values = "tpm", return_SCESet = TRUE)
+} else {
+  tsne <- scater::plotTSNE(sceset[!duplicated(count(sceset)), ], exprs_values = "cpm", return_SCESet = TRUE)
+}
 print(scater::plotReducedDim(tsne, colour_by = paste(phenoid, collapse = ".")) + 
         guides(fill = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps))
 if (length(phenoid) > 1) {

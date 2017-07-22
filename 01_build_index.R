@@ -1,6 +1,6 @@
-## The code below builds the Salmon indexes that will be used for
-## quantification. It also generates transcript-to-gene maps as well as GRanges
-## objects characterizing the genes and transcripts
+## The code below builds the Salmon and RapMap indexes that will be used for 
+## mapping and quantification. It also generates transcript-to-gene maps as well
+## as GRanges objects characterizing the genes and transcripts
 
 ## Define reference files and corresponding Ensembl version
 human_cdna_fa <- "reference-files/homo-sapiens/Homo_sapiens.GRCh38.cdna.all.fa"
@@ -15,15 +15,77 @@ human_ensembl_version <- 84
 mouse_ensembl_version <- 84
 zebrafish_ensembl_version <- 87
 
-library(dplyr)
-library(Biostrings)
-library(rtracklayer)
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(Biostrings))
+suppressPackageStartupMessages(library(rtracklayer))
+
+## -------------------------------------------------------------------------- ##
+##                            Build RapMap index                              ##
+## -------------------------------------------------------------------------- ##
+
+## Path to the RapMap binary
+rapmapbin <- "/home/charlotte/software/RapMap/bin/rapmap"
+rapmapversion <- "0.5.0"
+
+## Human cDNA & ncRNA + ERCC
+cmd <- sprintf("bash -c '%s quasiindex -x 5 -k 31 -t %s -i %s'",
+               rapmapbin,
+               paste0("<(cat ", human_cdna_fa, " ", human_ncrna_fa, " ", ercc_fa, ")"),
+               gsub("cdna.all.fa$", paste0(human_ensembl_version, 
+                                           ".cdna.ncrna.ercc92.", rapmapversion, 
+                                           ".ridx"), human_cdna_fa))
+system(cmd)
+
+## Index for shorter reads
+cmd <- sprintf("bash -c '%s quasiindex -x 5 -k 15 -t %s -i %s'",
+               rapmapbin,
+               paste0("<(cat ", human_cdna_fa, " ", human_ncrna_fa, " ", ercc_fa, ")"),
+               gsub("cdna.all.fa$", paste0(human_ensembl_version, 
+                                           ".cdna.ncrna.ercc92.k15.", rapmapversion, 
+                                           ".ridx"), human_cdna_fa))
+system(cmd)
+
+## Mouse cDNA & ncRNA + ERCC
+cmd <- sprintf("bash -c '%s quasiindex -x 5 -k 31 -t %s -i %s'",
+               rapmapbin,
+               paste0("<(cat ", mouse_cdna_fa, " ", mouse_ncrna_fa, " ", ercc_fa, ")"),
+               gsub("cdna.all.fa$", paste0(mouse_ensembl_version, 
+                                           ".cdna.ncrna.ercc92.", rapmapversion, 
+                                           ".ridx"), mouse_cdna_fa))
+system(cmd)
+
+## Index for shorter reads
+cmd <- sprintf("bash -c '%s quasiindex -x 5 -k 15 -t %s -i %s'",
+               rapmapbin,
+               paste0("<(cat ", mouse_cdna_fa, " ", mouse_ncrna_fa, " ", ercc_fa, ")"),
+               gsub("cdna.all.fa$", paste0(mouse_ensembl_version, 
+                                           ".cdna.ncrna.ercc92.k15.", rapmapversion, 
+                                           ".ridx"), mouse_cdna_fa))
+system(cmd)
+
+## Zebrafish cDNA & ncRNA + ERCC
+cmd <- sprintf("bash -c '%s quasiindex -x 5 -k 31 -t %s -i %s'",
+               rapmapbin,
+               paste0("<(cat ", zebrafish_cdna_fa, " ", zebrafish_ncrna_fa, " ", ercc_fa, ")"),
+               gsub("cdna.all.fa$", paste0(zebrafish_ensembl_version, 
+                                           ".cdna.ncrna.ercc92.", rapmapversion, 
+                                           ".ridx"), zebrafish_cdna_fa))
+system(cmd)
+
+## Index for shorter reads
+cmd <- sprintf("bash -c '%s quasiindex -x 5 -k 15 -t %s -i %s'",
+               rapmapbin,
+               paste0("<(cat ", zebrafish_cdna_fa, " ", zebrafish_ncrna_fa, " ", ercc_fa, ")"),
+               gsub("cdna.all.fa$", paste0(zebrafish_ensembl_version, 
+                                           ".cdna.ncrna.ercc92.k15.", rapmapversion, 
+                                           ".ridx"), zebrafish_cdna_fa))
+system(cmd)
 
 ## -------------------------------------------------------------------------- ##
 ##                            Build Salmon index                              ##
 ## -------------------------------------------------------------------------- ##
 
-## Give the path to the Salmon binary
+## Path to the Salmon binary
 #salmonbin <- "/usr/local/software/SalmonBeta-0.6.1_DebianSqueeze/bin/salmon"
 #salmonbin <- "software/Salmon-0.7.2_linux_x86_64/bin/salmon"
 #salmonversion <- "0.7.2"
