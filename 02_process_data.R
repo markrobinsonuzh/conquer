@@ -10,7 +10,9 @@ suppressPackageStartupMessages(library(GEOquery))
 suppressPackageStartupMessages(library(rmarkdown))
 suppressPackageStartupMessages(library(Rtsne))
 suppressPackageStartupMessages(library(rjson))
-#suppressPackageStartupMessages(library(countsimQC))
+suppressPackageStartupMessages(library(readr))
+suppressPackageStartupMessages(library(DESeq2))
+suppressPackageStartupMessages(library(countsimQC))
 source("00_help_functions.R")
 source("05_umi_functions.R")
 
@@ -102,6 +104,7 @@ process_data <- function(id, dtype, rtype, organism, genome,
   scaterdir <- paste0(topdir, "/report-scater")
   maedir <- paste0(topdir, "/data-mae")
   multiqcdir <- paste0(topdir, "/report-multiqc")
+  countsimqcdir <- paste0(topdir, "/report-countsimqc")
   
   ## Read run info downloaded from SRA
   x <- read.delim(paste0(topdir, "/data-raw/", id, "/", id, "_SraRunInfo.csv"), 
@@ -252,6 +255,28 @@ process_data <- function(id, dtype, rtype, organism, genome,
                     output_file = paste0(id, "_scater.html"),
                     output_dir = scaterdir,
                     nrw = nrw, lps = lps)
+  }
+  
+  ## ------------------------------------------------------------------------ ##
+  ##                    Generate countsimQC report                            ##
+  ## ------------------------------------------------------------------------ ##
+  if ("countsimQC" %in% aspects) {
+    mae <- readRDS(paste0(maedir, "/", id, ".rds"))
+    message("Generating countsimQC report for ", id)
+    ddsList <- list(
+      count_gene = DESeqDataSetFromMatrix(
+        countData = round(assays(experiments(mae)[["gene"]])[["count"]]),
+        colData = colData(mae),
+        design = as.formula(paste0("~ ", paste(groupid, collapse = " + ")))),
+      count_tx = DESeqDataSetFromMatrix(
+        countData = round(assays(experiments(mae)[["tx"]])[["count"]]),
+        colData = colData(mae),
+        design = as.formula(paste0("~ ", paste(groupid, collapse = " + "))))
+    )
+    countsimQCReport(ddsList = ddsList, outputFile = paste0(id, "_countsimQC.html"),
+                     outputDir = countsimqcdir, outputFormat = "html_document",
+                     showCode = FALSE, forceOverwrite = TRUE, savePlot = FALSE,
+                     description = id, subsampleSize = 250, maxNForDisp = 100)
   }
 }
 

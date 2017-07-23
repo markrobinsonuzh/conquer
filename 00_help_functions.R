@@ -233,13 +233,24 @@ compress_summarize_salmon <- function(id, topdir, salmondir, datasetdir,
 ## -------------------------------------------------------------------------- ##
 ##         Generate MultiAssayExperiment object from Salmon results           ##
 ## -------------------------------------------------------------------------- ##
+## Make sure that column type is determined from all values in a column when
+## importing Salmon files
+read_tsv2 <- function(...) readr::read_tsv(..., guess_max = 100000, progress = FALSE,
+                                           col_types = list(
+                                             Name = col_character(),
+                                             Length = col_integer(),
+                                             EffectiveLength = col_double(),
+                                             TPM = col_double(),
+                                             NumReads = col_double()
+                                           ))
+
 mae_tximport <- function(id, salmondir, topdir, txgenemap, geodata,
                          phenofile, gene_granges, tx_granges) {
   message("Reading expression levels for ", id)
   files <- paste0(list.files(salmondir, full.names = TRUE), "/quant.sf")
   names(files) <- basename(gsub("/quant.sf", "", files))
   txi_tx <- tximport(files = files, type = "salmon", txIn = TRUE, txOut = TRUE, 
-                     dropInfReps = TRUE)
+                     dropInfReps = TRUE, importer = read_tsv2)
   txi_gene <- summarizeToGene(txi = txi_tx, tx2gene = txgenemap,
                               countsFromAbundance = "no")
   txi_gene_lstpm <- summarizeToGene(txi = txi_tx, tx2gene = txgenemap, 
