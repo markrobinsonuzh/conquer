@@ -93,6 +93,7 @@ object, containing the counts, TPMs and phenotypic data.
 sceset <- newSCESet(countData = cts, 
                     phenoData = new("AnnotatedDataFrame", data = as.data.frame(phn)))
 set_exprs(sceset, "tpm") <- tpms
+set_exprs(sceset, "exprs") <- log2(calculateCPM(sceset) + 1)
 ```
 
 ## Plot overview for each cell
@@ -131,6 +132,13 @@ We filter the data set to keep only those features that are observed in at least
 keep_features <- rowSums(counts(sceset) > 0) >= 1
 sceset <- sceset[keep_features, ]
 ```
+
+Next, we exclude the cells with less than 5 detected features
+
+```{r}
+sceset <- sceset[, sceset$total_features > 5]
+```
+
 
 ## Plot QC metrics
 
@@ -212,16 +220,30 @@ if (length(phenoid) > 1) {
   }
 }
 if (!is.null(tpms)) {
-  tsne <- scater::plotTSNE(sceset[!duplicated(tpm(sceset)), ], exprs_values = "tpm", return_SCESet = TRUE)
+  if (any(duplicated(tpm(sceset))) || any(duplicated(t(tpm(sceset))))) {
+    tpm(sceset) <- tpm(sceset) + matrix(rnorm(length(tpm(sceset)), mean = 0, sd = 1e-5), 
+                                        nrow = nrow(tpm(sceset)))
+  }
+  tsne <- tryCatch(
+    scater::plotTSNE(sceset, exprs_values = "tpm", return_SCESet = TRUE),
+    error = function(e) NULL)
 } else {
-  tsne <- scater::plotTSNE(sceset[!duplicated(count(sceset)), ], exprs_values = "cpm", return_SCESet = TRUE)
+  if (any(duplicated(exprs(sceset))) || any(duplicated(t(exprs(sceset))))) {
+    exprs(sceset) <- exprs(sceset) + matrix(rnorm(length(exprs(sceset)), mean = 0, sd = 1e-5), 
+                                            nrow = nrow(exprs(sceset)))
+  }
+  tsne <- tryCatch(
+    scater::plotTSNE(sceset, exprs_values = "exprs", return_SCESet = TRUE),
+    error = function(e) NULL)
 }
-print(scater::plotReducedDim(tsne, colour_by = paste(phenoid, collapse = ".")) + 
-        guides(fill = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps))
-if (length(phenoid) > 1) {
-  for (pid in phenoid) {
-    print(scater::plotReducedDim(tsne, colour_by = pid) + 
-            guides(fill = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps))
+if (!is.null(tsne)) {
+  print(scater::plotReducedDim(tsne, colour_by = paste(phenoid, collapse = ".")) + 
+          guides(fill = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps))
+  if (length(phenoid) > 1) {
+    for (pid in phenoid) {
+      print(scater::plotReducedDim(tsne, colour_by = pid) + 
+              guides(fill = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps))
+    }
   }
 }
 ```

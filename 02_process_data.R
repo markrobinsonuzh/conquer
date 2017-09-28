@@ -111,7 +111,6 @@ process_data <- function(id, dtype, rtype, organism, genome,
                   header = TRUE, as.is = TRUE, sep = ",")
   samples <- unique(x[, sncol])
 
-  rapmap_info <- list()
   any_updated <- 0
   for (smp in samples) {
     ## Find all the SRA runs corresponding to this sample. They will be merged
@@ -159,10 +158,9 @@ process_data <- function(id, dtype, rtype, organism, genome,
                           salmonindex = salmonindex, bias = bias)
         ## RapMap + umis
         if ("umis" %in% aspects)
-          rapmap_info[[smp]] <- 
-            quantify_umis(files = files, rapmapbin = rapmapbin, cell_barcodes = cell_barcodes, 
-                          rapmapindex = rapmapindex, umis_transform = umis_transform, 
-                          smp = smp, tmpdir = tmpdir, umisdir = umisdir)
+          quantify_umis(files = files, rapmapbin = rapmapbin, cell_barcodes = cell_barcodes, 
+                        rapmapindex = rapmapindex, umis_transform = umis_transform, 
+                        smp = smp, tmpdir = tmpdir, umisdir = umisdir)
       } else {
         message("Output files for ", smp, " already exist.")
       }
@@ -182,8 +180,9 @@ process_data <- function(id, dtype, rtype, organism, genome,
   }
   
   if ("umis" %in% aspects) {
-    rapmap_info <- do.call(rbind(rapmap_info))
-    write.table(cbind(sample = rownames(rapmap_info), rapmap_info),
+    summary_table_rapmap <- 
+      summarize_rapmap(id = id, umisdir = umisdir)
+    write.table(summary_table_rapmap,
                 file = paste0(datasetdir, "/summary_table_rapmap.txt"),
                 row.names = FALSE, col.names = TRUE, sep = "\t", quote = FALSE)
   }

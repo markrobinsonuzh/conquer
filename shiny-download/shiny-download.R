@@ -174,8 +174,12 @@ scrna_download_shiny <- function(data_directory, top_url) {
       dtbl$`scater report` <- create_link(dtbl$scater_link, ".html", as.Date(dtbl$scater_mtime))
       dtbl$`salmon archive` <- create_link(dtbl$salmon_link, ".tar.gz", as.Date(dtbl$salmon_mtime))
       dtbl$ncells <- as.numeric(as.character(dtbl$ncells))
-      return(dtbl[, c("Data set", "ID", "organism", "ncells", "MultiAssayExperiment", 
-                      "MultiQC report", "scater report", "salmon archive")])
+      # return(dtbl[, c("Data set", "ID", "organism", "ncells", "MultiAssayExperiment", 
+      #                 "MultiQC report", "scater report", "salmon archive")])
+      return(datatable(dtbl[, c("Data set", "ID", "organism", "ncells", "MultiAssayExperiment", 
+                                "MultiQC report", "scater report", "salmon archive")],
+                       escape = FALSE, 
+                       options = list(scrollX = TRUE)))
     }, escape = FALSE)   
 
   }

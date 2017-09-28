@@ -120,7 +120,7 @@ $(document).ready(function () {
 </div>
 
 
-<p><strong>Note!</strong> Starting from version 1.1.49, the <code>pData</code> slot in a <em>MultiAssayExperiment</em> is deprecated in favor of <code>colData</code>. Thus, until the objects included in <em>conquer</em> are updated to the new version, you may need to run <code>updateObject()</code> on the downloaded <em>MultiAssayExperiment</em> objects to take advantage of the new features. .</p>
+<p><strong>Note!</strong> Starting from version 1.1.49, the <code>pData</code> slot in a <em>MultiAssayExperiment</em> is deprecated in favor of <code>colData</code>. The objects included in <em>conquer</em> are now updated to the new version.</p>
 <p>To use a data set provided in the <em>conquer</em> database, download the corresponding <strong>R</strong> object from the <strong>MultiAssayExperiment</strong> column. As an illustration, we will assume that the file for the <em>GSE41265</em> data set has been downloaded and is available in the current working directory. First, load the <a href="http://bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">SummarizedExperiment</a> and <a href="http://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html">MultiAssayExperiment</a> packages and read the file into R:</p>
 <pre class="r"><code>suppressPackageStartupMessages(library(SummarizedExperiment))
 suppressPackageStartupMessages(library(MultiAssayExperiment))
@@ -130,12 +130,13 @@ suppressPackageStartupMessages(library(MultiAssayExperiment))
 ##  Containing an ExperimentList class object of length 2: 
 ##  [1] gene: RangedSummarizedExperiment with 45686 rows and 18 columns 
 ##  [2] tx: RangedSummarizedExperiment with 113560 rows and 18 columns 
-## To access: 
-##  experiments() - to obtain the ExperimentList instance 
-##  pData() - for the primary/phenotype DataFrame 
-##  sampleMap() - for the sample availability DataFrame 
-##  metadata() - for the metadata object of ANY class 
-## See also: subsetByAssay(), subsetByRow(), subsetByColumn()</code></pre>
+## Features: 
+##  experiments() - obtain the ExperimentList instance 
+##  colData() - the primary/phenotype DataFrame 
+##  sampleMap() - the sample availability DataFrame 
+##  `$`, `[`, `[[` - extract colData columns, subset, or experiment 
+##  *Format() - convert into a long or wide DataFrame 
+##  assays() - convert ExperimentList to a SimpleList of matrices</code></pre>
 <p>The resulting object contains both gene and transcript abundances.</p>
 <pre class="r"><code>experiments(gse41265)</code></pre>
 <pre><code>## ExperimentList class object of length 2: 
@@ -439,7 +440,7 @@ suppressPackageStartupMessages(library(MultiAssayExperiment))
 <div id="sample-annotations" class="section level2">
 <h2>Sample annotations</h2>
 <p>The sample annotations, downloaded from GEO, are also available in the object:</p>
-<pre class="r"><code>pdata &lt;- Biobase::pData(gse41265)
+<pre class="r"><code>pdata &lt;- colData(gse41265)
 head(pdata, 2)</code></pre>
 <pre><code>## DataFrame with 2 rows and 47 columns
 ##                     title geo_accession                status
@@ -550,6 +551,40 @@ head(pdata, 2)</code></pre>
 ##                                                                                         &lt;factor&gt;
 ## GSM1012777 ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX190/SRX190719
 ## GSM1012778 ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX190/SRX190720</code></pre>
+</div>
+<div id="metadata" class="section level2">
+<h2>Metadata</h2>
+<p>Finally, the MultiAssayExperiment object contains information regarding the mapping and abundance estimation, as well as the date when it was generated.</p>
+<pre class="r"><code>names(metadata(gse41265))</code></pre>
+<pre><code>## [1] &quot;genome&quot;         &quot;organism&quot;       &quot;salmon_summary&quot; &quot;creation_date&quot;</code></pre>
+<pre class="r"><code>metadata(gse41265)$genome</code></pre>
+<pre><code>## [1] &quot;GRCm38.84&quot;</code></pre>
+<pre class="r"><code>metadata(gse41265)$organism</code></pre>
+<pre><code>## [1] &quot;Mus musculus&quot;</code></pre>
+<pre class="r"><code>head(metadata(gse41265)$salmon_summary)</code></pre>
+<pre><code>##       sample salmon_version libtype
+## 1 GSM1012777          0.6.0      IU
+## 2 GSM1012778          0.6.0      IU
+## 3 GSM1012779          0.6.0      IU
+## 4 GSM1012780          0.6.0      IU
+## 5 GSM1012781          0.6.0      IU
+## 6 GSM1012782          0.6.0      IU
+##                                           index seqBias num_processed
+## 1 Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx   FALSE      21326048
+## 2 Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx   FALSE      27434011
+## 3 Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx   FALSE      31142391
+## 4 Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx   FALSE      26231852
+## 5 Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx   FALSE      29977214
+## 6 Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx   FALSE      24148387
+##   num_mapped percent_mapped
+## 1   15794660         74.063
+## 2   18787649         68.483
+## 3   24373666         78.265
+## 4   20122093         76.709
+## 5   23706687         79.082
+## 6   19342343         80.098</code></pre>
+<pre class="r"><code>metadata(gse41265)$creation_date</code></pre>
+<pre><code>## [1] &quot;Sun Jul 23 20:00:43 2017&quot;</code></pre>
 </div>
 
 

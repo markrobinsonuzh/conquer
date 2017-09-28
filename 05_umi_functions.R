@@ -52,7 +52,7 @@ quantify_umis <- function(files, umisdir, rapmapbin, rapmapindex,
   rapmap_version <- gsub("VN:", "", tmp[grep("VN:", tmp)])
   
   cmd <- sprintf("mkdir -p %s",
-                 paste0(topdir, "/data-processed/", id, "/umis/", smp)
+                 paste0(umisdir, "/", smp)
   )
   system(cmd)
   
@@ -67,6 +67,25 @@ quantify_umis <- function(files, umisdir, rapmapbin, rapmapindex,
   unlink(paste0(tmpdir, "/", smp, "_rapmap_header.txt"))
   unlink(paste0(tmpdir, "/", smp, "_transformed.fastq"))
   
-  c(rapmap_version = rapmap_version, rapmap_index = rapmapindex, 
-    umis_transform = umis_transform, cell_barcodes = basename(cell_barcodes))
+  if (is.null(cell_barcodes)) cell_barcodes <- "None"
+  
+  write.table(data.frame(sample = smp, rapmap_version = rapmap_version, 
+                         rapmap_index = rapmapindex, 
+                         umis_transform = umis_transform, 
+                         cell_barcodes = basename(cell_barcodes)),
+              file = paste0(umisdir, "/", smp, "/rapmap_settings.txt"),
+              row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+  
+}
+
+summarize_rapmap <- function(id = id, umisdir = umisdir) {
+  message("Creating RapMap summary table for ", id)
+  smps <- list.files(umisdir, full.names = TRUE)
+  names(smps) <- basename(smps)
+  summary_table_rapmap <- data.frame(do.call(rbind, lapply(smps, function(s) {
+    read.delim(paste0(s, "/rapmap_settings.txt"), header = TRUE, as.is = TRUE)
+  })), stringsAsFactors = FALSE)
+  summary_table_rapmap$rapmap_index <- basename(summary_table_rapmap$rapmap_index)
+  summary_table_rapmap
+  
 }

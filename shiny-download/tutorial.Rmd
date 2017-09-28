@@ -8,10 +8,8 @@ output:
 ---
 
 **Note!** Starting from version 1.1.49, the `pData` slot in a
-*MultiAssayExperiment* is deprecated in favor of `colData`. Thus, until the
-objects included in *conquer* are updated to the new version, you may need to
-run `updateObject()` on the downloaded *MultiAssayExperiment* objects to take
-advantage of the new features. .
+*MultiAssayExperiment* is deprecated in favor of `colData`. The
+objects included in *conquer* are now updated to the new version.
 
 To use a data set provided in the *conquer* database, download the corresponding
 **R** object from the **MultiAssayExperiment** column. As an illustration, we 
@@ -97,7 +95,20 @@ head(assays(gse41265_tx)[["efflength"]])
 The sample annotations, downloaded from GEO, are also available in the object:
 
 ```{r}
-pdata <- Biobase::pData(gse41265)
+pdata <- colData(gse41265)
 head(pdata, 2)
+```
+
+## Metadata
+
+Finally, the MultiAssayExperiment object contains information regarding the
+mapping and abundance estimation, as well as the date when it was generated.
+
+```{r}
+names(metadata(gse41265))
+metadata(gse41265)$genome
+metadata(gse41265)$organism
+head(metadata(gse41265)$salmon_summary)
+metadata(gse41265)$creation_date
 ```
 

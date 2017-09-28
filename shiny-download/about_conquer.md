@@ -2,11 +2,16 @@
 
 The *conquer* (**con**sistent **qu**antification of **e**xternal **r**na-seq data) repository is developed by [Charlotte Soneson](mailto:charlotte.soneson@imls.uzh.ch) and [Mark D Robinson](mailto:mark.robinson@imls.uzh.ch) at the University of Zurich, Switzerland. It is implemented in [shiny](http://shiny.rstudio.com/) and provides access to consistently processed public single-cell RNA-seq data sets. Below is a short description of the workflow used to process the raw reads in order to generate the data provided in the repository.
 
+If you use *conquer* for your work, please cite
+
+* C Soneson & MD Robinson: [Bias, robustness and scalability in differential expression analysis of single-cell RNA-seq data](http://biorxiv.org/content/early/2017/05/28/143289). bioRxiv doi:10.1101/143289 (2017).
+
+
 <a name="indexing"/>
 </a>
 ## Index building
 
-In order to use [Salmon](https://combine-lab.github.io/salmon/) to quantify the transcript abundances in a given sample, we first need to index the corresponding reference transcriptome. For a given organism, we download the fasta files containing cDNA and ncRNA sequences from [Ensembl](http://www.ensembl.org/info/data/ftp/index.html), complement these with [ERCC spike-in sequences](https://www.thermofisher.com/order/catalog/product/4456739), and build a Salmon  quasi-mapping index for the entire catalog. Note that the [scater](https://bioconductor.org/packages/devel/bioc/html/scater.html) report for a given data set (available in the **scater_html** column) details the precise version of the transcriptome that was used for the quantification. For data sets with "long" reads (longer than 50 bp) we use the default `k=31`, while for "short reads" (typically around 25 bp) we set `k=15`. 
+In order to use [Salmon](https://combine-lab.github.io/salmon/) to quantify the transcript abundances in a given sample, we first need to index the corresponding reference transcriptome. For a given organism, we download the fasta files containing cDNA and ncRNA sequences from [Ensembl](http://www.ensembl.org/info/data/ftp/index.html), complement these with [ERCC spike-in sequences](https://www.thermofisher.com/order/catalog/product/4456739), and build a Salmon  quasi-mapping index for the entire catalog. Note that the [scater](https://bioconductor.org/packages/devel/bioc/html/scater.html) report for a given data set (available in the **scater report** column) details the precise version of the transcriptome that was used for the quantification. For data sets with "long" reads (longer than 50 bp) we use the default `k=31`, while for "short reads" (typically around 25 bp) we set `k=15`. 
 
 We also create a lookup table relating transcript IDs to the corresponding gene IDs. This information is obtained by parsing the sequence names in the cDNA and ncRNA fasta files. From these names we also obtain the genomic coordinates for each feature. 
 
@@ -20,11 +25,13 @@ For each sample in the data set, we find all the corresponding runs, and downloa
 
 ## Abundance quantification
 
-After the QC, we run [Salmon](https://combine-lab.github.io/salmon/) to estimate the abundance of each transcript from the catalog described [above](#indexing) in each sample. The Salmon output files are then compressed in an archive and can be downloaded from *conquer* (see the **salmon_tar** column).
+After the QC, we run [Salmon](https://combine-lab.github.io/salmon/) to estimate the abundance of each transcript from the catalog described [above](#indexing) in each sample. The Salmon output files are then compressed in an archive and can be downloaded from *conquer* (see the **salmon archive** column).
+
+For data obtained with non-full-length library preparation protocols (e.g. targeting only the 3' or 5' end of transcripts), we quantify transcript and gene abundances using the [umis](https://github.com/vals/umis) pipeline developed by Valentine Svensson. Briefly, we quasimap the reads to the transcriptome using [RapMap](https://github.com/COMBINE-lab/RapMap) and use the counting capabilities of [umis](https://github.com/vals/umis) to obtain feature counts. 
 
 ## Summary report - MultiQC
 
-Once FastQC and Salmon have been applied to all samples in the data set, we run [MultiQC](http://multiqc.info/) to summarise all the information into one report. This can also be downloaded from *conquer* (see the **MultiQC_html** column). This report contains quality scores for all the samples and can be used to determine if there are problematic samples and whether the data set is good enough for the purposes of the user or needs to be subsetted.
+Once FastQC and Salmon (or RapMap/umis) have been applied to all samples in the data set, we run [MultiQC](http://multiqc.info/) to summarise all the information into one report. This can also be downloaded from *conquer* (see the **MultiQC report** column). This report contains quality scores for all the samples and can be used to determine if there are problematic samples and whether the data set is good enough for the purposes of the user or needs to be subsetted.
 
 ## Data summarisation
 
@@ -43,7 +50,7 @@ The transcript-level experiment contains three "assays":
 - *count*
 - *efflength* (the effective length estimated by Salmon)
 
-The MultiAssayExperiment also contains the phenotypic data (in the *pData* slot), as well as some metadata for the data set (the genome, the organism and the Salmon index that was used for the quantification). 
+The MultiAssayExperiment also contains the phenotypic data (in the *colData* slot), as well as some metadata for the data set (the genome, the organism, a summary of the Salmon parameters and the fraction of reads that were mapped, and the date when the object was generated). Please note that the format of *MultiAssayExperiment* objects changed with version 1.1.49 of the *MultiAssayExperiment* package, and in particular the *pData* slot is now deprecated in favor of *colData*. The objects provided in *conquer* follow the new format. 
 
 ## Summary report - scater
 
@@ -55,7 +62,10 @@ We would like to thank Simon Andrews for help with [FastQC](http://www.bioinform
 
 ## Presentations/publications
 
-*conquer* was presented as a [poster](http://imlspenticton.uzh.ch/robinson_lab/conquer/presentation/Soneson-poster-singlecellgenomics-2016.pdf) at the [Single Cell Genomics](https://coursesandconferences.wellcomegenomecampus.org/events/item.aspx?e=596) conference in Hinxton, UK, in September 2016.
+*conquer* was presented as a [poster](http://imlspenticton.uzh.ch/robinson_lab/conquer/presentation/Soneson-poster-singlecellgenomics-2016.pdf) at the [Single Cell Genomics](https://coursesandconferences.wellcomegenomecampus.org/events/item.aspx?e=596) conference in Hinxton, UK, in September 2016. A detailed description of the database and an example of its use in an evaluation of differential expression analysis methods for single-cell RNA-seq data can be found in:
+
+* C Soneson & MD Robinson: [Bias, robustness and scalability in differential expression analysis of single-cell RNA-seq data](http://biorxiv.org/content/early/2017/05/28/143289). bioRxiv doi:10.1101/143289 (2017).
+
 
 ## Code
 

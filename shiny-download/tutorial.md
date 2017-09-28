@@ -3,10 +3,8 @@
   
 
 **Note!** Starting from version 1.1.49, the `pData` slot in a
-*MultiAssayExperiment* is deprecated in favor of `colData`. Thus, until the
-objects included in *conquer* are updated to the new version, you may need to
-run `updateObject()` on the downloaded *MultiAssayExperiment* objects to take
-advantage of the new features. .
+*MultiAssayExperiment* is deprecated in favor of `colData`. The
+objects included in *conquer* are now updated to the new version.
 
 To use a data set provided in the *conquer* database, download the corresponding
 **R** object from the **MultiAssayExperiment** column. As an illustration, we 
@@ -30,12 +28,13 @@ suppressPackageStartupMessages(library(MultiAssayExperiment))
 ##  Containing an ExperimentList class object of length 2: 
 ##  [1] gene: RangedSummarizedExperiment with 45686 rows and 18 columns 
 ##  [2] tx: RangedSummarizedExperiment with 113560 rows and 18 columns 
-## To access: 
-##  experiments() - to obtain the ExperimentList instance 
-##  pData() - for the primary/phenotype DataFrame 
-##  sampleMap() - for the sample availability DataFrame 
-##  metadata() - for the metadata object of ANY class 
-## See also: subsetByAssay(), subsetByRow(), subsetByColumn()
+## Features: 
+##  experiments() - obtain the ExperimentList instance 
+##  colData() - the primary/phenotype DataFrame 
+##  sampleMap() - the sample availability DataFrame 
+##  `$`, `[`, `[[` - extract colData columns, subset, or experiment 
+##  *Format() - convert into a long or wide DataFrame 
+##  assays() - convert ExperimentList to a SimpleList of matrices
 ```
 
 The resulting object contains both gene and transcript abundances. 
@@ -424,7 +423,7 @@ The sample annotations, downloaded from GEO, are also available in the object:
 
 
 ```r
-pdata <- Biobase::pData(gse41265)
+pdata <- colData(gse41265)
 head(pdata, 2)
 ```
 
@@ -538,5 +537,71 @@ head(pdata, 2)
 ##                                                                                         <factor>
 ## GSM1012777 ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX190/SRX190719
 ## GSM1012778 ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX190/SRX190720
+```
+
+## Metadata
+
+Finally, the MultiAssayExperiment object contains information regarding the
+mapping and abundance estimation, as well as the date when it was generated.
+
+
+```r
+names(metadata(gse41265))
+```
+
+```
+## [1] "genome"         "organism"       "salmon_summary" "creation_date"
+```
+
+```r
+metadata(gse41265)$genome
+```
+
+```
+## [1] "GRCm38.84"
+```
+
+```r
+metadata(gse41265)$organism
+```
+
+```
+## [1] "Mus musculus"
+```
+
+```r
+head(metadata(gse41265)$salmon_summary)
+```
+
+```
+##       sample salmon_version libtype
+## 1 GSM1012777          0.6.0      IU
+## 2 GSM1012778          0.6.0      IU
+## 3 GSM1012779          0.6.0      IU
+## 4 GSM1012780          0.6.0      IU
+## 5 GSM1012781          0.6.0      IU
+## 6 GSM1012782          0.6.0      IU
+##                                           index seqBias num_processed
+## 1 Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx   FALSE      21326048
+## 2 Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx   FALSE      27434011
+## 3 Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx   FALSE      31142391
+## 4 Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx   FALSE      26231852
+## 5 Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx   FALSE      29977214
+## 6 Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.sidx   FALSE      24148387
+##   num_mapped percent_mapped
+## 1   15794660         74.063
+## 2   18787649         68.483
+## 3   24373666         78.265
+## 4   20122093         76.709
+## 5   23706687         79.082
+## 6   19342343         80.098
+```
+
+```r
+metadata(gse41265)$creation_date
+```
+
+```
+## [1] "Sun Jul 23 20:00:43 2017"
 ```
 
