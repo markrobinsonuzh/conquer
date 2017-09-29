@@ -133,9 +133,10 @@ scrna_download_shiny <- function(data_directory, top_url) {
           fn <- read.delim(fn, header = FALSE, row.names = 1, as.is = TRUE)
           c(organism = fn["organism", 1], ncells = fn["nsamples", 1],
             pmid = fn["PMID", 1], datalink = fn["datalink", 1], 
-            ID = fn["shortname", 1])
+            ID = fn["shortname", 1], description = fn["description", 1])
         } else {
-          c(organism = NA, ncells = NA, pmid = NA, datalink = NA, ID = NA)
+          c(organism = NA, ncells = NA, pmid = NA, datalink = NA, ID = NA,
+            description = NA)
         }
       })), stringsAsFactors = FALSE) %>% 
         tibble::rownames_to_column(var = "dataset")
@@ -173,10 +174,12 @@ scrna_download_shiny <- function(data_directory, top_url) {
       dtbl$`MultiQC report` <- create_link(dtbl$multiqc_link, ".html", as.Date(dtbl$multiqc_mtime))
       dtbl$`scater report` <- create_link(dtbl$scater_link, ".html", as.Date(dtbl$scater_mtime))
       dtbl$`salmon archive` <- create_link(dtbl$salmon_link, ".tar.gz", as.Date(dtbl$salmon_mtime))
-      dtbl$ncells <- as.numeric(as.character(dtbl$ncells))
+      dtbl$`Number of cells` <- as.numeric(as.character(dtbl$ncells))
+      dtbl$`Brief description` <- dtbl$description
       # return(dtbl[, c("Data set", "ID", "organism", "ncells", "MultiAssayExperiment", 
       #                 "MultiQC report", "scater report", "salmon archive")])
-      return(datatable(dtbl[, c("Data set", "ID", "organism", "ncells", "MultiAssayExperiment", 
+      return(datatable(dtbl[, c("Data set", "ID", "organism", "Brief description",
+                                "Number of cells", "MultiAssayExperiment", 
                                 "MultiQC report", "scater report", "salmon archive")],
                        escape = FALSE, 
                        options = list(scrollX = TRUE)))

@@ -36,6 +36,8 @@ source("05_umi_functions.R")
 #' @param pmid A PubMed ID that can be linked to the dataset
 #' @param datalink A URL where the dataset can be found
 #' @param shortname An informative identifier for the dataset
+#' @param description A very brief description of the data set to go in the
+#'   repository table
 #' @param dotrim Whether or not to run analysis on trimmed data (using 
 #'   cutadapt)
 #' @param cutadaptbin The path to the cutadapt binary
@@ -83,6 +85,7 @@ source("05_umi_functions.R")
 #'   
 process_data <- function(id, dtype, rtype, organism, genome, 
                          pmid = NA, datalink = NA, shortname = NA, 
+                         description = "",
                          dotrim = FALSE, cutadaptbin, adapterseq = NULL,
                          fastqcbin, multiqcbin, 
                          salmonbin, salmonindex, libtype, bias = FALSE, 
@@ -238,7 +241,8 @@ process_data <- function(id, dtype, rtype, organism, genome,
                          ngenes = nrow(assays(experiments(mae)[["gene"]])[["count"]]),
                          PMID = pmid,
                          datalink = datalink,
-                         shortname = shortname)
+                         shortname = shortname,
+                         description = description)
     write.table(t(infodf), file = paste0(datasetdir, "/dataset_info.txt"),
                 row.names = TRUE, col.names = FALSE, sep = "\t", quote = FALSE)
   }
