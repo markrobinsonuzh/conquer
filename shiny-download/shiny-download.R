@@ -133,10 +133,11 @@ scrna_download_shiny <- function(data_directory, top_url) {
           fn <- read.delim(fn, header = FALSE, row.names = 1, as.is = TRUE)
           c(organism = fn["organism", 1], ncells = fn["nsamples", 1],
             pmid = fn["PMID", 1], datalink = fn["datalink", 1], 
-            ID = fn["shortname", 1], description = fn["description", 1])
+            ID = fn["shortname", 1], description = fn["description", 1],
+            protocol = fn["protocol", 1], protocoltype = fn["protocoltype", 1])
         } else {
           c(organism = NA, ncells = NA, pmid = NA, datalink = NA, ID = NA,
-            description = NA)
+            description = NA, protocol = NA, protocoltype = NA)
         }
       })), stringsAsFactors = FALSE) %>% 
         tibble::rownames_to_column(var = "dataset")
@@ -176,10 +177,12 @@ scrna_download_shiny <- function(data_directory, top_url) {
       dtbl$`salmon archive` <- create_link(dtbl$salmon_link, ".tar.gz", as.Date(dtbl$salmon_mtime))
       dtbl$`Number of cells` <- as.numeric(as.character(dtbl$ncells))
       dtbl$`Brief description` <- dtbl$description
+      dtbl$Protocol <- dtbl$protocol
+      dtbl$`Protocol type` <- dtbl$protocoltype
       # return(dtbl[, c("Data set", "ID", "organism", "ncells", "MultiAssayExperiment", 
       #                 "MultiQC report", "scater report", "salmon archive")])
       return(datatable(dtbl[, c("Data set", "ID", "organism", "Brief description",
-                                "Number of cells", "MultiAssayExperiment", 
+                                "Number of cells", "Protocol", "Protocol type", "MultiAssayExperiment", 
                                 "MultiQC report", "scater report", "salmon archive")],
                        escape = FALSE, 
                        options = list(scrollX = TRUE)))

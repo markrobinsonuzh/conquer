@@ -6,6 +6,7 @@ If you use *conquer* for your work, please cite
 
 * C Soneson & MD Robinson: [Bias, robustness and scalability in differential expression analysis of single-cell RNA-seq data](http://biorxiv.org/content/early/2017/05/28/143289). bioRxiv doi:10.1101/143289 (2017).
 
+The information provided in the columns `Brief description`, `Protocol` and `Protocol type` was inferred and summarized from the information provided by the data generators in the public repositories. We refer to the original descriptions for more detailed information. 
 
 <a name="indexing"/>
 </a>

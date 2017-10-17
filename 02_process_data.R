@@ -38,6 +38,9 @@ source("05_umi_functions.R")
 #' @param shortname An informative identifier for the dataset
 #' @param description A very brief description of the data set to go in the
 #'   repository table
+#' @param protocol The protocol that was used to process the cells
+#' @param protocoltype Either "full-length" or "UMI", the type of protocol used
+#'   to process the cells
 #' @param dotrim Whether or not to run analysis on trimmed data (using 
 #'   cutadapt)
 #' @param cutadaptbin The path to the cutadapt binary
@@ -85,7 +88,7 @@ source("05_umi_functions.R")
 #'   
 process_data <- function(id, dtype, rtype, organism, genome, 
                          pmid = NA, datalink = NA, shortname = NA, 
-                         description = "",
+                         description = "", protocol = "", protocoltype = "",
                          dotrim = FALSE, cutadaptbin, adapterseq = NULL,
                          fastqcbin, multiqcbin, 
                          salmonbin, salmonindex, libtype, bias = FALSE, 
@@ -242,7 +245,9 @@ process_data <- function(id, dtype, rtype, organism, genome,
                          PMID = pmid,
                          datalink = datalink,
                          shortname = shortname,
-                         description = description)
+                         description = description,
+                         protocol = protocol,
+                         protocoltype = protocoltype)
     write.table(t(infodf), file = paste0(datasetdir, "/dataset_info.txt"),
                 row.names = TRUE, col.names = FALSE, sep = "\t", quote = FALSE)
   }
