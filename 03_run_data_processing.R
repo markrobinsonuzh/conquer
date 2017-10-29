@@ -26,6 +26,151 @@ Danio_rerio.GRCz10.87.cdna.ncrna.ercc92.granges <-
 adapterseq <- "AGATCGGAAGAGC"
 #adapterseq <- "file:adapters.fa"
 
+## To run
+## GSE81903
+process_data(id = "GSE81903", dtype = "fl", rtype = "single",
+             organism = "Mus musculus", genome = "GRCm38.84",
+             pmid = 27565351, shortname = "Shekhar2016", 
+             datalink = "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE81903",
+             description = "P17 retinal cells from the Kcng4-cre;stop-YFP X Thy1-stop-YFP Line#1 mice", 
+             protocol = "Smart-Seq2", protocoltype = "full-length",
+             dotrim = FALSE, cutadaptbin = cutadaptbin, adapterseq = NULL, 
+             fastqcbin = fastqcbin, multiqcbin = multiqcbin, 
+             salmonbin = salmonbin,
+             salmonindex = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.0.8.2.sidx",
+             libtype = "A", bias = TRUE, 
+             rapmapbin = rapmapbin, rapmapindex = NULL, umis_transform = NULL, cell_barcodes = NULL,
+             sncol = "SampleName", groupid = "characteristics_ch1.2", 
+             geodata = TRUE, phenofile = NULL,
+             gene_granges = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges$gene_granges,
+             tx_granges = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges$tx_granges,
+             txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
+             tmpdir = "tmp", topdir = ".", 
+             nrw = 3, lps = "bottom",
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), 
+             force = FALSE)
+
+## To run
+## GSE80232
+process_data(id = "GSE80232", dtype = "fl", rtype = "single",
+             organism = "Mus musculus", genome = "GRCm38.84",
+             pmid = 27565351, shortname = "Shekhar2016", 
+             datalink = "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE80232",
+             description = "P17 retinal cells from the Tg(Chx10-EGFP/cre,-ALPP)2Clc or Vsx2-GFP transgenic line", 
+             protocol = "Smart-Seq2", protocoltype = "full-length",
+             dotrim = FALSE, cutadaptbin = cutadaptbin, adapterseq = NULL, 
+             fastqcbin = fastqcbin, multiqcbin = multiqcbin, 
+             salmonbin = salmonbin,
+             salmonindex = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.0.8.2.sidx",
+             libtype = "A", bias = TRUE, 
+             rapmapbin = rapmapbin, rapmapindex = NULL, umis_transform = NULL, cell_barcodes = NULL,
+             sncol = "SampleName", groupid = c("source_name_ch1", "characteristics_ch1.1"), 
+             geodata = TRUE, phenofile = NULL,
+             gene_granges = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges$gene_granges,
+             tx_granges = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges$tx_granges,
+             txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
+             tmpdir = "tmp", topdir = ".", 
+             nrw = 3, lps = "bottom",
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), 
+             force = FALSE)
+
+## To run
+## GSE80032
+process_data(id = "GSE80032", dtype = "fl", rtype = "paired",
+             organism = "Mus musculus", genome = "GRCm38.84",
+             pmid = 27923766, shortname = "Wollny2016", 
+             datalink = "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE80032",
+             description = "heterogeneity of acinar cells", 
+             protocol = "Smart-Seq2", protocoltype = "full-length",
+             dotrim = FALSE, cutadaptbin = cutadaptbin, adapterseq = NULL, 
+             fastqcbin = fastqcbin, multiqcbin = multiqcbin, 
+             salmonbin = salmonbin,
+             salmonindex = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.0.8.2.sidx",
+             libtype = "A", bias = TRUE, 
+             rapmapbin = rapmapbin, rapmapindex = NULL, umis_transform = NULL, cell_barcodes = NULL,
+             sncol = "SampleName", groupid = "characteristics_ch1.1", 
+             geodata = TRUE, phenofile = NULL,
+             gene_granges = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges$gene_granges,
+             tx_granges = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges$tx_granges,
+             txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
+             tmpdir = "tmp", topdir = ".", 
+             nrw = 3, lps = "bottom",
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), 
+             force = FALSE)
+
+## To run
+## GSE94383
+process_data(id = "GSE94383", dtype = "fl", rtype = "paired",
+             organism = "Mus musculus", genome = "GRCm38.84",
+             pmid = 28396000, shortname = "Lane2017", 
+             datalink = "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE94383",
+             description = "LPS stimulated and unstimulated 264.7 cells", 
+             protocol = "Smart-Seq2", protocoltype = "full-length",
+             dotrim = FALSE, cutadaptbin = cutadaptbin, adapterseq = NULL, 
+             fastqcbin = fastqcbin, multiqcbin = multiqcbin, 
+             salmonbin = salmonbin,
+             salmonindex = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.0.8.2.sidx",
+             libtype = "A", bias = TRUE, 
+             rapmapbin = rapmapbin, rapmapindex = NULL, umis_transform = NULL, cell_barcodes = NULL,
+             sncol = "SampleName", groupid = c("characteristics_ch1.1", "characteristics_ch1.2"), 
+             geodata = TRUE, phenofile = NULL,
+             gene_granges = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges$gene_granges,
+             tx_granges = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges$tx_granges,
+             txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
+             tmpdir = "tmp", topdir = ".", 
+             nrw = 3, lps = "bottom",
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), 
+             force = FALSE)
+
+## Running
+## GSE79102
+process_data(id = "GSE79102", dtype = "fl", rtype = "paired",
+             organism = "Homo sapiens", genome = "GRCh38.84",
+             pmid = 28346451, shortname = "Kiselev2017", 
+             datalink = "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE79102",
+             description = "three different patients with myeloproloferative disease", 
+             protocol = "Smart-Seq2", protocoltype = "full-length", 
+             dotrim = FALSE, cutadaptbin = cutadaptbin, adapterseq = NULL, 
+             fastqcbin = fastqcbin, multiqcbin = multiqcbin, 
+             salmonbin = salmonbin,
+             salmonindex = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.0.8.2.sidx",
+             libtype = "A", bias = TRUE,
+             rapmapbin = rapmapbin, rapmapindex = NULL, umis_transform = NULL, cell_barcodes = NULL,
+             sncol = "SampleName", groupid = "characteristics_ch1",
+             geodata = TRUE, phenofile = NULL,
+             gene_granges = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.granges$gene_granges,
+             tx_granges = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.granges$tx_granges,
+             txgenemap = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.txgenemap,
+             tmpdir = "tmp", topdir = ".",
+             nrw = 2, lps = "bottom", 
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"),
+             force = FALSE)
+
+
+## To run
+## GSE102299-smartseq2
+process_data(id = "GSE102299-smartseq2", dtype = "fl", rtype = "paired",
+             organism = "Mus musculus", genome = "GRCm38.84",
+             pmid = 28902842, shortname = "Wallrapp2017", 
+             datalink = "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE102299",
+             description = "innate lymphoid cells from mouse lungs after various treatments", 
+             protocol = "Smart-Seq2", protocoltype = "full-length",
+             dotrim = FALSE, cutadaptbin = cutadaptbin, adapterseq = NULL, 
+             fastqcbin = fastqcbin, multiqcbin = multiqcbin, 
+             salmonbin = salmonbin,
+             salmonindex = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.k15.0.8.2.sidx",
+             libtype = "A", bias = TRUE, 
+             rapmapbin = rapmapbin, rapmapindex = NULL, umis_transform = NULL, cell_barcodes = NULL,
+             sncol = "SampleName", groupid = "characteristics_ch1.4", 
+             geodata = TRUE, phenofile = NULL,
+             gene_granges = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges$gene_granges,
+             tx_granges = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges$tx_granges,
+             txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
+             tmpdir = "tmp", topdir = ".", 
+             nrw = 3, lps = "bottom",
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), 
+             force = FALSE)
+
 ## GSE81076-GPL16791
 process_data(id = "GSE81076-GPL16791", dtype = "umi", rtype = "paired", 
              organism = "Homo sapiens", genome = "GRCh38.84", 
@@ -74,13 +219,13 @@ process_data(id = "GSE81076-GPL18573", dtype = "umi", rtype = "paired",
              aspects = c("fastqc", "umis", "multiqc", "mae", "scater"),
              force = FALSE)
 
-## To run
 ## GSE100911
 process_data(id = "GSE100911", dtype = "fl", rtype = "paired",
              organism = "Danio rerio", genome = "GRCz10.87",
              pmid = "", shortname = "Tang2017", 
              datalink = "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE100911",
-             description = "", protocol = "", protocoltype = "", 
+             description = "hematopoietic and renal cell heterogeneity", 
+             protocol = "Smart-Seq2", protocoltype = "full-length", 
              dotrim = FALSE, cutadaptbin = cutadaptbin, adapterseq = NULL, 
              fastqcbin = fastqcbin, multiqcbin = multiqcbin, 
              salmonbin = salmonbin,
