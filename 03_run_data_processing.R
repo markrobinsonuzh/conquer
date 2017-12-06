@@ -27,6 +27,30 @@ adapterseq <- "AGATCGGAAGAGC"
 #adapterseq <- "file:adapters.fa"
 
 ## To run
+## GSE84465
+process_data(id = "GSE84465", dtype = "fl", rtype = "paired",
+             organism = "Homo sapiens", genome = "GRCh38.84",
+             pmid = 29091775, shortname = "Darmanis2017", 
+             datalink = "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE84465",
+             description = "glioblastoma tumors", 
+             protocol = "Smart-Seq2", protocoltype = "full-length", 
+             dotrim = FALSE, cutadaptbin = cutadaptbin, adapterseq = NULL, 
+             fastqcbin = fastqcbin, multiqcbin = multiqcbin, 
+             salmonbin = salmonbin,
+             salmonindex = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.0.8.2.sidx",
+             libtype = "A", bias = TRUE,
+             rapmapbin = rapmapbin, rapmapindex = NULL, umis_transform = NULL, cell_barcodes = NULL,
+             sncol = "SampleName", groupid = c("description", "neoplastic:ch1"),
+             geodata = TRUE, phenofile = NULL,
+             gene_granges = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.granges$gene_granges,
+             tx_granges = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.granges$tx_granges,
+             txgenemap = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.txgenemap,
+             tmpdir = "tmp", topdir = ".",
+             nrw = 2, lps = "bottom", 
+             aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"),
+             force = FALSE)
+
+## To run
 ## GSE81903
 process_data(id = "GSE81903", dtype = "fl", rtype = "single",
              organism = "Mus musculus", genome = "GRCm38.84",
@@ -74,7 +98,6 @@ process_data(id = "GSE80232", dtype = "fl", rtype = "single",
              aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), 
              force = FALSE)
 
-## To run
 ## GSE80032
 process_data(id = "GSE80032", dtype = "fl", rtype = "paired",
              organism = "Mus musculus", genome = "GRCm38.84",
@@ -98,7 +121,6 @@ process_data(id = "GSE80032", dtype = "fl", rtype = "paired",
              aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), 
              force = FALSE)
 
-## To run
 ## GSE94383
 process_data(id = "GSE94383", dtype = "fl", rtype = "paired",
              organism = "Mus musculus", genome = "GRCm38.84",
@@ -122,13 +144,12 @@ process_data(id = "GSE94383", dtype = "fl", rtype = "paired",
              aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), 
              force = FALSE)
 
-## Running
 ## GSE79102
 process_data(id = "GSE79102", dtype = "fl", rtype = "paired",
              organism = "Homo sapiens", genome = "GRCh38.84",
              pmid = 28346451, shortname = "Kiselev2017", 
              datalink = "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE79102",
-             description = "three different patients with myeloproloferative disease", 
+             description = "different patients with myeloproloferative disease", 
              protocol = "Smart-Seq2", protocoltype = "full-length", 
              dotrim = FALSE, cutadaptbin = cutadaptbin, adapterseq = NULL, 
              fastqcbin = fastqcbin, multiqcbin = multiqcbin, 

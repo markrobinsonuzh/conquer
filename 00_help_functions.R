@@ -113,7 +113,7 @@ fastqc_single <- function(fastqcdir, smp, files, fastqcbin, appd = "") {
   }
   
   if (!file.exists(paste0(fastqcdir, "/", smp, "/", smp, appd, "_fastqc.html"))) {
-    fastqc <- sprintf("bash -c 'cat %s | %s --noextract -o %s -f fastq stdin:%s'",
+    fastqc <- sprintf("bash -c 'cat %s | %s --noextract -o %s -t 10 -f fastq stdin:%s'",
                       files,
                       fastqcbin, 
                       paste0(fastqcdir, "/", smp),
