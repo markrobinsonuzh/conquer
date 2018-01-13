@@ -82,18 +82,18 @@ table(phn[, paste(phenoid, collapse = ".")])
 ```
 
 
-### Create an SCESet object
+### Create a SingleCellExperiment object
 
 The functions in the
 [scater](https://www.bioconductor.org/packages/release/bioc/html/scater.html)
-package operate on objects of the class `SCESet`. Here, we generate such an
+package operate on objects of the class `SingleCellExperiment`. Here, we generate such an
 object, containing the counts, TPMs and phenotypic data.
 
 ```{r}
-sceset <- newSCESet(countData = cts, 
-                    phenoData = new("AnnotatedDataFrame", data = as.data.frame(phn)))
-set_exprs(sceset, "tpm") <- tpms
-set_exprs(sceset, "exprs") <- log2(calculateCPM(sceset) + 1)
+sce <- SingleCellExperiment(assays = list(counts = cts, 
+                                          tpm = tpms), 
+                            colData = as.data.frame(phn))
+logcounts(sce) <- log2(calculateCPM(sce, use.size.factors = FALSE) + 1)
 ```
 
 ## Plot overview for each cell
@@ -104,24 +104,24 @@ annotation.
 
 ```{r}
 tryCatch({
-  plot(sceset, block1 = paste(phenoid, collapse = "."))
+  plotScater(sce, block1 = paste(phenoid, collapse = "."))
 }, error = function(e) print(e))
 ```
 
 ## Calculate quality metrics and filter
 
 Next we calculate various quality control metrics for the data set. If there are
-at least two ERCC spike-in transcripts that are expressed (TPM > 0) anywhere in
+at least two ERCC spike-in transcripts that are expressed (count > 0) anywhere in
 the data set, we will consider these as the control features. Otherwise, no
 control features are used.
 
 ```{r}
-if (sum(rowSums(counts(sceset)[grep("^ERCC-", rownames(sceset)), ] > 0) > 
-        min(table(pData(sceset)[, paste(phenoid, collapse = ".")]))) > 1) {
+if (sum(rowSums(counts(sce)[grep("^ERCC-", rownames(sce)), ] > 0) > 
+        min(table(colData(sce)[, paste(phenoid, collapse = ".")]))) > 1) {
   withcontrols <- TRUE
-  sceset <- calculateQCMetrics(sceset, feature_controls = grep("^ERCC-", rownames(sceset)))
+  sce <- calculateQCMetrics(sce, feature_controls = grep("^ERCC-", rownames(sce)))
 } else {
-  sceset <- calculateQCMetrics(sceset)
+  sce <- calculateQCMetrics(sce)
   withcontrols <- FALSE
 }
 ```
@@ -129,14 +129,14 @@ if (sum(rowSums(counts(sceset)[grep("^ERCC-", rownames(sceset)), ] > 0) >
 We filter the data set to keep only those features that are observed in at least 1 cell. 
 
 ```{r}
-keep_features <- rowSums(counts(sceset) > 0) >= 1
-sceset <- sceset[keep_features, ]
+keep_features <- rowSums(counts(sce) > 0) >= 1
+sce <- sce[keep_features, ]
 ```
 
 Next, we exclude the cells with less than 5 detected features
 
 ```{r}
-sceset <- sceset[, sceset$total_features > 5]
+sce <- sce[, sce$total_features > 5]
 ```
 
 
@@ -146,7 +146,7 @@ Next, we plot some of the QC metrics calculated above. First, we show the 50
 features with the highest expression in the data set.
 
 ```{r}
-plotQC(sceset, type = "highest-expression")
+plotQC(sce, type = "highest-expression")
 ```
 
 Next, we find the principal components that are most highly correlated with the 
@@ -154,8 +154,8 @@ number of observed features. These are plotted both to show the association to
 the number of observed features, and the correlation between each other.
 
 ```{r, warning = FALSE}
-plotQC(sceset, type = "find-pcs", variable = "total_features")
-plotQC(sceset, type = "find-pcs", variable = "total_features", plot_type = "pairs-pcs")
+plotQC(sce, type = "find-pcs", variable = "total_features")
+plotQC(sce, type = "find-pcs", variable = "total_features", plot_type = "pairs-pcs")
 ```
 
 Next, we visualize a subset of the sample annotations in terms of the amount of
@@ -163,27 +163,27 @@ marginal variance that they explain. These are also visualized in a pairs plot
 to show the associations among them.
 
 ```{r}
-expl_vars <- c(phenoid, "log10_total_counts", "log10_total_features", "pct_dropout",
+expl_vars <- c(phenoid, "log10_total_counts", "log10_total_features", 
                "pct_counts_top_200_features", ifelse(withcontrols, "log10_counts_feature_controls", NA),
                ifelse(withcontrols, "pct_counts_feature_controls", NA))
-plotQC(sceset, type = "explanatory-variables", variables = expl_vars[!is.na(expl_vars)])
-plotQC(sceset, type = "explanatory-variables", variables = expl_vars[!is.na(expl_vars)], method = "pairs")
+plotQC(sce, type = "explanatory-variables", variables = expl_vars[!is.na(expl_vars)])
+plotQC(sce, type = "explanatory-variables", variables = expl_vars[!is.na(expl_vars)], method = "pairs")
 ```
 
 We also construct a couple of plots comparing various features of the cells. The
 cells are colored by the ``r paste(phenoid, collapse = ".")`` annotation.
 
 ```{r}
-plotPhenoData(sceset, aes_string(x = "log10_total_counts", y = "total_features",
-                                 colour = paste(phenoid, collapse = "."))) + 
+plotPhenoData(sce, aes_string(x = "log10_total_counts", y = "total_features",
+                              colour = paste(phenoid, collapse = "."))) + 
   guides(colour = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps)
-plotPhenoData(sceset, aes_string(x = "pct_counts_top_200_features", y = "total_features", 
-                                 colour = paste(phenoid, collapse = "."))) + 
+plotPhenoData(sce, aes_string(x = "pct_counts_top_200_features", y = "total_features", 
+                              colour = paste(phenoid, collapse = "."))) + 
   guides(colour = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps)
 if (withcontrols) {
-  plotPhenoData(sceset, aes_string(x = "total_features", y = "pct_counts_feature_controls", 
-                                   color = paste(phenoid, collapse = "."))) + 
-  guides(colour = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps)
+  plotPhenoData(sce, aes_string(x = "total_features", y = "pct_counts_feature_controls", 
+                                color = paste(phenoid, collapse = "."))) + 
+    guides(colour = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps)
 }
 ```
 
@@ -192,15 +192,8 @@ gene is observed) against the average expression of the gene.
 
 ```{r}
 tryCatch({
-  plotQC(sceset, type = "exprs-freq-vs-mean")
+  plotQC(sce, type = "exprs-freq-vs-mean")
 }, error = function(e) NULL)
-```
-
-Next, we represent the features by their relative contribution to the total
-observed expression, plotted against the number of cells they are observed in.
-
-```{r}
-plotFeatureData(sceset, aes(x = n_cells_exprs, y = pct_total_exprs))
 ```
 
 
@@ -211,37 +204,38 @@ two-dimensional representations of the cells in the data set. The cells are
 colored by the ``r phenoid`` annotation.
 
 ```{r, fig.width = 8}
-print(scater::plotPCA(sceset, colour_by = paste(phenoid, collapse = ".")) + 
+print(scater::plotPCA(sce, colour_by = paste(phenoid, collapse = ".")) + 
         guides(fill = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps))
 if (length(phenoid) > 1) {
   for (pid in phenoid) {
-    print(scater::plotPCA(sceset, colour_by = pid) + 
+    print(scater::plotPCA(sce, colour_by = pid) + 
             guides(fill = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps))
   }
 }
 if (!is.null(tpms)) {
-  if (any(duplicated(tpm(sceset))) || any(duplicated(t(tpm(sceset))))) {
-    tpm(sceset) <- tpm(sceset) + matrix(rnorm(length(tpm(sceset)), mean = 0, sd = 1e-5), 
-                                        nrow = nrow(tpm(sceset)))
+  if (any(duplicated(tpm(sce))) || any(duplicated(t(tpm(sce))))) {
+    tpm(sce) <- tpm(sce) + matrix(rnorm(length(tpm(sce)), mean = 0, sd = 1e-5), 
+                                        nrow = nrow(tpm(sce)))
   }
   tsne <- tryCatch(
-    scater::plotTSNE(sceset, exprs_values = "tpm", return_SCESet = TRUE),
+    scater::plotTSNE(sce, exprs_values = "tpm", return_SCE = TRUE),
     error = function(e) NULL)
 } else {
-  if (any(duplicated(exprs(sceset))) || any(duplicated(t(exprs(sceset))))) {
-    exprs(sceset) <- exprs(sceset) + matrix(rnorm(length(exprs(sceset)), mean = 0, sd = 1e-5), 
-                                            nrow = nrow(exprs(sceset)))
+  if (any(duplicated(exprs(sce))) || any(duplicated(t(exprs(sce))))) {
+    exprs(sce) <- exprs(sce) + matrix(rnorm(length(exprs(sce)), mean = 0, sd = 1e-5), 
+                                            nrow = nrow(exprs(sce)))
   }
   tsne <- tryCatch(
-    scater::plotTSNE(sceset, exprs_values = "exprs", return_SCESet = TRUE),
+    scater::plotTSNE(sce, exprs_values = "exprs", return_SCE = TRUE),
     error = function(e) NULL)
 }
 if (!is.null(tsne)) {
-  print(scater::plotReducedDim(tsne, colour_by = paste(phenoid, collapse = ".")) + 
+  print(scater::plotReducedDim(tsne, colour_by = paste(phenoid, collapse = "."),
+                               use_dimred = "TSNE") + 
           guides(fill = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps))
   if (length(phenoid) > 1) {
     for (pid in phenoid) {
-      print(scater::plotReducedDim(tsne, colour_by = pid) + 
+      print(scater::plotReducedDim(tsne, colour_by = pid, use_dimred = "TSNE") + 
               guides(fill = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps))
     }
   }
