@@ -185,7 +185,8 @@ scrna_download_shiny <- function(data_directory, top_url) {
                                 "Number of cells", "Protocol", "Protocol type", "MultiAssayExperiment", 
                                 "MultiQC report", "scater report", "salmon archive")],
                        escape = FALSE, 
-                       options = list(scrollX = TRUE)))
+                       options = list(scrollX = TRUE, 
+                                      pageLength = 50)))
     }, escape = FALSE)   
 
   }

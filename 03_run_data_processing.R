@@ -74,7 +74,6 @@ process_data(id = "GSE81903", dtype = "fl", rtype = "single",
              aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"), 
              force = FALSE)
 
-## Running
 ## GSE80232
 process_data(id = "GSE80232", dtype = "fl", rtype = "single",
              organism = "Mus musculus", genome = "GRCm38.84",
