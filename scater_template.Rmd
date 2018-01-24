@@ -119,7 +119,8 @@ control features are used.
 if (sum(rowSums(counts(sce)[grep("^ERCC-", rownames(sce)), ] > 0) > 
         min(table(colData(sce)[, paste(phenoid, collapse = ".")]))) > 1) {
   withcontrols <- TRUE
-  sce <- calculateQCMetrics(sce, feature_controls = grep("^ERCC-", rownames(sce)))
+  sce <- calculateQCMetrics(sce, feature_controls = list(ERCC = grep("^ERCC-", rownames(sce), 
+                                                                     value = TRUE)))
 } else {
   sce <- calculateQCMetrics(sce)
   withcontrols <- FALSE
@@ -181,7 +182,7 @@ plotPhenoData(sce, aes_string(x = "pct_counts_top_200_features", y = "total_feat
                               colour = paste(phenoid, collapse = "."))) + 
   guides(colour = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps)
 if (withcontrols) {
-  plotPhenoData(sce, aes_string(x = "total_features", y = "pct_counts_feature_controls", 
+  plotPhenoData(sce, aes_string(x = "total_features", y = "pct_counts_ERCC", 
                                 color = paste(phenoid, collapse = "."))) + 
     guides(colour = guide_legend(nrow = nrw, byrow = TRUE)) + theme(legend.position = lps)
 }
