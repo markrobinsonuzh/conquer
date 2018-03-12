@@ -50,6 +50,8 @@ source("05_umi_functions.R")
 #' @param multiqcbin The path to the multiqc binary
 #' @param salmonbin The path to the Salmon binary
 #' @param salmonindex The path to the Salmon index
+#' @param kallistobin The path to the Salmon binary
+#' @param kallistoindex The path to the Salmon index
 #' @param libtype The \code{LIBTYPE} argument passed to Salmon
 #' @param bias Whether to run Salmon with bias correction
 #' @param rapmapbin The path to the RapMap binary
@@ -91,14 +93,16 @@ process_data <- function(id, dtype, rtype, organism, genome,
                          description = "", protocol = "", protocoltype = "",
                          dotrim = FALSE, cutadaptbin, adapterseq = NULL,
                          fastqcbin, multiqcbin, 
-                         salmonbin, salmonindex, libtype, bias = FALSE, 
+                         salmonbin, salmonindex, 
+                         kallistobin, kallistoindex,
+                         libtype, bias = FALSE, 
                          rapmapbin, rapmapindex, umis_transform, cell_barcodes, 
                          sncol = "SampleName", groupid,
                          geodata = TRUE, phenofile = NULL, 
                          gene_granges = NULL, tx_granges = NULL, txgenemap = NULL, 
                          tmpdir = "tmp", topdir = ".", 
                          nrw = NULL, lps = "right", 
-                         aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"),
+                         aspects = c("fastqc", "salmon", "multiqc", "mae", "scater", "tcc"),
                          force = FALSE) {
 
   ## Generate paths to output folders
@@ -111,6 +115,8 @@ process_data <- function(id, dtype, rtype, organism, genome,
   maedir <- paste0(topdir, "/data-mae")
   multiqcdir <- paste0(topdir, "/report-multiqc")
   countsimqcdir <- paste0(topdir, "/report-countsimqc")
+  tccdir <- paste0(topdir, "/data-tcc/", id)
+  kallistodir <- paste0(tccdir, "/kallistotcc")
   
   ## Read run info downloaded from SRA
   x <- read.delim(paste0(topdir, "/data-raw/", id, "/", id, "_SraRunInfo.csv"), 
@@ -162,6 +168,13 @@ process_data <- function(id, dtype, rtype, organism, genome,
                           salmondir = salmondir, smp = smp,
                           salmonbin = salmonbin, libtype = libtype, 
                           salmonindex = salmonindex, bias = bias)
+        
+        ## kallisto-tcc
+        if ("tcc" %in% aspects)
+          quantify_kallistotcc(rtype = rtype, files = files, 
+                          kallistodir = kallistodir, smp = smp,
+                          kallistobin = kallistobin, kallistoindex = kallistoindex)
+        
         ## RapMap + umis
         if ("umis" %in% aspects)
           quantify_umis(files = files, rapmapbin = rapmapbin, cell_barcodes = cell_barcodes, 
