@@ -53,6 +53,59 @@ process_data(id = "SRP073808", dtype = "fl", rtype = "paired",
              aspects = c("tcc"), verbose = TRUE,
              force = FALSE)
 
+## GSE52529-GPL16791
+process_data(id = "GSE52529-GPL16791", dtype = "fl", rtype = "paired",
+             organism = "Homo sapiens", genome = "GRCh38.84",
+             pmid = 24658644, shortname = "Trapnell2014",
+             datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE52529",
+             description = "primary myoblasts over a time course of serum-induced differentiation",
+             protocol = "SMARTer C1", protocoltype = "full-length",
+             dotrim = FALSE, cutadaptbin = cutadaptbin, adapterseq = NULL,
+             fastqcbin = fastqcbin, multiqcbin = multiqcbin,
+             salmonbin = salmonbin,
+             salmonindex = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.0.6.1.sidx",
+             kallistobin = kallistobin,
+             kallistoindex = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.0.44.kidx",
+             libtype = "IU", bias = FALSE,
+             rapmapbin = rapmapbin, rapmapindex = NULL, umis_transform = NULL, cell_barcodes = NULL,
+             sncol = "SampleName", groupid = "source_name_ch1",
+             geodata = TRUE, phenofile = NULL,
+             gene_granges = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.granges$gene_granges,
+             tx_granges = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.granges$tx_granges,
+             txgenemap = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.txgenemap,
+             tmpdir = "tmp", topdir = ".",
+             nrw = 3, lps = "bottom",
+             aspects = c("tcc"), verbose = TRUE,
+             force = FALSE)
+
+
+
+## GSE60749, HiSeq2000 (25bp reads) - TCC
+process_data(id = "GSE60749-GPL13112", dtype = "fl", rtype = "paired",
+             organism = "Mus musculus", genome = "GRCm38.84",
+             pmid = 25471879, shortname = "Kumar2014",
+             datalink = "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60749",
+             description = "mESCs with various genetic perturbations, cultured in different media",
+             protocol = "SMARTer C1", protocoltype = "full-length",
+             dotrim = FALSE, cutadaptbin = cutadaptbin, adapterseq = NULL,
+             fastqcbin = fastqcbin, multiqcbin = multiqcbin,
+             salmonbin = salmonbin,
+             salmonindex = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.k15.0.6.1.sidx",
+             kallistobin = kallistobin,
+             kallistoindex = "reference-files/mus-musculus/Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.k15.0.44.kidx",
+             libtype = "IU", bias = FALSE,
+             rapmapbin = rapmapbin, rapmapindex = NULL, umis_transform = NULL, cell_barcodes = NULL,
+             sncol = "SampleName", groupid = c("source_name_ch1", "characteristics_ch1.1"),
+             geodata = TRUE, phenofile = NULL,
+             gene_granges = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges$gene_granges,
+             tx_granges = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.granges$tx_granges,
+             txgenemap = Mus_musculus.GRCm38.84.cdna.ncrna.ercc92.txgenemap,
+             tmpdir = "tmp", topdir = ".",
+             nrw = 3, lps = "bottom",
+             aspects = c("tcc"), verbose=TRUE,
+             force = FALSE)
+
+
 
 ## Running
 ## GSE84465

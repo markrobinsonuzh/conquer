@@ -49,6 +49,17 @@ cmd <- sprintf("bash -c '%s index -i %s %s'",
 cmd
 system(cmd)
 
+## Index for shorter reads // mouse // TCC
+cmd <- sprintf("bash -c '%s index -k 15 -i %s %s'",
+               kallistobin,
+               gsub("cdna.all.fa$", paste0(mouse_ensembl_version,
+                                           ".cdna.ncrna.ercc92.k15.", kallistoversion,
+                                           ".kidx"), mouse_cdna_fa),
+               paste0("<(cat ", mouse_cdna_fa, " ", mouse_ncrna_fa, " ", ercc_fa, ")"))
+cmd
+system(cmd)
+
+
 
 
 
