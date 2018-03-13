@@ -61,13 +61,13 @@ quantify_kallistotcc <- function(rtype, files, kallistodir, smp, kallistobin,
                             kallistoindex) {
   if ( !file.exists(c(paste0(kallistodir, "/", smp, "/run_info.json"))) ) {
     if (rtype == "single") {
-      kallisto <- sprintf("bash -c '%s pseudo -t 8 --single -l 200 -s 30 -i %s -o %s %s'",
+      kallisto <- sprintf("bash -c '%s pseudo -t 4 --single -l 200 -s 30 -i %s -o %s %s'",
                         kallistobin, 
                         kallistoindex,
                         paste0(kallistodir, "/", smp),
                         files)
     } else if (rtype == "paired") {
-      kallisto <- sprintf("bash -c '%s pseudo -t 10 -i %s -o %s %s %s'",
+      kallisto <- sprintf("bash -c '%s pseudo -t 4 -i %s -o %s %s %s'",
                         kallistobin, 
                         kallistoindex,
                         paste0(kallistodir, "/", smp),

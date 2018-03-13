@@ -103,6 +103,7 @@ process_data <- function(id, dtype, rtype, organism, genome,
                          tmpdir = "tmp", topdir = ".", 
                          nrw = NULL, lps = "right", 
                          aspects = c("fastqc", "salmon", "multiqc", "mae", "scater", "tcc"),
+                         verbose = FALSE,
                          force = FALSE) {
 
   ## Generate paths to output folders
@@ -122,12 +123,16 @@ process_data <- function(id, dtype, rtype, organism, genome,
   x <- read.delim(paste0(topdir, "/data-raw/", id, "/", id, "_SraRunInfo.csv"), 
                   header = TRUE, as.is = TRUE, sep = ",")
   samples <- unique(x[, sncol])
+  if(verbose) message( "Found ", length(samples), " samples to process.")
+
 
   any_updated <- 0
   for (smp in samples) {
+    if(verbose) message( "Working on ", smp, " ..")
     ## Find all the SRA runs corresponding to this sample. They will be merged
     ## together in the analysis
     runs <- x$Run[x[, sncol] == smp]
+    if(verbose) message( "Found ", length(runs), " runs.")
     
     ## Put together a file list
     if (rtype == "single") {
@@ -137,8 +142,9 @@ process_data <- function(id, dtype, rtype, organism, genome,
       files2 <- paste(paste0("<(./stream_ena ", runs, "_2.fastq)"), collapse = " ")
       files <- list(f1 = files1, f2 = files2)
     } 
+    if(verbose) message( "Files: ", files )
     
-    if (any(c("fastqc", "salmon", "umis") %in% aspects)) {
+    if (any(c("fastqc", "salmon", "umis", "tcc") %in% aspects)) {
       if (force || 
           !(any(c(file.exists(paste0(fastqcdir, "/", smp, "/", smp, "_fastqc.html")),
                   file.exists(paste0(fastqcdir, "/", smp, "/", smp, "_1_fastqc.html")) && 
@@ -170,10 +176,12 @@ process_data <- function(id, dtype, rtype, organism, genome,
                           salmonindex = salmonindex, bias = bias)
         
         ## kallisto-tcc
-        if ("tcc" %in% aspects)
+        if ("tcc" %in% aspects) {
+          if( verbose ) message("Running quantify_kallistotcc() on ", files)
           quantify_kallistotcc(rtype = rtype, files = files, 
                           kallistodir = kallistodir, smp = smp,
                           kallistobin = kallistobin, kallistoindex = kallistoindex)
+        }
         
         ## RapMap + umis
         if ("umis" %in% aspects)

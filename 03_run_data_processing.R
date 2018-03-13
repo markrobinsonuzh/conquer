@@ -1,8 +1,8 @@
-source("02_process_data.R")
 
 #salmonbin <- "/usr/local/software/SalmonBeta-0.6.1_DebianSqueeze/bin/salmon"
 #salmonbin <- "software/Salmon-0.7.2_linux_x86_64/bin/salmon"
 salmonbin <- "/home/charlotte/software/Salmon-0.8.2_linux_x86_64/bin/salmon"
+kallistobin <- "/usr/local/software/kallisto_linux-v0.44.0/kallisto"
 rapmapbin <- "/home/charlotte/software/RapMap/bin/rapmap"
 fastqcbin <- "FastQC_v0.11.6.devel/fastqc"
 cutadaptbin <- "/home/charlotte/miniconda3/bin/cutadapt"
@@ -25,6 +25,34 @@ Danio_rerio.GRCz10.87.cdna.ncrna.ercc92.granges <-
 
 adapterseq <- "AGATCGGAAGAGC"
 #adapterseq <- "file:adapters.fa"
+
+source("02_process_data.R")
+
+## SRP073808 - TCC
+process_data(id = "SRP073808", dtype = "fl", rtype = "paired",
+             organism = "Homo sapiens", genome = "GRCh38.84",
+             pmid = 27996962, shortname = "Koh2016",
+             datalink = "https://www.ncbi.nlm.nih.gov/sra?term=SRP073808",
+             description = "in vitro cultured H7 embryonic stem cells (WiCell) and H7-derived downstream early mesoderm progenitors",
+             protocol = "SMARTer C1", protocoltype = "full-length",
+             dotrim = FALSE, cutadaptbin = cutadaptbin, adapterseq = NULL,
+             fastqcbin = fastqcbin, multiqcbin = multiqcbin,
+             salmonbin = salmonbin,
+             salmonindex = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.0.8.2.sidx",
+             kallistobin = kallistobin,
+             kallistoindex = "reference-files/homo-sapiens/Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.0.44.kidx",
+             libtype = "A", bias = TRUE,
+             rapmapbin = rapmapbin, rapmapindex = NULL, umis_transform = NULL, cell_barcodes = NULL,
+             sncol = "Run", groupid = "LibraryName",
+             geodata = FALSE, phenofile = "data-raw/SRP073808/SRP073808_pheno.txt",
+             gene_granges = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.granges$gene_granges,
+             tx_granges = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.granges$tx_granges,
+             txgenemap = Homo_sapiens.GRCh38.84.cdna.ncrna.ercc92.txgenemap,
+             tmpdir = "tmp", topdir = ".",
+             nrw = NULL, lps = "right",
+             aspects = c("tcc"), verbose = TRUE,
+             force = FALSE)
+
 
 ## Running
 ## GSE84465
