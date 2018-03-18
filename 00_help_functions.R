@@ -59,7 +59,7 @@ download_fastq <- function(rtype, outdir, smp, files) {
 #'   
 quantify_kallistotcc <- function(rtype, files, kallistodir, smp, kallistobin,
                             kallistoindex) {
-  kallisto_files <- c("pseudoalignment.ec", "pseudoalignment.tsv", "run_info.json")
+  kallisto_files <- c("pseudoalignments.ec", "pseudoalignments.tsv", "run_info.json")
   if ( !file.exists(c(paste0(kallistodir, "/", smp, "/run_info.json"))) &
        !file.exists(c(paste0(kallistodir, "/", smp, "/run_info.json.gz"))) ) {
     out_dir <- paste0(kallistodir, "/", smp)
@@ -67,7 +67,6 @@ quantify_kallistotcc <- function(rtype, files, kallistodir, smp, kallistobin,
       kallisto <- sprintf("bash -c '%s pseudo -t 8 --single -l 200 -s 30 -i %s -o %s %s'",
                         kallistobin, kallistoindex, out_dir, files)
     } else if (rtype == "paired") {
-                        paste0(kallistodir, "/", smp),
       kallisto <- sprintf("bash -c '%s pseudo -t 10 -i %s -o %s %s %s'",
                         kallistobin, kallistoindex, out_dir,
                         files$f1, files$f2)
