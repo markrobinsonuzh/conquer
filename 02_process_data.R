@@ -50,8 +50,8 @@ source("05_umi_functions.R")
 #' @param multiqcbin The path to the multiqc binary
 #' @param salmonbin The path to the Salmon binary
 #' @param salmonindex The path to the Salmon index
-#' @param kallistobin The path to the Salmon binary
-#' @param kallistoindex The path to the Salmon index
+#' @param kallistobin The path to the kallisto binary
+#' @param kallistoindex The path to the kallisto index
 #' @param libtype The \code{LIBTYPE} argument passed to Salmon
 #' @param bias Whether to run Salmon with bias correction
 #' @param rapmapbin The path to the RapMap binary

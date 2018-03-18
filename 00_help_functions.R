@@ -57,27 +57,28 @@ download_fastq <- function(rtype, outdir, smp, files) {
 #' @return Returns nothing, but generates kallisto output files in the
 #'   kallistodir/smp directory.
 #'   
-quantify_kallistotcc <- function(rtype, files, kallistodir, smp, kallistobin, 
+quantify_kallistotcc <- function(rtype, files, kallistodir, smp, kallistobin,
                             kallistoindex) {
-  if ( !file.exists(c(paste0(kallistodir, "/", smp, "/run_info.json"))) ) {
+  kallisto_files <- c("pseudoalignment.ec", "pseudoalignment.tsv", "run_info.json")
+  if ( !file.exists(c(paste0(kallistodir, "/", smp, "/run_info.json"))) &
+       !file.exists(c(paste0(kallistodir, "/", smp, "/run_info.json.gz"))) ) {
+    out_dir <- paste0(kallistodir, "/", smp)
     if (rtype == "single") {
-      kallisto <- sprintf("bash -c '%s pseudo -t 4 --single -l 200 -s 30 -i %s -o %s %s'",
-                        kallistobin, 
-                        kallistoindex,
-                        paste0(kallistodir, "/", smp),
-                        files)
+      kallisto <- sprintf("bash -c '%s pseudo -t 8 --single -l 200 -s 30 -i %s -o %s %s'",
+                        kallistobin, kallistoindex, out_dir, files)
     } else if (rtype == "paired") {
-      kallisto <- sprintf("bash -c '%s pseudo -t 4 -i %s -o %s %s %s'",
-                        kallistobin, 
-                        kallistoindex,
                         paste0(kallistodir, "/", smp),
-                        files$f1,
-                        files$f2)
+      kallisto <- sprintf("bash -c '%s pseudo -t 10 -i %s -o %s %s %s'",
+                        kallistobin, kallistoindex, out_dir,
+                        files$f1, files$f2)
     }
     cat(kallisto)
     system(kallisto)
+    # compress files
+    kallisto_compress <- paste0("gzip ", paste(file.path(out_dir,kallisto_files), collapse=" "))
+    system(kallisto_compress)
   } else {
-    message("Salmon has already been run for ", smp)
+    message("kallisto has already been run for ", smp)
   }
 }
 
