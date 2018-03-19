@@ -1,0 +1,7 @@
+ln -s /home/Shared_taupo/data/seq/conquer/database/reference-files
+mkdir tmp
+mkdir data-tcc
+mkdir data-tcc/GSE60749-GPL13112
+mkdir data-tcc/GSE60749-GPL13112/kallistotcc
+mkdir data-tcc/GSE52529-GPL16791
+mkdir data-tcc/GSE52529-GPL16791/kallistotcc

@@ -44,6 +44,45 @@ download_fastq <- function(rtype, outdir, smp, files) {
 }
 
 ## -------------------------------------------------------------------------- ##
+##                                Run kallisto TCC                            ##
+## -------------------------------------------------------------------------- ##
+#' Compute equivalence classes and quantify abundances w/ kallisto
+#' 
+#' @param rtype "single" or "paired"
+#' @param files Names of the fastq files to use for the quantification
+#' @param smp Sample ID
+#' @param kallistobin Path to kallisto binary
+#' @param kallistoindex Path to kallisto index
+#' 
+#' @return Returns nothing, but generates kallisto output files in the
+#'   kallistodir/smp directory.
+#'   
+quantify_kallistotcc <- function(rtype, files, kallistodir, smp, kallistobin,
+                            kallistoindex) {
+  kallisto_files <- c("pseudoalignments.ec", "pseudoalignments.tsv", "run_info.json")
+  if ( !file.exists(c(paste0(kallistodir, "/", smp, "/run_info.json"))) &
+       !file.exists(c(paste0(kallistodir, "/", smp, "/run_info.json.gz"))) ) {
+    out_dir <- paste0(kallistodir, "/", smp)
+    if (rtype == "single") {
+      kallisto <- sprintf("bash -c '%s pseudo -t 8 --single -l 200 -s 30 -i %s -o %s %s'",
+                        kallistobin, kallistoindex, out_dir, files)
+    } else if (rtype == "paired") {
+      kallisto <- sprintf("bash -c '%s pseudo -t 10 -i %s -o %s %s %s'",
+                        kallistobin, kallistoindex, out_dir,
+                        files$f1, files$f2)
+    }
+    cat(kallisto)
+    system(kallisto)
+    # compress files
+    kallisto_compress <- paste0("gzip ", paste(file.path(out_dir,kallisto_files), collapse=" "))
+    system(kallisto_compress)
+  } else {
+    message("kallisto has already been run for ", smp)
+  }
+}
+
+
+## -------------------------------------------------------------------------- ##
 ##                              Trim adapters                                 ##
 ## -------------------------------------------------------------------------- ##
 #' Trim adapter sequences using cutadapt

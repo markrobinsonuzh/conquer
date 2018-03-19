@@ -50,6 +50,8 @@ source("05_umi_functions.R")
 #' @param multiqcbin The path to the multiqc binary
 #' @param salmonbin The path to the Salmon binary
 #' @param salmonindex The path to the Salmon index
+#' @param kallistobin The path to the kallisto binary
+#' @param kallistoindex The path to the kallisto index
 #' @param libtype The \code{LIBTYPE} argument passed to Salmon
 #' @param bias Whether to run Salmon with bias correction
 #' @param rapmapbin The path to the RapMap binary
@@ -91,14 +93,17 @@ process_data <- function(id, dtype, rtype, organism, genome,
                          description = "", protocol = "", protocoltype = "",
                          dotrim = FALSE, cutadaptbin, adapterseq = NULL,
                          fastqcbin, multiqcbin, 
-                         salmonbin, salmonindex, libtype, bias = FALSE, 
+                         salmonbin, salmonindex, 
+                         kallistobin, kallistoindex,
+                         libtype, bias = FALSE, 
                          rapmapbin, rapmapindex, umis_transform, cell_barcodes, 
                          sncol = "SampleName", groupid,
                          geodata = TRUE, phenofile = NULL, 
                          gene_granges = NULL, tx_granges = NULL, txgenemap = NULL, 
                          tmpdir = "tmp", topdir = ".", 
                          nrw = NULL, lps = "right", 
-                         aspects = c("fastqc", "salmon", "multiqc", "mae", "scater"),
+                         aspects = c("fastqc", "salmon", "multiqc", "mae", "scater", "tcc"),
+                         verbose = FALSE,
                          force = FALSE) {
 
   ## Generate paths to output folders
@@ -111,17 +116,23 @@ process_data <- function(id, dtype, rtype, organism, genome,
   maedir <- paste0(topdir, "/data-mae")
   multiqcdir <- paste0(topdir, "/report-multiqc")
   countsimqcdir <- paste0(topdir, "/report-countsimqc")
+  tccdir <- paste0(topdir, "/data-tcc/", id)
+  kallistodir <- paste0(tccdir, "/kallistotcc")
   
   ## Read run info downloaded from SRA
   x <- read.delim(paste0(topdir, "/data-raw/", id, "/", id, "_SraRunInfo.csv"), 
                   header = TRUE, as.is = TRUE, sep = ",")
   samples <- unique(x[, sncol])
+  if(verbose) message( "Found ", length(samples), " samples to process.")
+
 
   any_updated <- 0
   for (smp in samples) {
+    if(verbose) message( "Working on ", smp, " ..")
     ## Find all the SRA runs corresponding to this sample. They will be merged
     ## together in the analysis
     runs <- x$Run[x[, sncol] == smp]
+    if(verbose) message( "Found ", length(runs), " runs.")
     
     ## Put together a file list
     if (rtype == "single") {
@@ -131,8 +142,9 @@ process_data <- function(id, dtype, rtype, organism, genome,
       files2 <- paste(paste0("<(./stream_ena ", runs, "_2.fastq)"), collapse = " ")
       files <- list(f1 = files1, f2 = files2)
     } 
+    if(verbose) message( "Files: ", files )
     
-    if (any(c("fastqc", "salmon", "umis") %in% aspects)) {
+    if (any(c("fastqc", "salmon", "umis", "tcc") %in% aspects)) {
       if (force || 
           !(any(c(file.exists(paste0(fastqcdir, "/", smp, "/", smp, "_fastqc.html")),
                   file.exists(paste0(fastqcdir, "/", smp, "/", smp, "_1_fastqc.html")) && 
@@ -162,6 +174,15 @@ process_data <- function(id, dtype, rtype, organism, genome,
                           salmondir = salmondir, smp = smp,
                           salmonbin = salmonbin, libtype = libtype, 
                           salmonindex = salmonindex, bias = bias)
+        
+        ## kallisto-tcc
+        if ("tcc" %in% aspects) {
+          if( verbose ) message("Running quantify_kallistotcc() on ", files)
+          quantify_kallistotcc(rtype = rtype, files = files, 
+                          kallistodir = kallistodir, smp = smp,
+                          kallistobin = kallistobin, kallistoindex = kallistoindex)
+        }
+        
         ## RapMap + umis
         if ("umis" %in% aspects)
           quantify_umis(files = files, rapmapbin = rapmapbin, cell_barcodes = cell_barcodes, 

@@ -19,6 +19,50 @@ suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(Biostrings))
 suppressPackageStartupMessages(library(rtracklayer))
 
+
+## -------------------------------------------------------------------------- ##
+##                            Build kallisto index (for TCC quants)           ##
+## -------------------------------------------------------------------------- ##
+
+## Path to the kallisto binary
+kallistobin <- "/usr/local/software/kallisto_linux-v0.44.0/kallisto"
+kallistoversion <- "0.44"
+
+## Human cDNA & ncRNA + ERCC
+cmd <- sprintf("bash -c '%s index -i %s %s'",
+               kallistobin,
+               gsub("cdna.all.fa$", paste0(human_ensembl_version,
+                                           ".cdna.ncrna.ercc92.", kallistoversion,
+                                           ".kidx"), human_cdna_fa),
+               paste0("<(cat ", human_cdna_fa, " ", human_ncrna_fa, " ", ercc_fa, ")"))
+cmd
+system(cmd)
+
+
+## Mouse cDNA & ncRNA + ERCC
+cmd <- sprintf("bash -c '%s index -i %s %s'",
+               kallistobin,
+               gsub("cdna.all.fa$", paste0(mouse_ensembl_version,
+                                           ".cdna.ncrna.ercc92.", kallistoversion,
+                                           ".kidx"), mouse_cdna_fa),
+               paste0("<(cat ", mouse_cdna_fa, " ", mouse_ncrna_fa, " ", ercc_fa, ")"))
+cmd
+system(cmd)
+
+## Index for shorter reads // mouse // TCC
+cmd <- sprintf("bash -c '%s index -k 15 -i %s %s'",
+               kallistobin,
+               gsub("cdna.all.fa$", paste0(mouse_ensembl_version,
+                                           ".cdna.ncrna.ercc92.k15.", kallistoversion,
+                                           ".kidx"), mouse_cdna_fa),
+               paste0("<(cat ", mouse_cdna_fa, " ", mouse_ncrna_fa, " ", ercc_fa, ")"))
+cmd
+system(cmd)
+
+
+
+
+
 ## -------------------------------------------------------------------------- ##
 ##                            Build RapMap index                              ##
 ## -------------------------------------------------------------------------- ##
@@ -146,6 +190,9 @@ cmd <- sprintf("bash -c '%s index -t %s -i %s --type quasi -k 15'",
                                            ".cdna.ncrna.ercc92.k15.", salmonversion,
                                            ".sidx"), zebrafish_cdna_fa))
 system(cmd)
+
+
+
 
 ## -------------------------------------------------------------------------- ##
 ##                          Generate tx-to-gene map                           ##
