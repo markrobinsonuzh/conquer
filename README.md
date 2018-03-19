@@ -6,7 +6,7 @@ The repository is available at [http://imlspenticton.uzh.ch:3838/conquer/](http:
 
 If you use *conquer*, please cite
 
-* C Soneson & MD Robinson: [Bias, robustness and scalability in differential expression analysis of single-cell RNA-seq data](http://biorxiv.org/content/early/2017/05/28/143289). bioRxiv doi:10.1101/143289 (2017).
+* C Soneson & MD Robinson: [Bias, robustness and scalability in single-cell differential expression analysis](https://www.nature.com/articles/nmeth.4612). Nature Methods (2018).
 
 ## Adapters
 
