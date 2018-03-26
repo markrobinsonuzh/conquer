@@ -1,4 +1,18 @@
 
+
+
+source("02_process_data.R")
+
+base_dir <- "/home/Shared/data/seq/conquer/database/data-tcc/SRP073808"
+out_dir <- "/home/Shared/data/seq/conquer/database/data-tcc"
+mae_dir <- "/home/Shared/data/seq/conquer/database/data-mae/"
+
+compile_tcc_counts(base_dir=base_dir, mae_dir=mae_dir,
+                   out_dir=out_dir, experiment_id="SRP073808", verbose=TRUE)
+
+
+
+
 #salmonbin <- "/usr/local/software/SalmonBeta-0.6.1_DebianSqueeze/bin/salmon"
 #salmonbin <- "software/Salmon-0.7.2_linux_x86_64/bin/salmon"
 salmonbin <- "/home/charlotte/software/Salmon-0.8.2_linux_x86_64/bin/salmon"

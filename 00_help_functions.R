@@ -83,6 +83,102 @@ quantify_kallistotcc <- function(rtype, files, kallistodir, smp, kallistobin,
 
 
 ## -------------------------------------------------------------------------- ##
+##                                Compile kallisto TCC                        ##
+## -------------------------------------------------------------------------- ##
+#' Compile a set of kallisto .ec and .tsv and 
+#'
+#' @param base_dir directory where subdirectories of data (that contain .ec.gz, .tsv.gz) are
+#' @param mae_dir directory with the existing salmon-based MultiAssayExperiment objects are (data-mae)
+#' @param out_dir directory to deposit the TCC SummarizedExperiment object to
+#' @param experiment_id identifier of the experiment
+#' @param verbose boolean, whether to write message() statements as the program progresses
+#'
+#' @return returns invisibly the SummarizeExperiment object, generates RDS file of the 
+#'   object into the out_dir directory
+#'
+
+compile_tcc_counts <- function(base_dir, mae_dir, out_dir, experiment_id, verbose=TRUE) {
+
+
+  # get filenames
+  ec_files <- dir(base_dir, "pseudoalignments.ec.gz", recursive=TRUE, full.names=TRUE)
+  count_files <- dir(base_dir, "pseudoalignments.tsv.gz", recursive=TRUE, full.names=TRUE)
+
+  stopifnot(length(ec_files)==length(count_files))
+
+  if(verbose) message( "Found ", length(ec_files), " samples.")
+
+  # note this 8 below is because the sample id is after the 11th "/"
+  # /home/Shared/data/seq/conquer/database/data-tcc/SRP073808/kallistotcc/SRR3952971/..
+  extract_delim <- function(x, delim="/", ind=11) {
+    sapply( strsplit(x,delim), .subset, ind)
+  }
+
+  sample_id_ec <- extract_delim(ec_files, "/", 11)
+  sample_id_cnt <- extract_delim(count_files, "/", 11)
+
+  stopifnot(sample_id_ec==sample_id_cnt)
+
+  ec_col <- cols(
+    label = col_integer(),
+    trans_in_class = col_character()
+  )
+
+  counts_col <- cols(
+    label = col_integer(),
+    count = col_integer()
+  )
+
+
+  if(verbose) message( "Reading ", length(ec_files), " samples to process.")
+
+  dfs <- mapply( function(u,v,z) {
+    cat(".")
+    ec <- readr::read_tsv(u, col_names=c("label", "trans_in_class"), 
+                          col_types = ec_col, progress=FALSE )
+    cnt <- readr::read_tsv(v, col_names=c("label", "count"),
+                           col_types = counts_col, progress=FALSE )
+    k <- cnt$count > 0
+    df <- data.frame(ec=ec$trans_in_class[k], 
+                     counts=cnt$count[k], stringsAsFactors=FALSE)
+    colnames(df)[2] <- z
+    df
+  }, ec_files, count_files, sample_id_ec, SIMPLIFY=FALSE)
+
+  if(verbose) message( "Performing full_join().")
+  df_merged <- dfs %>%
+                 Reduce(function(df1,df2) full_join(df1,df2,by="ec"), .) %>%
+                 column_to_rownames("ec") %>%
+                 replace(., is.na(.), 0)
+
+  mae_rds <- paste0(experiment_id, ".rds")
+  if(verbose) message( "Reading ", file.path(mae_dir, mae_rds), ".")
+  mae <- readRDS( file.path(mae_dir, mae_rds) )
+
+  if(verbose) message( "Constructing SummarizedExperiment.")
+  samples <- intersect(colnames(df_merged), mae$Run)
+
+  md <- metadata(mae)
+
+  m1 <- match(samples , colnames(df_merged))
+  m2 <- match(samples, mae$Run)
+
+  cd <- colData(mae)
+  x <- as.matrix(df_merged)
+
+  se <- SummarizedExperiment(assays=SimpleList(tcc=x[,m1]),
+                             colData=cd[m2,])
+
+  tcc_rds <- paste0(experiment_id, ".rds")
+  if(verbose) message( "Writing ", file.path(out_dir, tcc_rds), ".")
+  saveRDS(se, file.path(out_dir, tcc_rds))
+  invisible(se)
+}
+
+
+
+
+## -------------------------------------------------------------------------- ##
 ##                              Trim adapters                                 ##
 ## -------------------------------------------------------------------------- ##
 #' Trim adapter sequences using cutadapt
