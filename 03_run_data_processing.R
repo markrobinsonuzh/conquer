@@ -3,12 +3,22 @@
 
 source("02_process_data.R")
 
-base_dir <- "/home/Shared/data/seq/conquer/database/data-tcc/SRP073808"
-out_dir <- "/home/Shared/data/seq/conquer/database/data-tcc"
-mae_dir <- "/home/Shared/data/seq/conquer/database/data-mae/"
+compile_tcc_counts(base_dir="/home/Shared_taupo/data/seq/conquer/database/data-tcc/SRP073808", 
+                   mae_dir="/home/Shared_taupo/data/seq/conquer/database/data-mae/",
+                   out_dir="/home/Shared_taupo/data/seq/conquer/database/data-tcc", 
+                   experiment_id="SRP073808", verbose=TRUE)
 
-compile_tcc_counts(base_dir=base_dir, mae_dir=mae_dir,
-                   out_dir=out_dir, experiment_id="SRP073808", verbose=TRUE)
+compile_tcc_counts(base_dir="/home/Shared_taupo/data/seq/conquer/database/data-tcc/GSE52529-GPL16791",
+                   mae_dir="/home/Shared_taupo/data/seq/conquer/database/data-mae/",
+                   out_dir="/home/Shared_taupo/data/seq/conquer/database/data-tcc",
+                   experiment_id="GSE52529-GPL16791", verbose=TRUE)
+
+compile_tcc_counts(base_dir="/home/Shared_taupo/data/seq/conquer/database/data-tcc/GSE52529-GPL16791",
+                   mae_dir="/home/Shared_taupo/data/seq/conquer/database/data-mae/",
+                   out_dir="/home/Shared_taupo/data/seq/conquer/database/data-tcc",
+                   experiment_id="GSE52529-GPL16791", verbose=TRUE)
+
+
 
 
 

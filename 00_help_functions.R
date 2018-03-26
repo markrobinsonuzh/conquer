@@ -99,7 +99,6 @@ quantify_kallistotcc <- function(rtype, files, kallistodir, smp, kallistobin,
 
 compile_tcc_counts <- function(base_dir, mae_dir, out_dir, experiment_id, verbose=TRUE) {
 
-
   # get filenames
   ec_files <- dir(base_dir, "pseudoalignments.ec.gz", recursive=TRUE, full.names=TRUE)
   count_files <- dir(base_dir, "pseudoalignments.tsv.gz", recursive=TRUE, full.names=TRUE)
@@ -108,7 +107,7 @@ compile_tcc_counts <- function(base_dir, mae_dir, out_dir, experiment_id, verbos
 
   if(verbose) message( "Found ", length(ec_files), " samples.")
 
-  # note this 8 below is because the sample id is after the 11th "/"
+  # note this 11 below is because the sample id is after the 10th "/"
   # /home/Shared/data/seq/conquer/database/data-tcc/SRP073808/kallistotcc/SRR3952971/..
   extract_delim <- function(x, delim="/", ind=11) {
     sapply( strsplit(x,delim), .subset, ind)
@@ -129,8 +128,8 @@ compile_tcc_counts <- function(base_dir, mae_dir, out_dir, experiment_id, verbos
     count = col_integer()
   )
 
-
-  if(verbose) message( "Reading ", length(ec_files), " samples to process.")
+  # read files and extract equiv. classes and counts
+  if(verbose) message( "Reading ", length(ec_files), " .ec/.tsv files.")
 
   dfs <- mapply( function(u,v,z) {
     cat(".")
@@ -145,6 +144,7 @@ compile_tcc_counts <- function(base_dir, mae_dir, out_dir, experiment_id, verbos
     df
   }, ec_files, count_files, sample_id_ec, SIMPLIFY=FALSE)
 
+  # merge together using full_join()
   if(verbose) message( "Performing full_join().")
   df_merged <- dfs %>%
                  Reduce(function(df1,df2) full_join(df1,df2,by="ec"), .) %>%
@@ -155,6 +155,7 @@ compile_tcc_counts <- function(base_dir, mae_dir, out_dir, experiment_id, verbos
   if(verbose) message( "Reading ", file.path(mae_dir, mae_rds), ".")
   mae <- readRDS( file.path(mae_dir, mae_rds) )
 
+  # construct SummarizedExperiment object (using also annotation from Charlotte's earlier object
   if(verbose) message( "Constructing SummarizedExperiment.")
   samples <- intersect(colnames(df_merged), mae$Run)
 
