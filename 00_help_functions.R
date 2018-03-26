@@ -157,14 +157,12 @@ compile_tcc_counts <- function(base_dir, mae_dir, out_dir, experiment_id, verbos
 
   # construct SummarizedExperiment object (using also annotation from Charlotte's earlier object
   if(verbose) message( "Constructing SummarizedExperiment.")
-  samples <- intersect(colnames(df_merged), mae$Run)
-
-  md <- metadata(mae)
+  cd <- colData(mae)
+  samples <- intersect(colnames(df_merged), rownames(cd))
 
   m1 <- match(samples , colnames(df_merged))
-  m2 <- match(samples, mae$Run)
+  m2 <- match(samples, rownames(cd))
 
-  cd <- colData(mae)
   x <- as.matrix(df_merged)
 
   se <- SummarizedExperiment(assays=SimpleList(tcc=x[,m1]),
