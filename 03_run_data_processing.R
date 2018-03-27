@@ -13,10 +13,10 @@ compile_tcc_counts(base_dir="/home/Shared_taupo/data/seq/conquer/database/data-t
                    out_dir="/home/Shared_taupo/data/seq/conquer/database/data-tcc",
                    experiment_id="GSE52529-GPL16791", verbose=TRUE)
 
-compile_tcc_counts(base_dir="/home/Shared_taupo/data/seq/conquer/database/data-tcc/GSE52529-GPL16791",
+compile_tcc_counts(base_dir="/home/Shared_taupo/data/seq/conquer/database/data-tcc/GSE60749-GPL13112",
                    mae_dir="/home/Shared_taupo/data/seq/conquer/database/data-mae/",
                    out_dir="/home/Shared_taupo/data/seq/conquer/database/data-tcc",
-                   experiment_id="GSE52529-GPL16791", verbose=TRUE)
+                   experiment_id="GSE60749-GPL13112", verbose=TRUE)
 
 
 
