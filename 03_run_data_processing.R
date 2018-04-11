@@ -1,4 +1,28 @@
 
+
+
+source("02_process_data.R")
+
+compile_tcc_counts(base_dir="/home/Shared_taupo/data/seq/conquer/database/data-tcc/SRP073808", 
+                   mae_dir="/home/Shared_taupo/data/seq/conquer/database/data-mae/",
+                   out_dir="/home/Shared_taupo/data/seq/conquer/database/data-tcc", 
+                   experiment_id="SRP073808", verbose=TRUE)
+
+compile_tcc_counts(base_dir="/home/Shared_taupo/data/seq/conquer/database/data-tcc/GSE52529-GPL16791",
+                   mae_dir="/home/Shared_taupo/data/seq/conquer/database/data-mae/",
+                   out_dir="/home/Shared_taupo/data/seq/conquer/database/data-tcc",
+                   experiment_id="GSE52529-GPL16791", verbose=TRUE)
+
+compile_tcc_counts(base_dir="/home/Shared_taupo/data/seq/conquer/database/data-tcc/GSE60749-GPL13112",
+                   mae_dir="/home/Shared_taupo/data/seq/conquer/database/data-mae/",
+                   out_dir="/home/Shared_taupo/data/seq/conquer/database/data-tcc",
+                   experiment_id="GSE60749-GPL13112", verbose=TRUE)
+
+
+
+
+
+
 #salmonbin <- "/usr/local/software/SalmonBeta-0.6.1_DebianSqueeze/bin/salmon"
 #salmonbin <- "software/Salmon-0.7.2_linux_x86_64/bin/salmon"
 salmonbin <- "/home/charlotte/software/Salmon-0.8.2_linux_x86_64/bin/salmon"
