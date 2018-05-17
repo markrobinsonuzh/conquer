@@ -187,7 +187,7 @@ scrna_download_shiny <- function(data_directory, top_url) {
                        escape = FALSE, 
                        options = list(scrollX = TRUE, 
                                       pageLength = 50)))
-    }, escape = FALSE)   
+    })   
 
   }
   
