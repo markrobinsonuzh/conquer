@@ -26,7 +26,6 @@ Danio_rerio.GRCz10.87.cdna.ncrna.ercc92.granges <-
 adapterseq <- "AGATCGGAAGAGC"
 #adapterseq <- "file:adapters.fa"
 
-## Running
 ## GSE84465
 process_data(id = "GSE84465", dtype = "fl", rtype = "paired",
              organism = "Homo sapiens", genome = "GRCh38.84",
