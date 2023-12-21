@@ -10,8 +10,8 @@ If you use *conquer*, please cite
 
 ## Adapters
 
-In cases where adapter trimming was necessary, we used a fasta filew ith adapters obtained from [https://github.com/csf-ngs/fastqc/blob/master/Contaminants/contaminant_list.txt](https://github.com/csf-ngs/fastqc/blob/master/Contaminants/contaminant_list.txt) (downloaded on July 25, 2016).
+In cases where adapter trimming was necessary, we used a fasta file with adapters obtained from [https://github.com/csf-ngs/fastqc/blob/master/Contaminants/contaminant_list.txt](https://github.com/csf-ngs/fastqc/blob/master/Contaminants/contaminant_list.txt) (downloaded on July 25, 2016).
 
 ## Contact
 
-If you have questions or comments about *conquer*, please contact [Charlotte Soneson](mailto:charlotte.soneson@uzh.ch) or [Mark D Robinson](mailto:mark.robinson@imls.uzh.ch).
+If you have questions or comments about *conquer*, please contact [Charlotte Soneson](mailto:charlotte.soneson@uzh.ch) or [Mark D Robinson](mailto:mark.robinson@mls.uzh.ch).
